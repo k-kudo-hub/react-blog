@@ -1,0 +1,37 @@
+name: Feature
+description: Ideas for new features or modifications to existing features
+title: "[Feature]: "
+assignees:
+  - octocat
+body:
+  - type: input
+    id: function_name
+    attributes:
+      label: 機能名
+      description: 機能の名前を入力します
+      placeholder: ex. マークダウン編集機能
+    validations:
+      required: true
+  - type: textarea
+    id: why_do_it
+    attributes:
+      label: なぜやるのか?
+      description: この機能を開発する目的を記載します。
+      placeholder: ex. ブログをより簡単に投稿できるようにするため
+    validations:
+      required: false
+  - type: textarea
+    id: how_to_do_it
+    attributes:
+      label: どうやってやるのか?
+      description: この機能を開発する手段を記載します。
+      placeholder: react-markdownを活用する。
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 優先順位
+      multiple: false
+      options:
+        - 低
+        - 中
+        - 高
