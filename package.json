@@ -9,12 +9,6 @@
     "prepare": "husky install",
     "lint-staged": "lint-staged"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn run lint"
-    }
-  },
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
       "prettier --write",
