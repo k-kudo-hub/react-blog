@@ -1,0 +1,11 @@
+@import '../../../styles/colors';
+@import '../../../styles/length';
+
+.body {
+  min-height: 100vh;
+  background-color: $light-gray;
+  .main {
+    padding: 20px 40px;
+    min-height: $main-height;
+  }
+}
