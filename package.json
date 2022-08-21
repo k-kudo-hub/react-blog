@@ -7,7 +7,8 @@
     "build": "next build",
     "lint": "next lint",
     "prepare": "husky install",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "migrate:dev": "prisma migrate dev --name"
   },
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
@@ -16,7 +17,7 @@
     ]
   },
   "dependencies": {
-    "@prisma/client": "^4.1.0",
+    "@prisma/client": "^4.2.1",
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
