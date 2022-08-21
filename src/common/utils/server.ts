@@ -1,7 +1,7 @@
 /**
  * httpリクエストに関する共通関数群
  */
-import { generateUrl } from "@utils/url";
+import { generateUrl } from "src/common/utils/url";
 
 interface RequestConditionType {
   method: "GET" | "POST" | "PUT" | "DELETE";
