@@ -11,16 +11,17 @@ type ResponseData = {
   contributes: contribute[];
 };
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
   if (req.method === "GET") {
     try {
-      const contributes = getAllContributes();
+      const contributes = await getAllContributes();
       res.status(200).json({ contributes });
     } catch (e) {
-      res.status(500);
+      console.error(e);
+      res.status(500).end();
     }
   }
 }

@@ -11,8 +11,8 @@ interface RequestConditionType {
 export async function get(route: string, params = {}) {
   const url = generateUrl({ route, params });
   try {
-    const data = await fetch(url);
-    return data.json();
+    const response = await fetch(url);
+    return response.json();
   } catch (e) {
     console.error(e);
     // TODO: GETの失敗をユーザーに知らせる処理

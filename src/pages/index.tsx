@@ -8,19 +8,26 @@ const {
   HOME: { TITLE, DESCRIPTION },
 } = PAGES;
 
-interface contribute {
+interface Contribute {
   id: number;
   title: string;
-  tags: string[];
+  tags: Tag[];
+}
+
+interface Tag {
+  id: number;
+  name: string;
+  description: string;
 }
 
 const Home: NextPage = () => {
-  const [contributes, setContributes] = useState<contribute[]>([]);
+  const [contributes, setContributes] = useState<Contribute[]>([]);
 
   useEffect(() => {
     const fetchContributes = async () => {
       const response = await get("/contributes");
-      setContributes(response.contributes);
+      const contribute = response?.contributes || [];
+      setContributes(contribute);
     };
     fetchContributes();
   }, []);
@@ -35,7 +42,7 @@ const Home: NextPage = () => {
               <p>{contribute.title}</p>
               <ul>
                 {contribute.tags?.map((tag) => (
-                  <li key={tag}>{tag}</li>
+                  <li key={tag.id}>{tag.name}</li>
                 ))}
               </ul>
             </div>
