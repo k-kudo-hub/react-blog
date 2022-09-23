@@ -1,14 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getAllContributes } from "../../server/usecase/contribute";
-
-interface contribute {
-  id: number;
-  title: string;
-  tags: string[];
-}
+import { ContributeFormatted } from "../../server/domain/model/contribute";
 
 type ResponseData = {
-  contributes: contribute[];
+  contributes: ContributeFormatted[];
 };
 
 export default async function handler(

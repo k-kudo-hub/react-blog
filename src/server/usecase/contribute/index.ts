@@ -1,21 +1,17 @@
 import { PrismaClient } from "@prisma/client";
-
-interface Contribute {
-  id: number;
-  title: string;
-  tags: string[];
-}
+import { fetchContributes } from "../../repository/contribute";
+import { formatContributes } from "../../service/contribute";
 
 export const getAllContributes = async () => {
   const prisma = new PrismaClient();
 
-  const contributes = await prisma.contribute.findMany({
-    include: {
-      tags: {
-        include: { tag: true },
-      },
-    },
-  });
-
-  return contributes;
+  try {
+    const contributesData = await fetchContributes(prisma);
+    return formatContributes(contributesData);
+  } catch (error) {
+    console.error({ error });
+    throw new Error("投稿の取得に失敗しました。");
+  } finally {
+    prisma.$disconnect();
+  }
 };
