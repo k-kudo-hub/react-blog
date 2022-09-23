@@ -12,6 +12,9 @@ export async function get(route: string, params = {}) {
   const url = generateUrl({ route, params });
   try {
     const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("データの取得に失敗しました。");
+    }
     return response.json();
   } catch (e) {
     console.error(e);
@@ -25,8 +28,11 @@ export async function post(route: string, body: object) {
     body,
   });
   try {
-    const data = await fetch(route, condition);
-    return data.json();
+    const response = await fetch(route, condition);
+    if (!response.ok) {
+      throw new Error("データの更新に失敗しました。");
+    }
+    return response.json();
   } catch (e) {
     console.error(e);
     // TODO: POSTの失敗をユーザーに知らせる処理
