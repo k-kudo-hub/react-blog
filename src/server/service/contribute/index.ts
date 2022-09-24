@@ -1,5 +1,6 @@
 import { Tag } from "@prisma/client";
 import { ContributeFormatted } from "../../domain/model/contribute";
+import dayjs from "dayjs";
 
 interface ContributeDataType {
   id: number;
@@ -29,9 +30,17 @@ export const formatContributes = (contributesData: ContributeDataType[]) => {
       contribute.tags?.map((tagRelation: ContributeTagRelationDataType) => {
         return tagRelation.tag;
       }) || [];
+    const lastEditedAt = contribute.lastEditedAt
+      ? dayjs(contribute.lastEditedAt).format("YYYY.MM.DD")
+      : "";
+    const publishedAt = contribute.publishedAt
+      ? dayjs(contribute.publishedAt).format("YYYY.MM.DD")
+      : "";
     return {
       ...contribute,
-      tags: tags,
+      tags,
+      lastEditedAt,
+      publishedAt,
     };
   });
 

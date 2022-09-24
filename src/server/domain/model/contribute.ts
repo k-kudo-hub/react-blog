@@ -18,8 +18,8 @@ export interface ContributeFormatted {
   tags: Tag[];
   content: string;
   status: string;
-  publishedAt: Date | null;
-  lastEditedAt: Date | null;
+  publishedAt: string;
+  lastEditedAt: string;
 }
 
 export default class Contribute {
