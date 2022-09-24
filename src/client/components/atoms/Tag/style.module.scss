@@ -1,0 +1,11 @@
+@import '../../../styles/colors';
+
+.tag {
+  color: $dark-gray;
+  display: flex;
+  align-items: center;
+  .tagIcon {
+    margin-right: 3px;
+    margin-top: 2px;
+  }
+}
