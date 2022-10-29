@@ -7,6 +7,7 @@ import styles from "./style.module.scss";
 
 interface Props {
   children: ReactNode;
+  asideContent?: ReactNode;
   pageTitle?: string;
   pageDescription?: string;
 }
@@ -14,7 +15,12 @@ interface Props {
 const { TITLE: SITE_TITLE, DESCRIPTION } = SITE_INFO;
 const FAVICON_PATH = "/fire.png";
 
-const FullTemplate = ({ children, pageTitle, pageDescription }: Props) => {
+const FullTemplate = ({
+  children,
+  asideContent,
+  pageTitle,
+  pageDescription,
+}: Props) => {
   const siteTitle = pageTitle ? `${pageTitle} | ${SITE_TITLE}` : SITE_TITLE;
   const siteDescription = pageDescription ? pageDescription : DESCRIPTION;
 
@@ -26,7 +32,14 @@ const FullTemplate = ({ children, pageTitle, pageDescription }: Props) => {
         <link rel="icon" href={FAVICON_PATH} />
       </Head>
       <Header />
-      <main className={styles.main}>{children}</main>
+      <div className={styles.fullTemplateContainer}>
+        <main className={styles.main}>{children}</main>
+        {asideContent && (
+          <aside className={styles.aside}>
+            <div className={styles.dummy}>{asideContent}</div>
+          </aside>
+        )}
+      </div>
       <Footer />
     </div>
   );
