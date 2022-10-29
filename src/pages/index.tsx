@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import type { NextPage } from "next";
-import FullTemplate from "src/client/components/templates/FullTemplate";
 import PAGES from "src/common/constants/pages";
 import { get } from "src/common/utils/server";
+import FullTemplate from "src/client/components/templates/FullTemplate";
+import Contributes from "@components/organisms/Contributes";
 
 const {
   HOME: { TITLE, DESCRIPTION },
@@ -12,6 +13,9 @@ interface Contribute {
   id: number;
   title: string;
   tags: Tag[];
+  content: string;
+  lastEditedAt: string;
+  publishedAt: string;
 }
 
 interface Tag {
@@ -32,25 +36,15 @@ const Home: NextPage = () => {
     fetchContributes();
   }, []);
 
+  const asideContent = <p>Aside content test.</p>;
+
   return (
-    <FullTemplate pageTitle={TITLE} pageDescription={DESCRIPTION}>
-      <main>
-        {contributes.length ? (
-          contributes.map((contribute) => (
-            <div key={contribute.id}>
-              <p>{contribute.id}</p>
-              <p>{contribute.title}</p>
-              <ul>
-                {contribute.tags?.map((tag) => (
-                  <li key={tag.id}>{tag.name}</li>
-                ))}
-              </ul>
-            </div>
-          ))
-        ) : (
-          <p>投稿はまだありません</p>
-        )}
-      </main>
+    <FullTemplate
+      asideContent={asideContent}
+      pageTitle={TITLE}
+      pageDescription={DESCRIPTION}
+    >
+      <Contributes contributes={contributes} />
     </FullTemplate>
   );
 };
