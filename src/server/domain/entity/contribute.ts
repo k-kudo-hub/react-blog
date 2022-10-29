@@ -1,32 +1,22 @@
 import { ContributeTagRelation, Tag } from "@prisma/client";
+import BaseEntity from "./base";
 
-interface ContributeConstructProps {
-  id: number | null;
-  userId: number;
-  title: string;
-  tags: ContributeTagRelation[];
-  content: string;
-  status: string;
-  publishedAt: Date | null;
-  lastEditedAt: Date | null;
-}
-
-export interface ContributeFormatted {
+export interface ContributeType {
   id: number;
   userId: number;
   title: string;
   tags: Tag[];
   content: string;
   status: string;
-  publishedAt: string;
-  lastEditedAt: string;
+  publishedAt: Date | null;
+  lastEditedAt: Date | null;
 }
 
-export default class Contribute {
+export default class ContributeEntity extends BaseEntity {
   private id: number | null = null;
   private userId: number;
   private title: string;
-  private tags: ContributeTagRelation[];
+  private tags: Tag[];
   private content: string;
   private status: string;
   private publishedAt: Date | null;
@@ -41,7 +31,8 @@ export default class Contribute {
     status,
     publishedAt,
     lastEditedAt,
-  }: ContributeConstructProps) {
+  }: ContributeType) {
+    super();
     this.id = id || null;
     this.userId = userId;
     this.title = title;
