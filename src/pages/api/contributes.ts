@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import STATUS_CODES from "@constants/errors/statusCode";
-import { ContributeType } from "src/server/domain/entity/contribute";
 import { getAllContributes } from "../../server/usecase/contribute";
+import ContributeEntity from "@server/domain/entity/contribute";
 
 type ResponseData = {
-  contributes: ContributeType[];
+  contributes: ContributeEntity[];
 };
 
 export default async function handler(

@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import { ContributeType } from "../../entity/contribute";
+import ContributeEntity from "@server/domain/entity/contribute";
 
 export abstract class IContributeRepository {
-  abstract findAll: (prisma: PrismaClient) => Promise<ContributeType[]>;
+  abstract findAll: (prisma: PrismaClient) => Promise<ContributeEntity[]>;
 }

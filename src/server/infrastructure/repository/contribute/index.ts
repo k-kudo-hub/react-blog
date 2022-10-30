@@ -1,9 +1,4 @@
 import { PrismaClient, Tag } from "@prisma/client";
-import {
-  ContributeType,
-  ContributeDataType,
-  ContributeTagRelationDataType,
-} from "../../../domain/entity/contribute/types";
 import { IContributeRepository } from "src/server/domain/repository/contribute";
 import { ContributeFactory } from "@server/domain/factory/contribute";
 import ContributeEntity from "@server/domain/entity/contribute";
