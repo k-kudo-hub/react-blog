@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import ContributeRepository from "../../infrastructure/repository/contributes";
+import ContributeRepository from "../../infrastructure/repository/contribute";
 
 export const getAllContributes = async () => {
   const prisma = new PrismaClient();

@@ -40,7 +40,7 @@ const Contribute = ({ contribute }: { contribute: ContributeType }) => {
           )}
         </div>
         <p className={styles.title}>
-          <Link href={"/"}>{contribute.title}</Link>
+          <Link href={"/"}>{contribute.title || "title"}</Link>
         </p>
       </div>
     </div>
