@@ -17,11 +17,14 @@
       "@pages/*": ["src/pages/*"],
       "@config/*": ["config/*"],
       "@utils/*": ["src/common/utils/*"],
+      "@server/*": ["src/server/*"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
     "target": "es5",
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
