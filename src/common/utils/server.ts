@@ -1,7 +1,7 @@
 /**
  * httpリクエストに関する共通関数群
  */
-import { generateUrl } from "src/common/utils/url";
+import { generateUrl } from "./url";
 
 interface RequestConditionType {
   method: "GET" | "POST" | "PUT" | "DELETE";
@@ -23,12 +23,13 @@ export async function get(route: string, params = {}) {
 }
 
 export async function post(route: string, body: object) {
+  const url = generateUrl({ route });
   const condition = _generateRequestCondition({
     method: "POST",
     body,
   });
   try {
-    const response = await fetch(route, condition);
+    const response = await fetch(url, condition);
     if (!response.ok) {
       throw new Error("データの更新に失敗しました。");
     }
