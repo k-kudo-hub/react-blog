@@ -3,10 +3,10 @@ import CustomError from "@server/domain/entity/error";
 import { StatusCodes, Codes } from "@constants/errors/statusCode";
 
 interface InputMethods {
-  get?: (req: NextApiRequest) => Promise<any>;
-  post?: (req: NextApiRequest) => Promise<any>;
-  put?: (req: NextApiRequest) => Promise<any>;
-  delete?: (req: NextApiRequest) => Promise<any>;
+  get?: () => Promise<any>;
+  post?: () => Promise<any>;
+  put?: () => Promise<any>;
+  delete?: () => Promise<any>;
 }
 
 export interface ResponseData {
@@ -15,10 +15,10 @@ export interface ResponseData {
 }
 
 export class HttpMethodHandler {
-  get: ((req: NextApiRequest) => Promise<any>) | undefined;
-  post: ((req: NextApiRequest) => Promise<any>) | undefined;
-  put: ((req: NextApiRequest) => Promise<any>) | undefined;
-  delete: ((req: NextApiRequest) => Promise<any>) | undefined;
+  get: (() => Promise<any>) | undefined;
+  post: (() => Promise<any>) | undefined;
+  put: (() => Promise<any>) | undefined;
+  delete: (() => Promise<any>) | undefined;
 
   constructor(params: InputMethods) {
     this.get = params.get;
@@ -34,13 +34,13 @@ export class HttpMethodHandler {
     };
     try {
       if (req.method === "GET" && !!this.get) {
-        response.data = await this.get(req);
+        response.data = await this.get();
       } else if (req.method === "POST" && !!this.post) {
-        response.data = await this.post(req);
+        response.data = await this.post();
       } else if (req.method === "PUT" && !!this.put) {
-        response.data = await this.put(req);
+        response.data = await this.put();
       } else if (req.method === "DELETE" && !!this.delete) {
-        response.data = await this.delete(req);
+        response.data = await this.delete();
       } else {
         throw new CustomError({
           statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
