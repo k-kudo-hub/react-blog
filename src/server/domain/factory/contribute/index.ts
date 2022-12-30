@@ -14,13 +14,13 @@ export class ContributeFactory extends BaseFactory {
     return this.createEntity(ContributeEntity, params);
   }
   reconstructList(params: ContributeDataType[]): ContributeEntity[] {
-    const seed = params.map((p) => {
+    const seed = params.map((param) => {
       const tags =
-        p.tags?.map(
+        param.tags?.map(
           (tagRelation: ContributeTagRelationDataType) => tagRelation.tag
         ) || [];
       return {
-        ...p,
+        ...param,
         tags,
       };
     });

@@ -1,7 +1,7 @@
 export interface CustomErrorParams {
-  code: string;
-  statusCode: number;
-  message: string;
+  code: string; // ex: NOT_FOUND
+  statusCode: number; // ex: 404
+  message: string; // ex: Contribute not found.
   info?: { [key: string]: unknown };
 }
 

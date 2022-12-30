@@ -9,7 +9,7 @@ interface VariableLengthType {
 
 interface UrlParamType {
   route: string;
-  params: VariableLengthType | {};
+  params?: VariableLengthType | {};
 }
 
 /**
@@ -25,7 +25,7 @@ export const generateUrl = ({ route, params = {} }: UrlParamType) => {
   } else if (route.startsWith("http") || route.startsWith("https")) {
     return `${route}${queryString}`;
   } else {
-    throw Error("URL設定が正しくありません。");
+    throw new Error("URL設定が正しくありません。");
   }
 };
 

@@ -28,15 +28,16 @@ const Home: NextPage = () => {
   const [contributes, setContributes] = useState<Contribute[]>([]);
 
   useEffect(() => {
+    // TODO: どこかに逃す
     const fetchContributes = async () => {
       const response = await get("/contributes");
-      const contribute = response?.contributes || [];
+      const contribute = response?.data || [];
       setContributes(contribute);
     };
     fetchContributes();
   }, []);
 
-  const asideContent = <p>Aside content test.</p>;
+  const asideContent = <p></p>;
 
   return (
     <FullTemplate
