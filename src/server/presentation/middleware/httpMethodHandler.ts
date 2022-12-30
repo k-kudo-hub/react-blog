@@ -10,8 +10,8 @@ interface InputMethods {
 }
 
 export interface ResponseData {
-  data: unknown;
-  error: unknown;
+  data: any;
+  error: any;
 }
 
 export class HttpMethodHandler {
@@ -50,9 +50,25 @@ export class HttpMethodHandler {
       }
       res.status(StatusCodes.OK).json(response);
     } catch (e) {
-      response.error = { ...e, message: e.message };
+      if (e instanceof CustomError) {
+        response.error = {
+          statusCode: e.statusCode,
+          code: e.code,
+          message: e.message,
+        };
+      } else {
+        response.error = {
+          statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+          code: Codes.INTERNAL_SERVER_ERROR,
+          message: "予期せぬエラーが発生しました。管理者にお問合せください。",
+        };
+      }
       res
-        .status(e.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
+        .status(
+          response.error
+            ? response.error.statusCode
+            : StatusCodes.INTERNAL_SERVER_ERROR
+        )
         .json(response);
     }
   }
