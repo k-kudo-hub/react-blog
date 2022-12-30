@@ -1,0 +1,10 @@
+@import '../../../styles/colors';
+
+.lastEditedAt {
+  color: $dark-gray;
+  display: flex;
+  align-items: center;
+  .lastEditIcon {
+    margin-right: 3px;
+  }
+}

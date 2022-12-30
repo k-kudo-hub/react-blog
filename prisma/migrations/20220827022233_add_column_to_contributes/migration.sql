@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE `contributes` ADD COLUMN `content` VARCHAR(191) NOT NULL DEFAULT '',
+    ADD COLUMN `lastEditedAt` DATETIME(3) NULL,
+    ADD COLUMN `published_at` DATETIME(3) NULL,
+    ADD COLUMN `status` VARCHAR(191) NOT NULL DEFAULT 'DRAFT';

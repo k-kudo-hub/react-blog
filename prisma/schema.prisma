@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DB_HOST")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  nickName String @map("nick_name")
+  email String @unique
+  password String
+  contributes Contribute[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @default(now()) @map("updated_at")
+  @@map("users")
+}
+
+model Contribute {
+  id  Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id])
+  userId Int @map("user_id")
+  title String
+  tags ContributeTagRelation[]
+  content String @default("")
+  status String @default("DRAFT")
+  publishedAt DateTime? @map("published_at")
+  lastEditedAt DateTime? @map("last_edited_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @default(now()) @map("updated_at")
+  @@map("contributes")
+}
+
+model ContributeTagRelation {
+  id Int @id @default(autoincrement())
+  contribute Contribute @relation(fields: [contributeId], references: [id])
+  contributeId Int @map("contribute_id")
+  tag Tag @relation(fields: [tagId], references: [id])
+  tagId Int @map("tag_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @default(now()) @map("updated_at")
+  @@unique([contributeId, tagId])
+  @@map("contribute_tag_relations")
+}
+
+model Tag {
+  id Int @id @default(autoincrement())
+  name String
+  description String? @default("")
+  contributes ContributeTagRelation[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @default(now()) @map("updated_at")
+  @@map("tags")
+}

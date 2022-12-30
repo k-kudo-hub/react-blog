@@ -1,0 +1,8 @@
+@import '../../../styles/colors';
+@import '../../../styles/length';
+
+.footer {
+  background-color: $red;
+  height: $footer-height;
+  width: 100%;
+}

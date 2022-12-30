@@ -1,0 +1,9 @@
+@import '../../../styles/length';
+
+.header {
+  .hero {
+    position: relative;
+    width: 100%;
+    height: $header-height;
+  }
+}

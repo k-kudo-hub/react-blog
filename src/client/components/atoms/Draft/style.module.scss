@@ -1,0 +1,10 @@
+@import '../../../styles/colors';
+
+.draft {
+  color: $dark-gray;
+  display: flex;
+  align-items: center;
+  .draftIcon {
+    margin-right: 3px;
+  }
+}
