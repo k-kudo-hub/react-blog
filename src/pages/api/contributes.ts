@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getAllContributes } from "@server/usecase/contribute";
+import { getAllContributes } from "@server/usecase/getAllContributes";
 import {
   HttpMethodHandler,
   ResponseData,
