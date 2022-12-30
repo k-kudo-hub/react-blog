@@ -1,15 +1,18 @@
-import { PrismaClient, Tag } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { IContributeRepository } from "src/server/domain/repository/contribute";
 import { ContributeFactory } from "@server/domain/factory/contribute";
 import ContributeEntity from "@server/domain/entity/contribute";
+import CustomError from "@server/domain/entity/error";
+import prisma from "../prisma";
 
 const contributeFactory = new ContributeFactory();
 
 export default class ContributeRepository extends IContributeRepository {
   public findAll = async (
-    prisma: PrismaClient
+    transaction: PrismaClient | null
   ): Promise<ContributeEntity[]> => {
-    const contributes = await prisma.contribute.findMany({
+    const db = transaction ? transaction : prisma;
+    const contributes = await db.contribute.findMany({
       select: {
         id: true,
         title: true,
