@@ -50,6 +50,7 @@ export class HttpMethodHandler {
       }
       res.status(StatusCodes.OK).json(response);
     } catch (e) {
+      console.error(e);
       if (e instanceof CustomError) {
         response.error = {
           statusCode: e.statusCode,
