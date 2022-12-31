@@ -1,31 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import type { NextPage } from "next";
 import PAGES from "src/common/constants/pages";
 import { get } from "src/common/utils/server";
 import FullTemplate from "src/client/components/templates/FullTemplate";
 import Contributes from "@components/organisms/Contributes";
+import { contributesState } from "src/client/state/contributes";
+import { useRecoilState } from "recoil";
 
 const {
   HOME: { TITLE, DESCRIPTION },
 } = PAGES;
 
-interface Contribute {
-  id: number;
-  title: string;
-  tags: Tag[];
-  content: string;
-  lastEditedAt: string;
-  publishedAt: string;
-}
-
-interface Tag {
-  id: number;
-  name: string;
-  description: string;
-}
-
 const Home: NextPage = () => {
-  const [contributes, setContributes] = useState<Contribute[]>([]);
+  const [contributes, setContributes] = useRecoilState(contributesState);
 
   useEffect(() => {
     // TODO: どこかに逃す
