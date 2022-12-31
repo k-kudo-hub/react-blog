@@ -4,21 +4,7 @@ import styles from "./style.module.scss";
 import Tag from "../../atoms/Tag";
 import Draft from "../../atoms/Draft";
 import LastEditedAt from "../../atoms/LastEditedAt";
-
-interface ContributeType {
-  id: number;
-  title: string;
-  tags: TagType[];
-  content: string;
-  lastEditedAt: string;
-  publishedAt: string;
-}
-
-interface TagType {
-  id: number;
-  name: string;
-  description: string;
-}
+import { Contribute as ContributeType } from "../../../models/contribute";
 
 const Contribute = ({ contribute }: { contribute: ContributeType }) => {
   return (

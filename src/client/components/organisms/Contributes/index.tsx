@@ -1,20 +1,6 @@
 import styles from "./style.module.scss";
 import Contribute from "../../molecules/Contribute";
-
-interface ContributeType {
-  id: number;
-  title: string;
-  tags: TagType[];
-  content: string;
-  lastEditedAt: string;
-  publishedAt: string;
-}
-
-interface TagType {
-  id: number;
-  name: string;
-  description: string;
-}
+import { Contribute as ContributeType } from "../../../models/contribute";
 
 const Contributes = ({ contributes }: { contributes: ContributeType[] }) => {
   return (
