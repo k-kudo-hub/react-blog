@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import CustomError from "@server/domain/entity/error";
-import { StatusCodes, Codes } from "@constants/errors/statusCode";
+import { StatusCodes, Codes } from "@constants/http";
 
 interface InputMethods {
   get?: () => Promise<any>;

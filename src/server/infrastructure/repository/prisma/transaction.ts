@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import prisma from ".";
 import CustomError from "@server/domain/entity/error";
-import { StatusCodes } from "@constants/errors/statusCode";
+import { StatusCodes } from "@constants/http";
 
 export default class TransactionManager {
   db: PrismaClient;
