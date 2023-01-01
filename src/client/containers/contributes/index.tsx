@@ -1,28 +1,30 @@
 import { useEffect } from "react";
 import type { NextPage } from "next";
-import PAGES from "src/common/constants/pages";
-import { get } from "src/common/utils/server";
-import FullTemplate from "src/client/components/templates/FullTemplate";
-import Contributes from "@components/organisms/Contributes";
-import { contributesState } from "src/client/state/contributes";
 import { useRecoilState } from "recoil";
+import Contributes from "@components/organisms/Contributes";
+import FullTemplate from "@components/templates/FullTemplate";
+import PAGES from "../../../common/constants/pages";
+import contributesState from "../../state/contributes";
+import { Contribute } from "../../models/contribute";
+import { ContributeInterface } from "../../../client/interface/contributes";
 
+const contributeInterface = new ContributeInterface();
 const {
   HOME: { TITLE, DESCRIPTION },
 } = PAGES;
 
 const Home: NextPage = () => {
-  const [contributes, setContributes] = useRecoilState(contributesState);
+  const [contributes, setContributes] =
+    useRecoilState<Contribute[]>(contributesState);
 
   useEffect(() => {
-    // TODO: どこかに逃す
-    const fetchContributes = async () => {
-      const response = await get("/contributes");
-      const contribute = response?.data || [];
-      setContributes(contribute);
-    };
     fetchContributes();
   }, []);
+
+  const fetchContributes = async () => {
+    const contributes = await contributeInterface.getAllContributes();
+    setContributes(contributes);
+  };
 
   const asideContent = <p></p>;
 
