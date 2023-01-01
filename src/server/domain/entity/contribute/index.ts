@@ -15,6 +15,8 @@ export default class ContributeEntity extends BaseEntity {
   @Expose()
   status: string;
   @Expose()
+  identityCode: string;
+  @Expose()
   publishedAt: Date | null;
   @Expose()
   lastEditedAt: Date | null;

@@ -6,6 +6,7 @@ export interface Contribute {
   status: string;
   title: string;
   content: string;
+  identityCode: string;
   lastEditedAt: string | null;
   publishedAt: string | null;
   tags: Tag[];
