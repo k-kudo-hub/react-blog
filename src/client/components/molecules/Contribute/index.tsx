@@ -19,14 +19,16 @@ const Contribute = ({ contribute }: { contribute: ContributeType }) => {
               <Tag tag={tag} key={tag.id} />
             ))}
           </div>
-          {contribute.lastEditedAt ? (
-            <LastEditedAt lastEditedAt={contribute.lastEditedAt} />
+          {contribute.status === "PUBLISHED" ? (
+            <LastEditedAt lastEditedAt={contribute?.lastEditedAt} />
           ) : (
             <Draft />
           )}
         </div>
         <p className={styles.title}>
-          <Link href={"/"}>{contribute.title || "title"}</Link>
+          <Link href={`/contributes/${contribute.identityCode}`}>
+            {contribute.title}
+          </Link>
         </p>
       </div>
     </div>

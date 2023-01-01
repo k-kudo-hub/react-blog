@@ -1,8 +1,12 @@
 import styles from "./style.module.scss";
 import Image from "next/image";
 
-const LastEditedAt = ({ lastEditedAt }: { lastEditedAt: string }) => {
-  return (
+const LastEditedAt = ({
+  lastEditedAt = "",
+}: {
+  lastEditedAt: string | null;
+}) => {
+  return !!lastEditedAt ? (
     <div className={styles.lastEditedAt}>
       <div className={styles.lastEditIcon}>
         <Image
@@ -14,7 +18,7 @@ const LastEditedAt = ({ lastEditedAt }: { lastEditedAt: string }) => {
       </div>
       <span>{lastEditedAt}</span>
     </div>
-  );
+  ) : null;
 };
 
 export default LastEditedAt;
