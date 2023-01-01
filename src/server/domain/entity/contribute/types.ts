@@ -18,6 +18,7 @@ export interface ContributeDataType {
   content: string;
   status: string;
   tags: ContributeTagRelationDataType[];
+  details?: ContributeDetailDataType;
   publishedAt: Date | null;
   lastEditedAt: Date | null;
 }
@@ -27,6 +28,14 @@ export interface ContributeTagRelationDataType {
   contributeId: number;
   tag: Tag;
   tagId: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ContributeDetailDataType {
+  id: number;
+  contributeId: number;
+  content: string;
   createdAt: Date;
   updatedAt: Date;
 }
