@@ -5,12 +5,13 @@ import Tag from "../../atoms/Tag";
 import Draft from "../../atoms/Draft";
 import LastEditedAt from "../../atoms/LastEditedAt";
 import { Contribute as ContributeType } from "../../../models/contribute";
+import IMAGE_PATH from "src/client/styles/images";
 
 const Contribute = ({ contribute }: { contribute: ContributeType }) => {
   return (
     <div className={styles.contribute} key={contribute.id}>
       <div className={styles.contributeHeader}>
-        <Image src="/images/hero.png" layout="fill" objectFit="cover" />
+        <Image src={IMAGE_PATH.HERO_ORIGIN} layout="fill" objectFit="cover" />
       </div>
       <div className={styles.contributeBody}>
         <div className={styles.contributeBodyHeader}>
