@@ -18,7 +18,7 @@ export class ContributeFactory extends BaseFactory {
     const lastEditedAt = param.lastEditedAt
       ? dayjs(param.lastEditedAt).format("YYYY年MM月DD日")
       : null;
-    const content = param?.details ? param.details.content : null;
+    const content = param.details ? param.details.content : null;
     return this.createEntity(ContributeEntity, {
       ...param,
       publishedAt,

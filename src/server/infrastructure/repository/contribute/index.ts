@@ -44,8 +44,8 @@ export default class ContributeRepository extends IContributeRepository {
       },
     };
 
-    const contributes = await db.contribute.findUnique(query);
-    return contributeFactory.reconstruct(contributes);
+    const contribute = await db.contribute.findUnique(query);
+    return contributeFactory.reconstruct(contribute);
   };
 
   private getBaseQuery = (): PrismaQuery => {
