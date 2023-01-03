@@ -4,6 +4,7 @@ import SITE_INFO from "src/common/constants/siteInfo";
 import Header from "src/client/components/organisms/Header";
 import Footer from "src/client/components/organisms/Footer";
 import styles from "./style.module.scss";
+import IMAGE_PATH from "src/client/styles/images";
 
 interface Props {
   children: ReactNode;
@@ -13,7 +14,6 @@ interface Props {
 }
 
 const { TITLE: SITE_TITLE, DESCRIPTION } = SITE_INFO;
-const FAVICON_PATH = "/fire.png";
 
 const DoubleLineTemplate = ({
   children,
@@ -29,7 +29,7 @@ const DoubleLineTemplate = ({
       <Head>
         <title>{siteTitle}</title>
         <meta name="description" content={siteDescription} />
-        <link rel="icon" href={FAVICON_PATH} />
+        <link rel="icon" href={IMAGE_PATH.FIRE_ICON} />
       </Head>
       <Header />
       <div className={styles.doubleLineTemplateContainer}>
