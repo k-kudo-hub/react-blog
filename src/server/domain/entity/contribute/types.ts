@@ -17,8 +17,12 @@ export interface ContributeDataType {
   title: string;
   content: string;
   status: string;
+  identityCode: string;
   tags: ContributeTagRelationDataType[];
   details?: ContributeDetailDataType;
+  user: {
+    nickName: string;
+  };
   publishedAt: Date | null;
   lastEditedAt: Date | null;
 }

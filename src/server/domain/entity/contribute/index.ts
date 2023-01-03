@@ -2,6 +2,7 @@ import { Expose, Type } from "class-transformer";
 
 import BaseEntity from "../base";
 import TagEntity from "../tag";
+import UserEntity from "../user";
 
 export default class ContributeEntity extends BaseEntity {
   @Expose()
@@ -23,4 +24,7 @@ export default class ContributeEntity extends BaseEntity {
   @Expose()
   @Type(() => TagEntity)
   tags: TagEntity[];
+  @Expose()
+  @Type(() => UserEntity)
+  user: UserEntity;
 }

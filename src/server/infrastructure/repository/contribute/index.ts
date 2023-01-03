@@ -61,6 +61,12 @@ export default class ContributeRepository extends IContributeRepository {
         tags: {
           include: { tag: true },
         },
+        user: {
+          select: {
+            id: true,
+            nickName: true,
+          },
+        },
       },
     };
   };
