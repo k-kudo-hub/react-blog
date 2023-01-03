@@ -1,4 +1,5 @@
 import { Tag } from "../tag";
+import { User } from "../user";
 
 export interface Contribute {
   id: number;
@@ -10,4 +11,5 @@ export interface Contribute {
   lastEditedAt: string | null;
   publishedAt: string | null;
   tags: Tag[];
+  user: User;
 }
