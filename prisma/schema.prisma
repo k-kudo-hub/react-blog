@@ -42,7 +42,7 @@ model ContributeDetail {
   id Int @id @default(autoincrement())
   contribute Contribute @relation(fields: [contributeId], references: [id])
   contributeId Int @map("contribute_id") @unique
-  content String @default("")
+  content String @db.Text @default("")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @default(now()) @map("updated_at")
   @@map("contribute_details")
