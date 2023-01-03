@@ -1,19 +1,20 @@
 @import '../../../styles/colors';
+@import '../../../styles/font-size';
 
 .contribute {
-  height: 452px;
-  width: 430px;
+  height: 374px;
+  width: 325px;
   .contributeHeader {
-    height: 200px;
+    height: 174px;
     position: relative;
-    background-color: $dark-gray;
   }
   .contributeBody {
     background-color: $white;
-    height: 252px;
+    height: 200px;
     padding: 10px 15px;
+    position: relative;
     .title {
-      font-size: 24px;
+      font-size: $fs-x;
       font-weight: bold;
       :hover {
         color: $dark-gray;
@@ -25,18 +26,24 @@
 
 .contributeBodyHeader {
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
   margin-bottom: 15px;
   min-height: 30px;
+  .lastEditedAt {
+    color: $dark-gray;
+  }
+}
+
+.contributeBodyFooter {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 10px;
   .tags {
     display: flex;
     align-items: center;
     > div {
       margin: 0 5px 0 0;
     }
-  }
-  .lastEditedAt {
-    color: $dark-gray;
   }
 }

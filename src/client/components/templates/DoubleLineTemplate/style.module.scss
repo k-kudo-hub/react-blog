@@ -1,0 +1,21 @@
+@import '../../../styles/colors';
+@import '../../../styles/length';
+
+.body {
+  min-height: 100vh;
+  background-color: $light-gray;
+  .doubleLineTemplateContainer {
+    display: grid;
+    grid-template-columns: 45rem 1fr;
+    min-height: $main-height;
+    padding: 24px;
+    max-width: 64rem;
+    margin: 0 auto;
+    .main {
+      grid-column: 1 / 2;
+    }
+    .aside {
+      grid-column: 2 / 3;
+    }
+  }
+}

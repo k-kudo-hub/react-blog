@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import type { NextPage } from "next";
 import { useRecoilState } from "recoil";
 import Contributes from "@components/organisms/Contributes";
-import FullTemplate from "@components/templates/FullTemplate";
+import DoubleLineTemplate from "@components/templates/DoubleLineTemplate";
 import PAGES from "../../../common/constants/pages";
 import contributesState from "../../state/contributes";
 import { Contribute } from "../../models/contribute";
@@ -29,13 +29,13 @@ const Home: NextPage = () => {
   const asideContent = <p></p>;
 
   return (
-    <FullTemplate
+    <DoubleLineTemplate
       asideContent={asideContent}
       pageTitle={TITLE}
       pageDescription={DESCRIPTION}
     >
       <Contributes contributes={contributes} />
-    </FullTemplate>
+    </DoubleLineTemplate>
   );
 };
 

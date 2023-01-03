@@ -15,7 +15,7 @@ interface Props {
 const { TITLE: SITE_TITLE, DESCRIPTION } = SITE_INFO;
 const FAVICON_PATH = "/fire.png";
 
-const FullTemplate = ({
+const DoubleLineTemplate = ({
   children,
   asideContent,
   pageTitle,
@@ -32,17 +32,13 @@ const FullTemplate = ({
         <link rel="icon" href={FAVICON_PATH} />
       </Head>
       <Header />
-      <div className={styles.fullTemplateContainer}>
+      <div className={styles.doubleLineTemplateContainer}>
         <main className={styles.main}>{children}</main>
-        {asideContent && (
-          <aside className={styles.aside}>
-            <div className={styles.dummy}>{asideContent}</div>
-          </aside>
-        )}
+        <aside className={styles.aside}>{asideContent}</aside>
       </div>
       <Footer />
     </div>
   );
 };
 
-export default FullTemplate;
+export default DoubleLineTemplate;

@@ -15,11 +15,6 @@ const Contribute = ({ contribute }: { contribute: ContributeType }) => {
       </div>
       <div className={styles.contributeBody}>
         <div className={styles.contributeBodyHeader}>
-          <div className={styles.tags}>
-            {contribute.tags?.map((tag) => (
-              <Tag tag={tag} key={tag.id} />
-            ))}
-          </div>
           {contribute.status === "PUBLISHED" ? (
             <LastEditedAt lastEditedAt={contribute?.lastEditedAt} />
           ) : (
@@ -31,6 +26,13 @@ const Contribute = ({ contribute }: { contribute: ContributeType }) => {
             {contribute.title}
           </Link>
         </p>
+        <div className={styles.contributeBodyFooter}>
+          <div className={styles.tags}>
+            {contribute.tags?.map((tag) => (
+              <Tag tag={tag} key={tag.id} />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
