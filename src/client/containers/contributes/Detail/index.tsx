@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
@@ -9,8 +10,7 @@ import { Contribute as ContributeType } from "../../../models/contribute";
 import { ContributeInterface } from "../../../interface/contributes";
 import styles from "./style.module.scss";
 import CodeBlock from "./CodeBlock";
-import Image from "next/image";
-import IMAGE_PATH from "src/client/styles/images";
+import IMAGE_PATH from "../../../styles/images";
 
 const contributeInterface = new ContributeInterface();
 
