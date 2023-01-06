@@ -5,12 +5,12 @@ import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-import DoubleLineTemplate from "@components/templates/DoubleLineTemplate";
 import { Contribute as ContributeType } from "../../../models/contribute";
 import { ContributeInterface } from "../../../interface/contributes";
 import styles from "./style.module.scss";
 import CodeBlock from "./CodeBlock";
 import IMAGE_PATH from "../../../styles/images";
+import SingleLineTemplate from "@components/templates/SingleLineTemplate";
 
 const contributeInterface = new ContributeInterface();
 
@@ -30,7 +30,7 @@ const ContributeDetail: NextPage = () => {
   };
 
   return (
-    <DoubleLineTemplate pageTitle={contribute?.title}>
+    <SingleLineTemplate pageTitle={contribute?.title}>
       <div className={styles.detailContainer}>
         <section className={styles.detailHeader}>
           <div className={styles.userInfoContainer}>
@@ -71,7 +71,7 @@ const ContributeDetail: NextPage = () => {
           </div>
         </section>
       </div>
-    </DoubleLineTemplate>
+    </SingleLineTemplate>
   );
 };
 export default ContributeDetail;
