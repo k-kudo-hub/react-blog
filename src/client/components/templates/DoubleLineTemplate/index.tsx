@@ -1,10 +1,10 @@
 import Head from "next/head";
 import { ReactNode } from "react";
-import SITE_INFO from "src/common/constants/siteInfo";
-import Header from "src/client/components/organisms/Header";
-import Footer from "src/client/components/organisms/Footer";
+import SITE_INFO from "@constants/siteInfo";
+import Header from "@components/organisms/Header";
+import Footer from "@components/organisms/Footer";
 import styles from "./style.module.scss";
-import IMAGE_PATH from "src/client/styles/images";
+import IMAGE_PATH from "../../../styles/images";
 
 interface Props {
   children: ReactNode;
