@@ -1,10 +1,12 @@
 import { Tag } from "../tag";
 import { User } from "../user";
 
+export type ContributeStatus = "PUBLISHED" | "DRAFT";
+
 export interface Contribute {
   id: number;
   userId: number;
-  status: string;
+  status: ContributeStatus;
   title: string;
   content: string;
   identityCode: string;
