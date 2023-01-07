@@ -2,15 +2,13 @@ import { NextPage } from "next";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 
 import { Contribute as ContributeType } from "../../../models/contribute";
 import { ContributeInterface } from "../../../interface/contributes";
 import styles from "./style.module.scss";
-import CodeBlock from "./CodeBlock";
 import IMAGE_PATH from "../../../styles/images";
 import SingleLineTemplate from "@components/templates/SingleLineTemplate";
+import MarkdownRenderer from "@components/atoms/MarkdownRenderer";
 
 const contributeInterface = new ContributeInterface();
 
@@ -53,22 +51,13 @@ const ContributeDetail: NextPage = () => {
           <p>
             {contribute?.tags?.map((tag) => (
               <span className={styles.tag} key={tag.id}>
-                # {tag.name}
+                #{tag.name}
               </span>
             ))}
           </p>
         </section>
         <section className={styles.detailBody}>
-          <div className={styles.markdownContainer}>
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              components={{
-                code: CodeBlock,
-              }}
-            >
-              {contribute?.content as string}
-            </ReactMarkdown>
-          </div>
+          <MarkdownRenderer content={contribute?.content as string} />
         </section>
       </div>
     </SingleLineTemplate>
