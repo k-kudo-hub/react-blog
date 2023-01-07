@@ -1,14 +1,14 @@
 @import '../../../styles/colors';
 @import '../../../styles/font-size';
 
-.contribute {
+.card {
   height: 374px;
   width: 325px;
-  .contributeHeader {
+  .cardHeader {
     height: 174px;
     position: relative;
   }
-  .contributeBody {
+  .cardBody {
     background-color: $white;
     height: 200px;
     padding: 10px 15px;
@@ -24,7 +24,7 @@
   }
 }
 
-.contributeBodyHeader {
+.cardBodyHeader {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -35,7 +35,7 @@
   }
 }
 
-.contributeBodyFooter {
+.cardBodyFooter {
   position: absolute;
   bottom: 0;
   margin-bottom: 10px;
