@@ -1,7 +1,7 @@
 import styles from "./style.module.scss";
 import Image from "next/image";
 
-const Tag = () => {
+const Draft = () => {
   return (
     <div className={styles.draft}>
       <div className={styles.draftIcon}>
@@ -12,4 +12,4 @@ const Tag = () => {
   );
 };
 
-export default Tag;
+export default Draft;
