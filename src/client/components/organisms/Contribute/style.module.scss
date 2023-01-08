@@ -1,6 +1,13 @@
 @import '../../../styles/colors';
 @import '../../../styles/font-size';
 
+.userIcon {
+  width: 30px;
+  height: 30px;
+  border-radius: 32px;
+  margin-right: 0.6rem;
+}
+
 .detailHeader {
   margin-bottom: 2rem;
 }

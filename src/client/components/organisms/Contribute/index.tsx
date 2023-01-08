@@ -51,13 +51,11 @@ const createPublicStatusElement = (props: PublicStatusProps) => {
 const createTagElement = (props: TagsProps) => {
   const { tags } = props;
   return (
-    <p className={styles.tags}>
-      <>
-        {tags?.map((tag) => (
-          <Tag tag={tag} key={tag.id} />
-        ))}
-      </>
-    </p>
+    <>
+      {tags?.map((tag) => (
+        <Tag tag={tag} key={tag.id} />
+      ))}
+    </>
   );
 };
 
