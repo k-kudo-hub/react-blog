@@ -47,3 +47,16 @@
     }
   }
 }
+
+.syntaxHighlightContainer {
+  position: relative;
+  .syntaxHighlightFileName {
+    background-color: $dark-gray;
+    color: $white;
+    font-size: $fs-small;
+    padding: 1px 6px;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
