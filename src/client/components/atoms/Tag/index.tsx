@@ -8,11 +8,7 @@ interface TagProps {
 }
 
 const Tag = ({ tag }: { tag: TagProps }) => {
-  return (
-    <div className={styles.tag}>
-      <span># {tag.name}</span>
-    </div>
-  );
+  return <span className={styles.tag}># {tag.name}</span>;
 };
 
 export default Tag;

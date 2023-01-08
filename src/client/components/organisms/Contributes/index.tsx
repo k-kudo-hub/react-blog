@@ -16,11 +16,11 @@ const createPublicStatusElement = (contribute: ContributeType): JSX.Element => {
 
 const createTagsElement = (tags: TagType[]): JSX.Element => {
   return (
-    <>
+    <div className={styles.tags}>
       {tags?.map((tag) => (
         <Tag tag={tag} key={tag.id} />
       ))}
-    </>
+    </div>
   );
 };
 
