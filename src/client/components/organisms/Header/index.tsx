@@ -7,7 +7,12 @@ const header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.hero}>
-        <Image src={IMAGE_PATH.HERO} layout="fill" objectFit="cover" />
+        <Image
+          src={IMAGE_PATH.HERO}
+          layout="fill"
+          objectFit="cover"
+          priority={true}
+        />
         <div className={styles.heroTextContainer}>
           <Link href={"/"}>
             <a className={styles.heroText}>Cut Blog</a>
