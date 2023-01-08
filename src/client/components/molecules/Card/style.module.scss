@@ -1,0 +1,49 @@
+@import '../../../styles/colors';
+@import '../../../styles/font-size';
+
+.card {
+  height: 374px;
+  width: 325px;
+  .cardHeader {
+    height: 174px;
+    position: relative;
+  }
+  .cardBody {
+    background-color: $white;
+    height: 200px;
+    padding: 10px 15px;
+    position: relative;
+    .title {
+      font-size: $fs-x;
+      font-weight: bold;
+      :hover {
+        color: $dark-gray;
+        transition: 0.2s;
+      }
+    }
+  }
+}
+
+.cardBodyHeader {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 15px;
+  min-height: 30px;
+  .lastEditedAt {
+    color: $dark-gray;
+  }
+}
+
+.cardBodyFooter {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 10px;
+  .tags {
+    display: flex;
+    align-items: center;
+    > div {
+      margin: 0 5px 0 0;
+    }
+  }
+}

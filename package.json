@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@prisma/client": "^4.2.1",
+    "@types/react-syntax-highlighter": "^15.5.5",
     "@types/reflect-metadata": "^0.1.0",
     "class-transformer": "^0.5.1",
     "dayjs": "^1.11.5",
@@ -29,7 +30,11 @@
     "prisma": "^4.1.0",
     "react": "18.1.0",
     "react-dom": "18.1.0",
+    "react-markdown": "^8.0.4",
+    "react-syntax-highlighter": "^15.5.0",
+    "recoil": "^0.7.6",
     "reflect-metadata": "^0.1.13",
+    "remark-gfm": "^3.0.1",
     "sass": "^1.54.0"
   },
   "devDependencies": {

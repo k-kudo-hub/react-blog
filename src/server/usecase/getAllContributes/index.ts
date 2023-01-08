@@ -7,6 +7,6 @@ export const getAllContributes = async (): Promise<ContributeEntity[]> => {
   const contributeRepository = new ContributeRepository();
 
   return await tM.execute(async (tx) => {
-    return await contributeRepository.findAll(tx);
+    return await contributeRepository.getAll(tx);
   });
 };

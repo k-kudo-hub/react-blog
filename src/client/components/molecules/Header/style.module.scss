@@ -1,0 +1,32 @@
+@import '../../../styles/colors';
+@import '../../../styles/font-size';
+
+.userInfoContainer {
+  margin-bottom: 1rem;
+  .userInfo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.4rem;
+    .userIcon {
+      width: 30px;
+      height: 30px;
+      border-radius: 32px;
+      margin-right: 0.6rem;
+    }
+  }
+  .publishedAtContainer {
+    color: $dark-gray;
+    >* {
+      margin-right: 0.6rem;
+    }
+  }
+}
+.title {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+.tags {
+  >* {
+    margin-right: 0.6rem;
+  }
+}

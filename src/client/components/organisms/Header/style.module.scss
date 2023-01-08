@@ -1,9 +1,25 @@
+@import '../../../styles/colors';
 @import '../../../styles/length';
+@import '../../../styles/font-size';
 
 .header {
   .hero {
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: $header-height;
+  }
+  .heroTextContainer {
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+    .heroText {
+      color: $red;
+      font-size: $fs-4x;
+      font-weight: bold;
+      font-family: Arial Black, Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+    }
   }
 }
