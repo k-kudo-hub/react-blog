@@ -26,7 +26,7 @@ interface TagsProps {
   tags: TagType[];
 }
 
-const createUserInfoElement = (props: UserInfoProps) => {
+const createUserInfoElement = (props: UserInfoProps): JSX.Element => {
   const { nickName, imageUrl } = props;
   return (
     <>
@@ -38,7 +38,7 @@ const createUserInfoElement = (props: UserInfoProps) => {
   );
 };
 
-const createPublicStatusElement = (props: PublicStatusProps) => {
+const createPublicStatusElement = (props: PublicStatusProps): JSX.Element => {
   const { lastEditedAt, publishedAt } = props;
   return (
     <>
