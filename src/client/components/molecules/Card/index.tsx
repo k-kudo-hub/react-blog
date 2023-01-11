@@ -12,7 +12,7 @@ interface CardProps {
   bottomContent?: JSX.Element;
 }
 
-const Card = (props: CardProps) => {
+const Card = (props: CardProps): JSX.Element => {
   const {
     uniqueKey,
     coverImageUrl,
