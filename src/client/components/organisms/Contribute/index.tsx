@@ -3,7 +3,7 @@ import styles from "./style.module.scss";
 import Image from "next/image";
 import IMAGE_PATH from "src/client/styles/images";
 import MarkdownRenderer from "@components/atoms/MarkdownRenderer";
-import Tag from "@components/atoms/Tag";
+import Tag from "@components/atoms/Tags";
 import { Tag as TagType } from "src/client/models/tag";
 import Header from "@components/molecules/Header";
 

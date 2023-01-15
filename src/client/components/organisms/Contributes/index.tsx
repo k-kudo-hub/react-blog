@@ -1,7 +1,7 @@
 import styles from "./style.module.scss";
-import LastEditedAt from "@components/atoms/LastEditedAt";
-import Draft from "@components/atoms/Draft";
-import Tag from "@components/atoms/Tag";
+import LastEditedAt from "@components/atoms/Texts/LastEditedAt";
+import Draft from "@components/atoms/Texts/Draft";
+import Tag from "@components/atoms/Tags";
 import Card from "@components/molecules/Card";
 import { Tag as TagType } from "../../../models/tag";
 import { Contribute as ContributeType } from "../../../models/contribute";
