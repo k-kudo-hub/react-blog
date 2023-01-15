@@ -5,24 +5,4 @@
   position: fixed;
   right: 1.4rem;
   bottom: 1.4rem;
-  cursor: pointer;
-  .floatButton {
-    align-items: center;
-    background-color: $red;
-    border: 0.2rem solid $white;
-    border-radius: 4rem;
-    display: flex;
-    height: 3rem;
-    justify-content: center;
-    transition: .2s;
-    width: 3rem;
-    &:hover {
-      opacity: 0.5;
-      transition: .4s;
-    }
-    .buttonText {
-      font-size: $fs-2x;
-      color: $white
-    }
-  }
 }

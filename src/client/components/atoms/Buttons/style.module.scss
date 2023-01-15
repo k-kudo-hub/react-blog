@@ -1,0 +1,23 @@
+@import '../../../styles/colors';
+@import '../../../styles/font-size';
+
+.floatButton {
+  cursor: pointer;
+  align-items: center;
+  background-color: $red;
+  border: 0.2rem solid $white;
+  border-radius: 4rem;
+  display: flex;
+  height: 3rem;
+  justify-content: center;
+  transition: .2s;
+  width: 3rem;
+  &:hover {
+    opacity: 0.5;
+    transition: .4s;
+  }
+  .buttonText {
+    font-size: $fs-2x;
+    color: $white
+  }
+}

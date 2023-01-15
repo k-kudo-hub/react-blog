@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import type { NextPage } from "next";
-import Link from "next/link";
 import { useRecoilState } from "recoil";
+import Button from "@components/atoms/Buttons";
 import Contributes from "@components/organisms/Contributes";
 import DoubleLineTemplate from "@components/templates/DoubleLineTemplate";
 import PAGES from "../../../common/constants/pages";
@@ -38,11 +38,7 @@ const Home: NextPage = () => {
     >
       <Contributes contributes={contributes} />
       <div className={styles.floatButtonContainer}>
-        <Link href="/">
-          <div className={styles.floatButton}>
-            <a className={styles.buttonText}>+</a>
-          </div>
-        </Link>
+        <Button text="+" link={PAGES.CONTRIBUTES_NEW.PATH} />
       </div>
     </DoubleLineTemplate>
   );
