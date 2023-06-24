@@ -2,12 +2,12 @@
 @import '../../../styles/length';
 
 .body {
-  min-height: 100vh;
+  height: 100vh;
   background-color: $light-gray;
   .container {
-    min-height: $main-height;
-    padding: 24px;
-    max-width: 80rem;
+    height: $main-height-without-footer;
+    padding: 2rem;
+    max-width: 100%;
     margin: 0 auto;
   }
 }

@@ -25,7 +25,7 @@ export default class TransactionManager {
       });
   }
 
-  private async transaction(callback: (tx: any) => Promise<any>) {
+  private async transaction(callback: (tx: any) => Promise<unknown>) {
     return await this.db.$transaction(async (tx) => {
       return new Promise((resolve) => resolve(callback(tx)));
     });
