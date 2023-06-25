@@ -1,10 +1,17 @@
 type OrderByDesignation = "desc" | "asc";
 
-export interface PrismaQuery {
+export interface PrismaFindManyQuery {
   select?: { [key: string]: any };
-  where?: { [key: string]: string | number } | undefined;
+  include?: { [key: string]: any };
+  where: { [key: string]: string | number | boolean };
   orderBy?:
     | { [key: string]: OrderByDesignation }
     | { [key: string]: OrderByDesignation }[]
     | undefined;
+}
+
+export interface PrismaFindUniqueQuery {
+  select?: { [key: string]: any };
+  include?: { [key: string]: any };
+  where: { [key: string]: string | number | boolean };
 }

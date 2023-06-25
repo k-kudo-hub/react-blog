@@ -1,63 +1,68 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { ContributeFactory } from "@server/domain/factory/contribute";
 import ContributeEntity from "@server/domain/entity/contribute";
-import prisma from "../prisma";
-import { PrismaQuery } from "../prisma/query";
+import { PrismaFindManyQuery, PrismaFindUniqueQuery } from "../prisma/query";
+import RepositoryBase from "../base";
+
+// TODO: ここに置いておくのが適切か検討して必要であれば移す
+const contributeWithInformation = Prisma.validator<Prisma.ContributeArgs>()({
+  include: { details: true, tags: { include: { tag: true } }, user: true },
+});
+type ContributeWithInformation = Prisma.ContributeGetPayload<
+  typeof contributeWithInformation
+>;
 
 abstract class IContributeRepository {
-  abstract getAll: (transaction: PrismaClient) => Promise<ContributeEntity[]>;
+  abstract getAll: () => Promise<ContributeEntity[]>;
   abstract getByIdentityCode: (
-    transaction: PrismaClient,
     identityCode: string
-  ) => Promise<ContributeEntity>;
+  ) => Promise<ContributeEntity | null>;
 }
 
 const contributeFactory = new ContributeFactory();
 
-export default class ContributeRepository extends IContributeRepository {
-  public getAll = async (
-    transaction: PrismaClient | null
-  ): Promise<ContributeEntity[]> => {
-    const db = transaction ? transaction : prisma;
-    const query = this.getBaseQuery();
+export default class ContributeRepository
+  extends RepositoryBase
+  implements IContributeRepository
+{
+  constructor(db?: PrismaClient) {
+    super(db);
+  }
+
+  public getAll = async (): Promise<ContributeEntity[]> => {
+    const query: PrismaFindManyQuery = this.getBaseQuery();
     query.orderBy = [{ lastEditedAt: "desc" }, { id: "desc" }];
 
-    const contributes = await db.contribute.findMany(query);
-    return contributeFactory.reconstructList(contributes);
+    const contributes = await this.db.contribute.findMany(query);
+    return contributeFactory.reconstructList(
+      contributes as ContributeWithInformation[]
+    );
   };
 
   public getByIdentityCode = async (
-    transaction: PrismaClient | null,
     identityCode: string
-  ): Promise<ContributeEntity> => {
-    const db = transaction ? transaction : prisma;
-    const query = this.getBaseQuery();
+  ): Promise<ContributeEntity | null> => {
+    const query: PrismaFindUniqueQuery = this.getBaseQuery();
     query.where = {
       identityCode: identityCode,
     };
-    query.select = {
-      ...query.select,
-      details: {
-        select: {
-          content: true,
-        },
-      },
-    };
 
-    const contribute = await db.contribute.findUnique(query);
-    return contributeFactory.reconstruct(contribute);
+    const contribute = await this.db.contribute.findUnique(query);
+    return contribute
+      ? contributeFactory.reconstruct(contribute as ContributeWithInformation)
+      : null;
   };
 
-  private getBaseQuery = (): PrismaQuery => {
+  // any型にしなければprisma側の型と適合しなかったのでやむなくany
+  private getBaseQuery = () => {
     return {
-      select: {
-        id: true,
-        title: true,
-        userId: true,
-        lastEditedAt: true,
-        publishedAt: true,
-        identityCode: true,
-        status: true,
+      include: {
+        details: {
+          select: {
+            title: true,
+            content: true,
+          },
+        },
         tags: {
           include: { tag: true },
         },
@@ -68,6 +73,7 @@ export default class ContributeRepository extends IContributeRepository {
           },
         },
       },
+      where: {},
     };
   };
 }
