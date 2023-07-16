@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { ContributeDetail, Prisma, PrismaClient } from "@prisma/client";
 import { ContributeFactory } from "@server/domain/factory/contribute";
 import ContributeEntity from "@server/domain/entity/contribute";
 import { PrismaFindManyQuery, PrismaFindUniqueQuery } from "../prisma/query";
@@ -12,11 +12,27 @@ type ContributeWithInformation = Prisma.ContributeGetPayload<
   typeof contributeWithInformation
 >;
 
+export interface CreateContributeParam {
+  userId: number;
+}
+
+export interface UpdateContributeParam {
+  contributeId: number;
+  title: string;
+  content: string;
+}
+
 abstract class IContributeRepository {
   abstract getAll: () => Promise<ContributeEntity[]>;
   abstract getByIdentityCode: (
     identityCode: string
   ) => Promise<ContributeEntity | null>;
+  abstract create: (
+    contribute: CreateContributeParam
+  ) => Promise<ContributeEntity>;
+  abstract updateDetail: (
+    contribute: UpdateContributeParam
+  ) => Promise<ContributeDetail>;
 }
 
 const contributeFactory = new ContributeFactory();
@@ -40,17 +56,47 @@ export default class ContributeRepository
   };
 
   public getByIdentityCode = async (
-    identityCode: string
+    identityCode?: string
   ): Promise<ContributeEntity | null> => {
-    const query: PrismaFindUniqueQuery = this.getBaseQuery();
-    query.where = {
-      identityCode: identityCode,
+    const query: PrismaFindUniqueQuery = {
+      ...this.getBaseQuery(),
+      where: { identityCode },
     };
 
     const contribute = await this.db.contribute.findUnique(query);
     return contribute
       ? contributeFactory.reconstruct(contribute as ContributeWithInformation)
       : null;
+  };
+
+  public create = async (
+    contribute: CreateContributeParam
+  ): Promise<ContributeEntity> => {
+    const createdContributeData = await this.db.contribute.create({
+      data: {
+        userId: contribute.userId,
+        identityCode: contributeFactory.generateIdentityCode(),
+      },
+    });
+    return contributeFactory.reconstruct(
+      createdContributeData as ContributeWithInformation
+    );
+  };
+
+  public updateDetail = async (contribute: UpdateContributeParam) => {
+    const createdContributeData = await this.db.contributeDetail.upsert({
+      where: { contributeId: contribute.contributeId },
+      update: {
+        title: contribute.title,
+        content: contribute.content,
+      },
+      create: {
+        contributeId: contribute.contributeId,
+        title: contribute.title,
+        content: contribute.content,
+      },
+    });
+    return createdContributeData;
   };
 
   // any型にしなければprisma側の型と適合しなかったのでやむなくany

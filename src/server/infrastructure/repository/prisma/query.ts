@@ -13,5 +13,5 @@ export interface PrismaFindManyQuery {
 export interface PrismaFindUniqueQuery {
   select?: { [key: string]: any };
   include?: { [key: string]: any };
-  where: { [key: string]: string | number | boolean };
+  where: { identityCode: string | undefined };
 }

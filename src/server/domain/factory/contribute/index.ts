@@ -6,6 +6,10 @@ import {
 } from "@server/domain/entity/contribute/types";
 import { BaseFactory } from "../base";
 
+const CODE_LENGTH = 20;
+const CHARACTERS =
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
 export class ContributeFactory extends BaseFactory {
   reconstruct(param: ContributeDataType): ContributeEntity {
     const tags =
@@ -29,7 +33,17 @@ export class ContributeFactory extends BaseFactory {
       content,
     });
   }
+
   reconstructList(params: ContributeDataType[]): ContributeEntity[] {
     return params.map((param) => this.reconstruct(param));
+  }
+
+  generateIdentityCode(): string {
+    let identityCode = "";
+    for (let i = 0; i < CODE_LENGTH; i++) {
+      const randomIndex = Math.floor(Math.random() * CHARACTERS.length);
+      identityCode += CHARACTERS.charAt(randomIndex);
+    }
+    return identityCode;
   }
 }
