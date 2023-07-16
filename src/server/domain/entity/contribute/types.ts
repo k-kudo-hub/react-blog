@@ -14,12 +14,13 @@ export interface ContributeType {
 export interface ContributeDataType {
   id: number;
   userId: number;
-  title: string;
-  content: string;
   status: string;
   identityCode: string;
   tags: ContributeTagRelationDataType[];
-  details?: ContributeDetailDataType;
+  details: {
+    title: string;
+    content: string;
+  } | null;
   user: {
     nickName: string;
   };
@@ -39,6 +40,7 @@ export interface ContributeTagRelationDataType {
 export interface ContributeDetailDataType {
   id: number;
   contributeId: number;
+  title: string;
   content: string;
   createdAt: Date;
   updatedAt: Date;

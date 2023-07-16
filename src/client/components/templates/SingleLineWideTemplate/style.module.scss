@@ -1,0 +1,13 @@
+@import '../../../styles/colors';
+@import '../../../styles/length';
+
+.body {
+  height: 100vh;
+  background-color: $light-gray;
+  .container {
+    height: $main-height-without-footer;
+    padding: 2rem;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}

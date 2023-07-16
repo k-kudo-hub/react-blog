@@ -3,7 +3,7 @@ import styles from "./style.module.scss";
 import Image from "next/image";
 import IMAGE_PATH from "src/client/styles/images";
 import MarkdownRenderer from "@components/atoms/MarkdownRenderer";
-import Tag from "@components/atoms/Tag";
+import Tag from "@components/atoms/Tags";
 import { Tag as TagType } from "src/client/models/tag";
 import Header from "@components/molecules/Header";
 
@@ -26,7 +26,7 @@ interface TagsProps {
   tags: TagType[];
 }
 
-const createUserInfoElement = (props: UserInfoProps) => {
+const createUserInfoElement = (props: UserInfoProps): JSX.Element => {
   const { nickName, imageUrl } = props;
   return (
     <>
@@ -38,7 +38,7 @@ const createUserInfoElement = (props: UserInfoProps) => {
   );
 };
 
-const createPublicStatusElement = (props: PublicStatusProps) => {
+const createPublicStatusElement = (props: PublicStatusProps): JSX.Element => {
   const { lastEditedAt, publishedAt } = props;
   return (
     <>
@@ -51,13 +51,11 @@ const createPublicStatusElement = (props: PublicStatusProps) => {
 const createTagElement = (props: TagsProps) => {
   const { tags } = props;
   return (
-    <p className={styles.tags}>
-      <>
-        {tags?.map((tag) => (
-          <Tag tag={tag} key={tag.id} />
-        ))}
-      </>
-    </p>
+    <>
+      {tags?.map((tag) => (
+        <Tag tag={tag} key={tag.id} />
+      ))}
+    </>
   );
 };
 

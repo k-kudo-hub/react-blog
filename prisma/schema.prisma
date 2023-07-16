@@ -26,7 +26,6 @@ model Contribute {
   id  Int @id @default(autoincrement())
   user User @relation(fields: [userId], references: [id])
   userId Int @map("user_id")
-  title String
   tags ContributeTagRelation[]
   details ContributeDetail?
   status String @default("DRAFT")
@@ -42,7 +41,8 @@ model ContributeDetail {
   id Int @id @default(autoincrement())
   contribute Contribute @relation(fields: [contributeId], references: [id])
   contributeId Int @map("contribute_id") @unique
-  content String @db.Text @default("")
+  title String
+  content String @db.Text
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @default(now()) @map("updated_at")
   @@map("contribute_details")

@@ -1,17 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getAllContributes } from "@server/usecase/getAllContributes";
 import {
   HttpMethodHandler,
   ResponseData,
 } from "@server/presentation/middleware/httpMethodHandler";
+import { createContribute } from "@server/usecase/createContribute";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
   const methodHandler = new HttpMethodHandler({
-    get: async () => {
-      return getAllContributes();
+    post: async () => {
+      return createContribute(req.body.contribute);
     },
   });
 

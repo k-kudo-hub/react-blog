@@ -1,7 +1,8 @@
 import Image from "next/image";
-import styles from "./style.module.scss";
-import IMAGE_PATH from "../../../styles/images";
 import Link from "next/link";
+import SITE_INFO from "@constants/siteInfo";
+import IMAGE_PATH from "../../../styles/images";
+import styles from "./style.module.scss";
 
 const header = () => {
   return (
@@ -15,7 +16,7 @@ const header = () => {
         />
         <div className={styles.heroTextContainer}>
           <Link href={"/"}>
-            <a className={styles.heroText}>Cut Blog</a>
+            <a className={styles.heroText}>{SITE_INFO.TITLE}</a>
           </Link>
         </div>
       </div>

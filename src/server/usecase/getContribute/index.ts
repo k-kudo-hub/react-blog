@@ -8,7 +8,6 @@ export const getContribute = async (
   identityCode: string
 ): Promise<ContributeEntity> => {
   const tM = new TransactionManager();
-  const contributeRepository = new ContributeRepository();
 
   if (!identityCode) {
     throw new CustomError({
@@ -19,6 +18,7 @@ export const getContribute = async (
   }
 
   return await tM.execute(async (tx) => {
-    return await contributeRepository.getByIdentityCode(tx, identityCode);
+    const contributeRepository = new ContributeRepository(tx);
+    return await contributeRepository.getByIdentityCode(identityCode);
   });
 };

@@ -12,7 +12,7 @@ interface CardProps {
   bottomContent?: JSX.Element;
 }
 
-const Card = (props: CardProps) => {
+const Card = (props: CardProps): JSX.Element => {
   const {
     uniqueKey,
     coverImageUrl,
@@ -34,7 +34,7 @@ const Card = (props: CardProps) => {
       <div className={styles.cardBody}>
         <div className={styles.cardBodyHeader}>{topContent}</div>
         <p className={styles.title}>
-          <Link href={titleLink}>{titleText}</Link>
+          <Link href={titleLink}>{titleText || "(タイトルなし)"}</Link>
         </p>
         <div className={styles.cardBodyFooter}>
           <div className={styles.tags}>{bottomContent}</div>

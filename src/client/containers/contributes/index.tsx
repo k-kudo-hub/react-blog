@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import type { NextPage } from "next";
 import { useRecoilState } from "recoil";
+import Button from "@components/atoms/Buttons";
 import Contributes from "@components/organisms/Contributes";
 import DoubleLineTemplate from "@components/templates/DoubleLineTemplate";
 import PAGES from "../../../common/constants/pages";
 import contributesState from "../../state/contributes";
 import { Contribute } from "../../models/contribute";
 import { ContributeInterface } from "../../../client/interface/contributes";
+import styles from "./style.module.scss";
 
 const contributeInterface = new ContributeInterface();
 const {
@@ -35,6 +37,9 @@ const Home: NextPage = () => {
       pageDescription={DESCRIPTION}
     >
       <Contributes contributes={contributes} />
+      <div className={styles.floatButtonContainer}>
+        <Button text="+" link={PAGES.CONTRIBUTES_NEW.PATH} />
+      </div>
     </DoubleLineTemplate>
   );
 };
