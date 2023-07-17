@@ -1,6 +1,4 @@
-import ContributeRepository, {
-  CreateContributeParam,
-} from "../../infrastructure/repository/contribute";
+import ContributeRepository from "../../infrastructure/repository/contribute";
 import TransactionManager from "@server/infrastructure/repository/prisma/transaction";
 import ContributeEntity from "@server/domain/entity/contribute";
 import { PrismaClient } from "@prisma/client";

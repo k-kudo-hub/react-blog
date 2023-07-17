@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import CustomError from "@server/domain/entity/error";
 import { StatusCodes, Codes } from "@constants/http";
+import InternalServerError from "@server/domain/entity/error/InternalServerError";
 
 interface InputMethods {
   get?: () => Promise<any>;
@@ -42,7 +43,7 @@ export class HttpMethodHandler {
       } else if (req.method === "DELETE" && !!this.delete) {
         response.data = await this.delete();
       } else {
-        throw new CustomError({
+        throw new InternalServerError({
           statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
           message: "指定されたリクエストは無効です。",
           code: Codes.INTERNAL_SERVER_ERROR,

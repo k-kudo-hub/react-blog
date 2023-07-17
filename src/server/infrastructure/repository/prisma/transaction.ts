@@ -1,7 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 import prisma from ".";
-import CustomError from "@server/domain/entity/error";
-import { StatusCodes } from "@constants/http";
 
 export default class TransactionManager {
   db: PrismaClient;
@@ -11,18 +9,9 @@ export default class TransactionManager {
   }
 
   async execute(callback: (tx: any) => Promise<any>): Promise<any> {
-    return await this.transaction(callback)
-      .catch(async (e) => {
-        console.error(e);
-        throw new CustomError({
-          statusCode: e.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
-          code: e.code || StatusCodes.INTERNAL_SERVER_ERROR,
-          message: e.message || "DB処理でエラーが発生しました。",
-        });
-      })
-      .finally(async () => {
-        await this.db.$disconnect();
-      });
+    return this.transaction(callback).finally(async () => {
+      await this.db.$disconnect();
+    });
   }
 
   private async transaction(callback: (tx: any) => Promise<unknown>) {
