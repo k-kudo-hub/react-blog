@@ -1,0 +1,37 @@
+name: Document
+description: Ideas for new Documents or modifications to existing Documents
+title: "[Document]: "
+assignees:
+  - octocat
+body:
+  - type: input
+    id: function_name
+    attributes:
+      label: ドキュメント名
+      description: ドキュメントの名前を入力します
+      placeholder: ex. README
+    validations:
+      required: true
+  - type: textarea
+    id: why_do_it
+    attributes:
+      label: なぜやるのか?
+      description: このドキュメントを作成する目的を記載します。
+      placeholder: ex. オーナー以外でも開発できるようにするため
+    validations:
+      required: false
+  - type: textarea
+    id: how_to_do_it
+    attributes:
+      label: どうやってやるのか?
+      description: このドキュメントを作成する手段を記載します。
+      placeholder: READMEに開発環境構築の手順を記載する。
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 優先順位
+      multiple: false
+      options:
+        - 低
+        - 中
+        - 高
