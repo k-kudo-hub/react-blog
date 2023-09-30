@@ -13,6 +13,7 @@ const header = () => {
           layout="fill"
           objectFit="cover"
           priority={true}
+          alt="ヘッダー画像"
         />
         <div className={styles.heroTextContainer}>
           <Link href={"/"}>

@@ -14,6 +14,7 @@ const LastEditedAt = ({
           objectFit="cover"
           height={12}
           width={12}
+          alt="最終編集"
         />
       </div>
       <span>{lastEditedAt}</span>
