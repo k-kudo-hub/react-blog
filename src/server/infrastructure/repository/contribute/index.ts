@@ -5,9 +5,10 @@ import { PrismaFindManyQuery, PrismaFindUniqueQuery } from "../prisma/query";
 import RepositoryBase from "../base";
 
 // TODO: ここに置いておくのが適切か検討して必要であれば移す
-const contributeWithInformation = Prisma.validator<Prisma.ContributeArgs>()({
-  include: { details: true, tags: { include: { tag: true } }, user: true },
-});
+const contributeWithInformation =
+  Prisma.validator<Prisma.ContributeDefaultArgs>()({
+    include: { details: true, tags: { include: { tag: true } }, user: true },
+  });
 type ContributeWithInformation = Prisma.ContributeGetPayload<
   typeof contributeWithInformation
 >;
@@ -25,13 +26,13 @@ export interface UpdateContributeParam {
 abstract class IContributeRepository {
   abstract getAll: () => Promise<ContributeEntity[]>;
   abstract getByIdentityCode: (
-    identityCode: string
+    identityCode: string,
   ) => Promise<ContributeEntity | null>;
   abstract create: (
-    contribute: CreateContributeParam
+    contribute: CreateContributeParam,
   ) => Promise<ContributeEntity>;
   abstract updateDetail: (
-    contribute: UpdateContributeParam
+    contribute: UpdateContributeParam,
   ) => Promise<ContributeDetail>;
 }
 
@@ -51,17 +52,21 @@ export default class ContributeRepository
 
     const contributes = await this.db.contribute.findMany(query);
     return contributeFactory.reconstructList(
-      contributes as ContributeWithInformation[]
+      contributes as ContributeWithInformation[],
     );
   };
 
   public getByIdentityCode = async (
-    identityCode?: string
+    identityCode: string,
   ): Promise<ContributeEntity | null> => {
     const query: PrismaFindUniqueQuery = {
       ...this.getBaseQuery(),
       where: { identityCode },
     };
+
+    if (!identityCode) {
+      return null;
+    }
 
     const contribute = await this.db.contribute.findUnique(query);
     return contribute
@@ -70,7 +75,7 @@ export default class ContributeRepository
   };
 
   public create = async (
-    contribute: CreateContributeParam
+    contribute: CreateContributeParam,
   ): Promise<ContributeEntity> => {
     const createdContributeData = await this.db.contribute.create({
       data: {
@@ -79,7 +84,7 @@ export default class ContributeRepository
       },
     });
     return contributeFactory.reconstruct(
-      createdContributeData as ContributeWithInformation
+      createdContributeData as ContributeWithInformation,
     );
   };
 
