@@ -16,7 +16,7 @@ const header = () => {
         />
         <div className={styles.heroTextContainer}>
           <Link href={"/"}>
-            <a className={styles.heroText}>{SITE_INFO.TITLE}</a>
+            <p className={styles.heroText}>{SITE_INFO.TITLE}</p>
           </Link>
         </div>
       </div>

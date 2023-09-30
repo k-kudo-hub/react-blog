@@ -10,11 +10,11 @@ const Button = (props: ButtonProps) => {
   const { text, link } = props;
 
   return (
-    <Link href={link}>
-      <div className={styles.floatButton}>
-        <a className={styles.buttonText}>{text}</a>
-      </div>
-    </Link>
+    <div className={styles.floatButton}>
+      <Link href={link} className={styles.buttonText}>
+        {text}
+      </Link>
+    </div>
   );
 };
 
