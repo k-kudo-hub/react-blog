@@ -4,6 +4,7 @@ import MarkdownRenderer from "@components/atoms/MarkdownRenderer";
 import { useEffect, useState } from "react";
 import PAGES from "@constants/pages";
 import { ContributeInterface } from "src/client/interface/contributes";
+import useExclusiveControl from "src/client/hooks/useExclusiveControl";
 
 // ここに置くべきではなさそう
 const AUTO_SAVE_INTERVAL = 10000; // 自動保存の間隔 (単位:ms)
@@ -11,11 +12,12 @@ const AUTO_SAVE_INTERVAL = 10000; // 自動保存の間隔 (単位:ms)
 const contributeInterface = new ContributeInterface();
 
 const CreateContribute = () => {
+  const exclude = useExclusiveControl();
   const [identityCode, setIdentityCode] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [saveTimer, setSaveTimer] = useState<NodeJS.Timeout | undefined>(
-    undefined
+    undefined,
   );
 
   useEffect(() => {
@@ -24,13 +26,15 @@ const CreateContribute = () => {
   }, [identityCode, title, content]);
 
   const saveContribute = async () => {
-    const contribute = await contributeInterface.createContribute({
-      userId: 1,
-      title,
-      content,
-      identityCode,
-    });
-    setIdentityCode(contribute?.identityCode);
+    exclude(async () => {
+      const contribute = await contributeInterface.createContribute({
+        userId: 1, // TODO: 適切なユーザー管理機能を実装する
+        title,
+        content,
+        identityCode,
+      });
+      setIdentityCode(contribute?.identityCode);
+    }, 500);
   };
 
   return (
