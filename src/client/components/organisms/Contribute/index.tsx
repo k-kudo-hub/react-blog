@@ -31,7 +31,12 @@ const createUserInfoElement = (props: UserInfoProps): JSX.Element => {
   return (
     <>
       <div className={styles.userIcon}>
-        <Image src={imageUrl || IMAGE_PATH.FIRE_ICON} width={30} height={30} />
+        <Image
+          src={imageUrl || IMAGE_PATH.FIRE_ICON}
+          width={30}
+          height={30}
+          alt="ユーザーアイコン"
+        />
       </div>
       <span>@{nickName}</span>
     </>
@@ -50,13 +55,7 @@ const createPublicStatusElement = (props: PublicStatusProps): JSX.Element => {
 
 const createTagElement = (props: TagsProps) => {
   const { tags } = props;
-  return (
-    <>
-      {tags?.map((tag) => (
-        <Tag tag={tag} key={tag.id} />
-      ))}
-    </>
-  );
+  return <>{tags?.map((tag) => <Tag tag={tag} key={tag.id} />)}</>;
 };
 
 const ContributeContent = (props: ContributeContentProps) => {
