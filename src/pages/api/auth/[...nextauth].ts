@@ -15,13 +15,18 @@ const authOptions = {
   session: {
     /**
      * strategyについて、本来はdatabaseを使用したかったが、
-     * middlewareが使用できなくなる問題に直面したためjwtを使用する。
+     * middlewareが使用できなくなる問題が発生したためjwtを使用する。
      * https://github.com/nextauthjs/next-auth/issues/5170#issuecomment-1228008390
      */
     strategy: "jwt" as SessionStrategy,
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   adapter: PrismaAdapter(prisma),
+  theme: {
+    brandColor: "#b30000",
+    colorScheme: "auto" as const,
+    logo: "	http://localhost:3000/fire.png",
+  },
 };
 
 export default NextAuth(authOptions);
