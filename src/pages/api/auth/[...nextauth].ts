@@ -1,11 +1,11 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
-import NextAuth from "next-auth";
+import NextAuth, { SessionStrategy } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 
 const prisma = new PrismaClient();
 
-export default NextAuth({
+const authOptions = {
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID || "",
@@ -13,8 +13,15 @@ export default NextAuth({
     }),
   ],
   session: {
-    strategy: "database",
+    /**
+     * strategyについて、本来はdatabaseを使用したかったが、
+     * middlewareが使用できなくなる問題に直面したためjwtを使用する。
+     * https://github.com/nextauthjs/next-auth/issues/5170#issuecomment-1228008390
+     */
+    strategy: "jwt" as SessionStrategy,
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   adapter: PrismaAdapter(prisma),
-});
+};
+
+export default NextAuth(authOptions);
