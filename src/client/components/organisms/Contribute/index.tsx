@@ -8,7 +8,7 @@ import { Tag as TagType } from "src/client/models/tag";
 import Header from "@components/molecules/Header";
 
 interface UserInfoProps {
-  nickName: string;
+  name: string;
   imageUrl: string;
   identityCode: string;
 }
@@ -27,7 +27,7 @@ interface TagsProps {
 }
 
 const createUserInfoElement = (props: UserInfoProps): JSX.Element => {
-  const { nickName, imageUrl } = props;
+  const { name, imageUrl } = props;
   return (
     <>
       <div className={styles.userIcon}>
@@ -38,7 +38,7 @@ const createUserInfoElement = (props: UserInfoProps): JSX.Element => {
           alt="ユーザーアイコン"
         />
       </div>
-      <span>@{nickName}</span>
+      <span>@{name}</span>
     </>
   );
 };
@@ -65,7 +65,7 @@ const ContributeContent = (props: ContributeContentProps) => {
       <section className={styles.detailHeader}>
         <Header
           userInfoElement={createUserInfoElement({
-            nickName: contribute?.user.nickName,
+            name: contribute?.user.name,
             identityCode: contribute?.identityCode,
             imageUrl: "",
           })}

@@ -3,12 +3,13 @@ import { Expose, Type } from "class-transformer";
 import BaseEntity from "../base";
 import TagEntity from "../tag";
 import UserEntity from "../user";
+import { Contribute } from "@prisma/client";
 
-export default class ContributeEntity extends BaseEntity {
+export default class ContributeEntity extends BaseEntity implements Contribute {
   @Expose()
-  id: number | null;
+  id: number;
   @Expose()
-  userId: number;
+  userId: string;
   @Expose()
   title: string;
   @Expose()
@@ -21,6 +22,10 @@ export default class ContributeEntity extends BaseEntity {
   publishedAt: Date | null;
   @Expose()
   lastEditedAt: Date | null;
+  @Expose()
+  createdAt: Date;
+  @Expose()
+  updatedAt: Date;
   @Expose()
   @Type(() => TagEntity)
   tags: TagEntity[];

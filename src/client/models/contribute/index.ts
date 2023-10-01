@@ -5,7 +5,7 @@ export type ContributeStatus = "PUBLISHED" | "DRAFT";
 
 export interface Contribute {
   id: number;
-  userId: number;
+  userId: string;
   status: ContributeStatus;
   title: string;
   content: string;

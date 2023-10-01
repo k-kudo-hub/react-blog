@@ -9,18 +9,18 @@ export interface ContributeParam {
   identityCode: string;
   title: string;
   content: string;
-  userId: number;
+  userId: string;
 }
 
 export const createContribute = async (
-  contribute: ContributeParam
+  contribute: ContributeParam,
 ): Promise<ContributeEntity[]> => {
   const tM = new TransactionManager();
 
   return await tM.execute(async (tx: PrismaClient) => {
     const contributeRepository = new ContributeRepository(tx);
     const existContribute = await contributeRepository.getByIdentityCode(
-      contribute.identityCode
+      contribute.identityCode,
     );
 
     if (existContribute?.id) {
@@ -30,7 +30,7 @@ export const createContribute = async (
         content: contribute.content,
       });
       return contributeRepository.getByIdentityCode(
-        existContribute.identityCode
+        existContribute.identityCode,
       );
     } else {
       return contributeRepository.create(contribute);

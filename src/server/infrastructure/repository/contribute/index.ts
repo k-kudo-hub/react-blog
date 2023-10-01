@@ -14,7 +14,7 @@ type ContributeWithInformation = Prisma.ContributeGetPayload<
 >;
 
 export interface CreateContributeParam {
-  userId: number;
+  userId: string;
 }
 
 export interface UpdateContributeParam {
@@ -120,7 +120,7 @@ export default class ContributeRepository
         user: {
           select: {
             id: true,
-            nickName: true,
+            name: true,
           },
         },
       },
