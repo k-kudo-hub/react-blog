@@ -1,11 +1,16 @@
-import { Expose, Type } from "class-transformer";
+import { Expose } from "class-transformer";
 import BaseEntity from "../base";
+import { Tag } from "@prisma/client";
 
-export default class TagEntity extends BaseEntity {
+export default class TagEntity extends BaseEntity implements Tag {
   @Expose()
-  id: number | null;
+  readonly id: number;
   @Expose()
-  name: string;
+  readonly name: string;
   @Expose()
-  description: string;
+  readonly description: string | null;
+  @Expose()
+  readonly createdAt: Date;
+  @Expose()
+  readonly updatedAt: Date;
 }

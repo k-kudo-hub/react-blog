@@ -6,9 +6,9 @@ import UserEntity from "../user";
 
 export default class ContributeEntity extends BaseEntity {
   @Expose()
-  id: number | null;
+  id: number;
   @Expose()
-  userId: number;
+  userId: string;
   @Expose()
   title: string;
   @Expose()

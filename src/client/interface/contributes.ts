@@ -3,7 +3,6 @@ import { Contribute as ContributeType } from "../models/contribute";
 
 interface CreateContributeParam {
   identityCode: string;
-  userId: number;
   title: string;
   content: string;
 }
@@ -20,7 +19,7 @@ export class ContributeInterface {
   }
 
   async createContribute(
-    contribute: CreateContributeParam
+    contribute: CreateContributeParam,
   ): Promise<ContributeType> {
     const response = await post(`/contribute`, { contribute });
     return response?.data;

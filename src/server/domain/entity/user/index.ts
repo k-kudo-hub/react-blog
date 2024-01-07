@@ -3,7 +3,9 @@ import BaseEntity from "../base";
 
 export default class UserEntity extends BaseEntity {
   @Expose()
-  id: number | null;
+  readonly id: string;
   @Expose()
-  nickName: string;
+  readonly name: string;
+  @Expose()
+  readonly image: string | null;
 }

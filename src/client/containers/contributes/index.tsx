@@ -1,14 +1,12 @@
 import { useEffect } from "react";
 import type { NextPage } from "next";
-import { useRecoilState } from "recoil";
 import Button from "@components/atoms/Buttons";
 import Contributes from "@components/organisms/Contributes";
 import DoubleLineTemplate from "@components/templates/DoubleLineTemplate";
 import PAGES from "../../../common/constants/pages";
-import contributesState from "../../state/contributes";
-import { Contribute } from "../../models/contribute";
 import { ContributeInterface } from "../../../client/interface/contributes";
 import styles from "./style.module.scss";
+import useContributeState from "../../state/contributes";
 
 const contributeInterface = new ContributeInterface();
 const {
@@ -16,8 +14,7 @@ const {
 } = PAGES;
 
 const Home: NextPage = () => {
-  const [contributes, setContributes] =
-    useRecoilState<Contribute[]>(contributesState);
+  const { contributes, setContributes } = useContributeState();
 
   useEffect(() => {
     fetchContributes();

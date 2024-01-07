@@ -1,6 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import CustomError from "@server/domain/entity/error";
 import { StatusCodes, Codes } from "@constants/http";
+import { getToken } from "next-auth/jwt";
+import UserRepository from "@server/infrastructure/repository/user";
+import TransactionManager from "@server/infrastructure/repository/prisma/transaction";
+import UserEntity from "@server/domain/entity/user";
+
+export interface INextRequestWithUser extends NextApiRequest {
+  user?: UserEntity;
+}
 
 interface InputMethods {
   get?: () => Promise<any>;
@@ -33,6 +41,7 @@ export class HttpMethodHandler {
       error: undefined,
     };
     try {
+      await this.injectUserToRequest(req);
       if (req.method === "GET" && !!this.get) {
         response.data = await this.get();
       } else if (req.method === "POST" && !!this.post) {
@@ -68,9 +77,25 @@ export class HttpMethodHandler {
         .status(
           response.error
             ? response.error.statusCode
-            : StatusCodes.INTERNAL_SERVER_ERROR
+            : StatusCodes.INTERNAL_SERVER_ERROR,
         )
         .json(response);
     }
+  }
+
+  private async injectUserToRequest(req: INextRequestWithUser) {
+    const userToken = await getToken({ req });
+
+    if (!userToken?.sub) {
+      return (req.user = undefined);
+    }
+
+    const tM = new TransactionManager();
+    const user = await tM.execute(async (tx) => {
+      const userRepository = new UserRepository(tx);
+      return userRepository.getById(userToken.sub as string);
+    });
+
+    return (req.user = user);
   }
 }

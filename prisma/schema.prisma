@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["interactiveTransactions"]
 }
 
@@ -12,60 +12,92 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  nickName String @map("nick_name")
-  email String @unique
-  password String
-  contributes Contribute[]
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @default(now()) @map("updated_at")
-  @@map("users")
+  id            String       @id @default(cuid())
+  name          String?
+  email         String?      @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  Contribute    Contribute[]
 }
 
 model Contribute {
-  id  Int @id @default(autoincrement())
-  user User @relation(fields: [userId], references: [id])
-  userId Int @map("user_id")
-  tags ContributeTagRelation[]
-  details ContributeDetail?
-  status String @default("DRAFT")
-  identityCode String @map("identity_code") @unique
-  publishedAt DateTime? @map("published_at")
-  lastEditedAt DateTime? @map("last_edited_at")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @default(now()) @map("updated_at")
-  @@map("contributes")
+  id           Int                     @id @default(autoincrement())
+  user         User                    @relation(fields: [userId], references: [id])
+  userId       String
+  tags         ContributeTagRelation[]
+  details      ContributeDetail?
+  status       String                  @default("DRAFT")
+  identityCode String                  @unique
+  publishedAt  DateTime?
+  lastEditedAt DateTime?
+  createdAt    DateTime                @default(now())
+  updatedAt    DateTime                @default(now())
 }
 
 model ContributeDetail {
-  id Int @id @default(autoincrement())
-  contribute Contribute @relation(fields: [contributeId], references: [id])
-  contributeId Int @map("contribute_id") @unique
-  title String
-  content String @db.Text
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @default(now()) @map("updated_at")
-  @@map("contribute_details")
+  id           Int        @id @default(autoincrement())
+  contribute   Contribute @relation(fields: [contributeId], references: [id])
+  contributeId Int        @unique
+  title        String
+  content      String     @db.Text
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @default(now())
 }
 
 model ContributeTagRelation {
-  id Int @id @default(autoincrement())
-  contribute Contribute @relation(fields: [contributeId], references: [id])
-  contributeId Int @map("contribute_id")
-  tag Tag @relation(fields: [tagId], references: [id])
-  tagId Int @map("tag_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @default(now()) @map("updated_at")
+  id           Int        @id @default(autoincrement())
+  contribute   Contribute @relation(fields: [contributeId], references: [id])
+  contributeId Int
+  tag          Tag        @relation(fields: [tagId], references: [id])
+  tagId        Int
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @default(now())
+
   @@unique([contributeId, tagId])
-  @@map("contribute_tag_relations")
 }
 
 model Tag {
-  id Int @id @default(autoincrement())
-  name String
-  description String? @default("")
+  id          Int                     @id @default(autoincrement())
+  name        String
+  description String?                 @default("")
   contributes ContributeTagRelation[]
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @default(now()) @map("updated_at")
-  @@map("tags")
+  createdAt   DateTime                @default(now())
+  updatedAt   DateTime                @default(now())
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }

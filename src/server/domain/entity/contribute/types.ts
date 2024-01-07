@@ -2,7 +2,7 @@ import { Tag } from "@prisma/client";
 
 export interface ContributeType {
   id: number;
-  userId: number;
+  userId: string;
   title: string;
   tags: Tag[];
   content: string;
@@ -13,7 +13,7 @@ export interface ContributeType {
 
 export interface ContributeDataType {
   id: number;
-  userId: number;
+  userId: string;
   status: string;
   identityCode: string;
   tags: ContributeTagRelationDataType[];
@@ -22,7 +22,7 @@ export interface ContributeDataType {
     content: string;
   } | null;
   user: {
-    nickName: string;
+    name: string | null;
   };
   publishedAt: Date | null;
   lastEditedAt: Date | null;

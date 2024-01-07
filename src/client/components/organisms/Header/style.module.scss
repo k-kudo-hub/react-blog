@@ -22,4 +22,23 @@
       font-family: Arial Black, Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
     }
   }
+  .loginButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1rem 1rem 0 0;
+    color: $red;
+    font-size: $fs-2x;
+    font-weight: bold;
+  }
+  .iconButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1rem 1rem 0 0;
+    color: $red;
+    font-size: $fs-2x;
+    font-weight: bold;
+    border-radius: 50%;
+  }
 }
