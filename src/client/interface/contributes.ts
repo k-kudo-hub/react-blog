@@ -3,7 +3,6 @@ import { Contribute as ContributeType } from "../models/contribute";
 
 interface CreateContributeParam {
   identityCode: string;
-  email: string;
   title: string;
   content: string;
 }

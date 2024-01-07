@@ -28,7 +28,6 @@ const CreateContribute = () => {
   const saveContribute = async () => {
     exclude(async () => {
       const contribute = await contributeInterface.createContribute({
-        userId: 1, // TODO: 適切なユーザー管理機能を実装する
         title,
         content,
         identityCode,

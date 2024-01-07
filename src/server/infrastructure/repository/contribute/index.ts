@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { ContributeDetail, Prisma, PrismaClient } from "@prisma/client";
 import { ContributeFactory } from "@server/domain/factory/contribute";
 import ContributeEntity from "@server/domain/entity/contribute";
@@ -32,7 +33,7 @@ abstract class IContributeRepository {
     contribute: CreateContributeParam,
   ) => Promise<ContributeEntity>;
   abstract updateDetail: (
-    contribute: UpdateContributeParam,
+    contribute: ContributeEntity,
   ) => Promise<ContributeDetail>;
 }
 
@@ -47,8 +48,10 @@ export default class ContributeRepository
   }
 
   public getAll = async (): Promise<ContributeEntity[]> => {
-    const query: PrismaFindManyQuery = this.getBaseQuery();
-    query.orderBy = [{ lastEditedAt: "desc" }, { id: "desc" }];
+    const query: PrismaFindManyQuery = {
+      ...this.getBaseQuery(),
+      orderBy: [{ lastEditedAt: "desc" }, { id: "desc" }],
+    };
 
     const contributes = await this.db.contribute.findMany(query);
     return contributeFactory.reconstructList(
@@ -88,17 +91,25 @@ export default class ContributeRepository
     );
   };
 
-  public updateDetail = async (contribute: UpdateContributeParam) => {
+  public updateDetail = async (contribute: ContributeEntity) => {
+    // コンテンツの更新
     const createdContributeData = await this.db.contributeDetail.upsert({
-      where: { contributeId: contribute.contributeId },
+      where: { contributeId: contribute.id },
       update: {
         title: contribute.title,
         content: contribute.content,
       },
       create: {
-        contributeId: contribute.contributeId,
+        contributeId: contribute.id,
         title: contribute.title,
         content: contribute.content,
+      },
+    });
+    // 最終更新日の更新
+    await this.db.contribute.update({
+      where: { id: contribute.id },
+      data: {
+        lastEditedAt: dayjs().format(),
       },
     });
     return createdContributeData;
