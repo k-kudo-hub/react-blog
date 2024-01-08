@@ -1,5 +1,5 @@
 import { get, post } from "@utils/server";
-import { Contribute as ContributeType } from "../models/contribute";
+import { Contribute } from "../models/contribute";
 
 interface CreateContributeParam {
   identityCode: string;
@@ -8,19 +8,19 @@ interface CreateContributeParam {
 }
 
 export class ContributeInterface {
-  async getAllContributes(): Promise<ContributeType[]> {
+  async getAllContributes(): Promise<Contribute[]> {
     const response = await get("/contributes");
     return response?.data || [];
   }
 
-  async getContribute(identityCode: string): Promise<ContributeType> {
+  async getContribute(identityCode: string): Promise<Contribute> {
     const response = await get(`/contribute/${identityCode}`);
     return response?.data;
   }
 
   async createContribute(
     contribute: CreateContributeParam,
-  ): Promise<ContributeType> {
+  ): Promise<Contribute> {
     const response = await post(`/contribute`, { contribute });
     return response?.data;
   }
