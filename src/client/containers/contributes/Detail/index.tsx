@@ -8,7 +8,7 @@ import styles from "./style.module.scss";
 import SingleLineTemplate from "@components/templates/SingleLineTemplate";
 import ContributeContent from "@components/organisms/Contribute";
 import Button from "@components/atoms/Buttons";
-import useUserState from "src/client/state/ussr";
+import useMeState from "src/client/state/me";
 
 const contributeInterface = new ContributeInterface();
 
@@ -17,8 +17,8 @@ const ContributeDetail: NextPage = () => {
   const isEditableContribute = useRef<boolean>(false);
   const [contribute, setContribute] = useState<Contribute>();
   const {
-    user: { id: userId },
-  } = useUserState();
+    me: { id: meId },
+  } = useMeState();
 
   useEffect(() => {
     if (router.query.identityCode) {
@@ -27,7 +27,7 @@ const ContributeDetail: NextPage = () => {
   }, [router.query]);
 
   useEffect(() => {
-    if (contribute?.userId === userId) {
+    if (contribute?.userId === meId) {
       isEditableContribute.current = true;
     }
   });

@@ -1,14 +1,14 @@
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
-import { User } from "src/client/models/user";
-import useUserState from "src/client/state/ussr";
+import Me from "src/client/models/me";
+import useMeState from "src/client/state/me";
 
 /**
  * ユーザー情報を取得してstateに保存するためのコンポーネント
- * 基本的にここ以外ではsetUserを使わないことにしたい
+ * 基本的にここ以外ではsetMeを使わないことにしたい
  */
 const Auth = () => {
-  const { setUser } = useUserState();
+  const { setMe } = useMeState();
   const { status, data } = useSession();
 
   useEffect(() => {
@@ -16,8 +16,8 @@ const Auth = () => {
       const user = {
         ...data.user,
         isLoggedIn: true,
-      } as User;
-      setUser(user);
+      } as Me;
+      setMe(user);
     } else {
       const user = {
         id: "",
@@ -26,7 +26,7 @@ const Auth = () => {
         image: "",
         isLoggedIn: false,
       };
-      setUser(user);
+      setMe(user);
     }
   }, [status, data]);
 
