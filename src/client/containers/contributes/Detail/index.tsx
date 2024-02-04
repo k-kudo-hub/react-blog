@@ -45,7 +45,7 @@ const ContributeDetail: NextPage = () => {
         {isEditableContribute.current ? (
           <div className={styles.floatButtonContainer}>
             <Button
-              text="*"
+              text="#"
               link={`/contributes/${contribute?.identityCode}/edit`}
             />
           </div>
