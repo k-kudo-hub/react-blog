@@ -5,6 +5,7 @@ import { RECOIL_KEYS } from "..";
 const userState = atom({
   key: RECOIL_KEYS.USER,
   default: {
+    id: "",
     name: "",
     email: "",
     image: "",

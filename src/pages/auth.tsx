@@ -20,6 +20,7 @@ const Auth = () => {
       setUser(user);
     } else {
       const user = {
+        id: "",
         email: "",
         name: "",
         image: "",
