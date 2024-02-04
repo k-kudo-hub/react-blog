@@ -9,13 +9,14 @@ import SingleLineTemplate from "@components/templates/SingleLineTemplate";
 import ContributeContent from "@components/organisms/Contribute";
 import Button from "@components/atoms/Buttons";
 import useMeState from "src/client/state/me";
+import useContributeState from "src/client/state/contributes/contribute";
 
 const contributeInterface = new ContributeInterface();
 
 const ContributeDetail: NextPage = () => {
   const router = useRouter();
   const isEditableContribute = useRef<boolean>(false);
-  const [contribute, setContribute] = useState<Contribute>();
+  const { contribute, setContribute } = useContributeState();
   const {
     me: { id: meId },
   } = useMeState();
