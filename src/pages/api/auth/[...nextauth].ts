@@ -2,10 +2,11 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import NextAuth, { SessionStrategy } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
+import { IAuthOptions } from "./type";
 
 const prisma = new PrismaClient();
 
-const authOptions = {
+const authOptions: IAuthOptions = {
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID || "",
@@ -26,6 +27,14 @@ const authOptions = {
     brandColor: "#b30000",
     colorScheme: "auto" as const,
     logo: "	http://localhost:3000/fire.png",
+  },
+  callbacks: {
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.sub;
+      }
+      return session;
+    },
   },
 };
 

@@ -6,7 +6,7 @@ import DoubleLineTemplate from "@components/templates/DoubleLineTemplate";
 import PAGES from "../../../common/constants/pages";
 import { ContributeInterface } from "../../../client/interface/contributes";
 import styles from "./style.module.scss";
-import useContributeState from "../../state/contributes";
+import useContributesState from "../../state/contributes";
 
 const contributeInterface = new ContributeInterface();
 const {
@@ -14,7 +14,7 @@ const {
 } = PAGES;
 
 const Home: NextPage = () => {
-  const { contributes, setContributes } = useContributeState();
+  const { contributes, setContributes } = useContributesState();
 
   useEffect(() => {
     fetchContributes();

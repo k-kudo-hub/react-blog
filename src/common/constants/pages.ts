@@ -9,6 +9,6 @@ const PAGES = {
     TITLE: "新規投稿",
     DESCRIPTION: "投稿を作成してみましょう",
   },
-};
+} as const;
 
 export default PAGES;

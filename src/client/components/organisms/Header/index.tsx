@@ -3,13 +3,13 @@ import Link from "next/link";
 import SITE_INFO from "@constants/siteInfo";
 import IMAGE_PATH from "../../../styles/images";
 import styles from "./style.module.scss";
-import useUserState from "src/client/state/ussr";
+import useMeState from "src/client/state/me";
 import { signIn } from "next-auth/react";
 
 const Header = () => {
   const {
-    user: { isLoggedIn, image: userImage },
-  } = useUserState();
+    me: { isLoggedIn, image: userImage },
+  } = useMeState();
 
   return (
     <header className={styles.header}>
