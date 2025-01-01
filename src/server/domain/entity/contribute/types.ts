@@ -1,16 +1,5 @@
 import { Tag } from "@prisma/client";
 
-export interface ContributeType {
-  id: number;
-  userId: string;
-  title: string;
-  tags: Tag[];
-  content: string;
-  status: string;
-  publishedAt: Date | null;
-  lastEditedAt: Date | null;
-}
-
 export interface ContributeDataType {
   id: number;
   userId: string;

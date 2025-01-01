@@ -1,10 +1,12 @@
-import SingleLineWideTemplate from "@components/templates/SingleLineWideTemplate";
-import styles from "./styles.module.scss";
-import MarkdownRenderer from "@components/atoms/MarkdownRenderer";
 import { useEffect, useState } from "react";
 import PAGES from "@constants/pages";
+import SingleLineWideTemplate from "@components/templates/SingleLineWideTemplate";
+import MarkdownRenderer from "@components/atoms/MarkdownRenderer";
 import { ContributeInterface } from "src/client/interface/contributes";
 import useExclusiveControl from "src/client/hooks/useExclusiveControl";
+import { useRouter } from "next/router";
+import styles from "./styles.module.scss";
+import { useUpdateEffect } from "src/client/hooks/useUpdateEffect";
 
 // ここに置くべきではなさそう
 const AUTO_SAVE_INTERVAL = 10000; // 自動保存の間隔 (単位:ms)
@@ -12,31 +14,49 @@ const AUTO_SAVE_INTERVAL = 10000; // 自動保存の間隔 (単位:ms)
 const contributeInterface = new ContributeInterface();
 
 const CreateContribute = () => {
+  const router = useRouter();
   const exclude = useExclusiveControl();
-  const [identityCode, setIdentityCode] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
+  const [identityCode, setIdentityCode] = useState<string>("");
   const [saveTimer, setSaveTimer] = useState<NodeJS.Timeout | undefined>(
     undefined,
   );
 
   useEffect(() => {
-    clearTimeout(saveTimer);
-    setSaveTimer(setTimeout(createContribute, AUTO_SAVE_INTERVAL));
-  }, [identityCode, title, content]);
+    if (router.query.identityCode) {
+      fetchContribute(router.query.identityCode as string);
+    }
+  }, [router.query.identityCode]);
 
-  const createContribute = async () => {
-    if (!title || !content) {
+  useUpdateEffect(() => {
+    clearTimeout(saveTimer);
+    setSaveTimer(setTimeout(updateContribute, AUTO_SAVE_INTERVAL));
+  }, [title, content]);
+
+  const fetchContribute = async (identityCode: string) => {
+    try {
+      const existContribute =
+        await contributeInterface.getContribute(identityCode);
+      setTitle(existContribute?.title || "");
+      setContent(existContribute?.content || "");
+      setIdentityCode(existContribute?.identityCode || "");
+    } catch (e) {
+      // TODO: エラー処理
+    }
+  };
+
+  const updateContribute = async () => {
+    if (!identityCode) {
       return;
     }
 
     exclude(async () => {
-      const contribute = await contributeInterface.createContribute({
+      await contributeInterface.updateContribute({
         title,
         content,
         identityCode,
       });
-      setIdentityCode(contribute?.identityCode);
     }, 500);
   };
 

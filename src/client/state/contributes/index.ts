@@ -7,11 +7,11 @@ const contributesState = atom({
   default: [] as Contribute[],
 });
 
-const useContributeState = () => {
+const useContributesState = () => {
   const contributes = useRecoilValue(contributesState);
   const setContributes = useSetRecoilState(contributesState);
 
   return { contributes, setContributes };
 };
 
-export default useContributeState;
+export default useContributesState;

@@ -32,9 +32,7 @@ abstract class IContributeRepository {
   abstract create: (
     contribute: CreateContributeParam,
   ) => Promise<ContributeEntity>;
-  abstract updateDetail: (
-    contribute: ContributeEntity,
-  ) => Promise<ContributeDetail>;
+  abstract update: (contribute: ContributeEntity) => Promise<ContributeDetail>;
 }
 
 const contributeFactory = new ContributeFactory();
@@ -91,7 +89,7 @@ export default class ContributeRepository
     );
   };
 
-  public updateDetail = async (contribute: ContributeEntity) => {
+  public update = async (contribute: ContributeEntity) => {
     // コンテンツの更新
     const createdContributeData = await this.db.contributeDetail.upsert({
       where: { contributeId: contribute.id },

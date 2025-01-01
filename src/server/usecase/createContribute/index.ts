@@ -10,7 +10,6 @@ export interface ContributeParam {
   userId: string;
 }
 
-// TODO: 作成と更新の責務を持ってしまっているので分ける
 export const createContribute = async ({
   contribute,
 }: {
@@ -20,17 +19,6 @@ export const createContribute = async ({
 
   return tM.execute(async (tx: PrismaClient) => {
     const contributeRepository = new ContributeRepository(tx);
-    const existContribute = await contributeRepository.getByIdentityCode(
-      contribute.identityCode,
-    );
-
-    if (existContribute?.id) {
-      existContribute.title = contribute.title;
-      existContribute.content = contribute.content;
-      await contributeRepository.updateDetail(existContribute);
-      return existContribute;
-    } else {
-      return contributeRepository.create(contribute);
-    }
+    return contributeRepository.create(contribute);
   });
 };
