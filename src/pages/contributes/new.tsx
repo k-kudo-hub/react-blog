@@ -22,10 +22,14 @@ const CreateContribute = () => {
 
   useEffect(() => {
     clearTimeout(saveTimer);
-    setSaveTimer(setTimeout(saveContribute, AUTO_SAVE_INTERVAL));
+    setSaveTimer(setTimeout(createContribute, AUTO_SAVE_INTERVAL));
   }, [identityCode, title, content]);
 
-  const saveContribute = async () => {
+  const createContribute = async () => {
+    if (!title || !content) {
+      return;
+    }
+
     exclude(async () => {
       const contribute = await contributeInterface.createContribute({
         title,

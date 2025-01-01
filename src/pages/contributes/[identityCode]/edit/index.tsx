@@ -31,7 +31,7 @@ const CreateContribute = () => {
 
   useUpdateEffect(() => {
     clearTimeout(saveTimer);
-    setSaveTimer(setTimeout(saveContribute, AUTO_SAVE_INTERVAL));
+    setSaveTimer(setTimeout(updateContribute, AUTO_SAVE_INTERVAL));
   }, [title, content]);
 
   const fetchContribute = async (identityCode: string) => {
@@ -46,10 +46,13 @@ const CreateContribute = () => {
     }
   };
 
-  const saveContribute = async () => {
+  const updateContribute = async () => {
+    if (!identityCode) {
+      return;
+    }
+
     exclude(async () => {
-      console.log({ title, content, identityCode });
-      await contributeInterface.createContribute({
+      await contributeInterface.updateContribute({
         title,
         content,
         identityCode,
