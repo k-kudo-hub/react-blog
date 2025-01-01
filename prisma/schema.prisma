@@ -20,6 +20,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Contribute    Contribute[]
+
+  @@map("users")
 }
 
 model Contribute {
@@ -34,6 +36,8 @@ model Contribute {
   lastEditedAt DateTime?
   createdAt    DateTime                @default(now())
   updatedAt    DateTime                @default(now())
+
+  @@map("contributes")
 }
 
 model ContributeDetail {
@@ -44,6 +48,8 @@ model ContributeDetail {
   content      String     @db.Text
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @default(now())
+
+  @@map("contribute_details")
 }
 
 model ContributeTagRelation {
@@ -56,6 +62,7 @@ model ContributeTagRelation {
   updatedAt    DateTime   @default(now())
 
   @@unique([contributeId, tagId])
+  @@map("contribute_tag_relations")
 }
 
 model Tag {
@@ -65,6 +72,8 @@ model Tag {
   contributes ContributeTagRelation[]
   createdAt   DateTime                @default(now())
   updatedAt   DateTime                @default(now())
+
+  @@map("tags")
 }
 
 model Account {
@@ -84,6 +93,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@map("accounts")
 }
 
 model Session {
@@ -92,6 +102,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
 }
 
 model VerificationToken {
@@ -100,4 +112,5 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+  @@map("verification_tokens")
 }
