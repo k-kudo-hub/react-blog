@@ -1,32 +1,44 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# React blog
+元々WordPressで作成していた個人用ブログをRNext.js製のアプリケーションに置き換えるプロジェクト。3年前から始まっているのに、作る時間を取らないため一向に完成しないサグラダ・ファミリア。
 
-## Getting Started
+![logo](public/images/pr_logo.png)
 
-First, run the development server:
+## 技術スタック
+技術選定は、全面的に学習を目的にしていました。
 
-```bash
-yarn start
-```
+| 名前        | 概要                |
+|------------|---------------------|
+| ルーティング | AppRouter (Next.js) |
+| 認証        | NextAuth (Next.js)  |
+| RDB        | MySQL               |
+| ORM        | Prisma              |
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## セットアップ
+1. 任意のDBを立ち上げてください。以下は例です。
+    ```bash
+    sudo mysql.server start
+    ```
+1. 環境変数を設定します。詳しくは[環境設定](#環境変数)を参照してください。
+    ```bash
+    cp .env.sample .env
+    ```
+1. DB構造を反映します
+    ```bash
+    yarn migrate:dev
+    ```
+1. ローカル環境を立ち上げます
+    ```bash
+    yarn start
+    ```
+1. 下記にアクセスします
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+    http://localhost:3000
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 環境変数
+| 名前 | 概要 |
+|-----|------|
+| `DB_HOST`| DBのhostを設定します |
+| `NEXTAUTH_URL`| サイトのルートURLを指定します |
+| `NEXTAUTH_SECRET`| [こちら](https://next-auth.js.org/configuration/options#nextauth_secret)を参照してください |
+| `GITHUB_CLIENT_ID`| [こちら](https://docs.github.com/ja/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app)を参照し、OAuthアプリケーションを作成して、発行されたものを設定してください。|
+| `GITHUB_CLIENT_SECRET`| [こちら](https://docs.github.com/ja/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app)を参照し、OAuthアプリケーションを作成して、発行されたものを設定してください。 |

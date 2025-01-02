@@ -8,7 +8,7 @@
     "lint": "next lint",
     "prepare": "husky install",
     "lint-staged": "lint-staged",
-    "migrate:dev": "prisma migrate dev --name"
+    "migrate:dev": "prisma migrate dev"
   },
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
