@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import styles from "./styles.module.scss";
 import { useUpdateEffect } from "src/client/hooks/useUpdateEffect";
 import { NextPage } from "next";
+import Textarea from "@components/atoms/Textarea";
 
 // ここに置くべきではなさそう
 const AUTO_SAVE_INTERVAL = 10000; // 自動保存の間隔 (単位:ms)
@@ -75,13 +76,10 @@ const EditContribute: NextPage = () => {
       />
       <div className={styles.contentContainer}>
         <div className={styles.writeContainer}>
-          <textarea
-            id="content"
-            name="content"
-            value={content}
-            className={styles.contentForm}
-            onChange={(e) => setContent(e.target.value)}
+          <Textarea
+            content={content}
             placeholder="本文を入力しましょう。マークダウン記法に対応しています。"
+            onChange={setContent}
           />
         </div>
         <div className={styles.previewContainer}>
