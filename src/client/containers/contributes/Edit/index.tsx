@@ -9,6 +9,7 @@ import styles from "./styles.module.scss";
 import { useUpdateEffect } from "src/client/hooks/useUpdateEffect";
 import { NextPage } from "next";
 import Textarea from "@components/atoms/Textarea";
+import TextForm from "@components/atoms/TextForm";
 
 // ここに置くべきではなさそう
 const AUTO_SAVE_INTERVAL = 10000; // 自動保存の間隔 (単位:ms)
@@ -67,12 +68,10 @@ const EditContribute: NextPage = () => {
       pageTitle={PAGES.CONTRIBUTES_NEW.TITLE}
       pageDescription={PAGES.CONTRIBUTES_NEW.DESCRIPTION}
     >
-      <input
-        type="text"
-        className={styles.titleForm}
+      <TextForm
+        content={title}
         placeholder="まずはタイトルを入力しましょう"
-        onChange={(e) => setTitle(e.target.value)}
-        value={title}
+        onChange={setTitle}
       />
       <div className={styles.contentContainer}>
         <div className={styles.writeContainer}>
