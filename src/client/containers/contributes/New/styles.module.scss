@@ -1,0 +1,19 @@
+@import '../../../../client//styles/colors';
+@import '../../../../client//styles/font-size';
+
+.contentContainer {
+  display: flex;
+  justify-content: space-between;
+  .writeContainer {
+    min-height: 8em;
+    width: 49%;
+    background-color: $white;
+    
+  }
+  .previewContainer {
+    min-height: 8em;
+    width: 49%;
+    background-color: $white;
+    padding: 1rem;
+  }
+}
