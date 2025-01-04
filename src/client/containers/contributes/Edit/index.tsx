@@ -16,6 +16,7 @@ import Button from "@components/atoms/Buttons";
 import Modal from "@components/molecules/Modal";
 import { CONTRIBUTE_STATUS } from "@server/domain/entity/contribute";
 import { FLASH_TYPE, useFlashMessage } from "@components/atoms/Flash";
+import Image from "next/image";
 
 // ここに置くべきではなさそう
 const AUTO_SAVE_INTERVAL = 10000; // 自動保存の間隔 (単位:ms)
@@ -162,7 +163,18 @@ const EditContribute: NextPage = () => {
             </div>
           </div>
           <div className={styles.floatButtonContainer}>
-            <FloatButton text="→" onClick={openStatusModal} />
+            <FloatButton
+              text={
+                <Image
+                  src="/icons/earth.svg"
+                  alt="投稿"
+                  width={25}
+                  height={25}
+                  color="white"
+                />
+              }
+              onClick={openStatusModal}
+            />
           </div>
           {isOpenStatusModal && (
             <Modal onCancel={closeStatusModal}>

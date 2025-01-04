@@ -12,6 +12,7 @@ import { Contribute as ContributeType } from "../../models/contribute";
 import { CONTRIBUTE_STATUS } from "@server/domain/entity/contribute";
 import TextWithIcon from "@components/atoms/Texts/TextWithIcon";
 import CardList from "@components/organisms/CardList";
+import Image from "next/image";
 
 const contributeInterface = new ContributeInterface();
 const {
@@ -70,7 +71,18 @@ const Home: NextPage = () => {
         emptyMessage="投稿がありません"
       />
       <div className={styles.floatButtonContainer}>
-        <FloatButton text="+" link={PAGES.CONTRIBUTES_NEW.PATH} />
+        <FloatButton
+          text={
+            <Image
+              src="/icons/feather-pen-white.svg"
+              alt="投稿"
+              width={25}
+              height={25}
+              color="white"
+            />
+          }
+          link={PAGES.CONTRIBUTES_NEW.PATH}
+        />
       </div>
     </DoubleLineTemplate>
   );

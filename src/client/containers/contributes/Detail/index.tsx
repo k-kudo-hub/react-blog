@@ -113,7 +113,15 @@ const ContributeDetail: NextPage = () => {
         {!!contribute && isEditableContribute.current ? (
           <div className={styles.floatButtonContainer}>
             <FloatButton
-              text="#"
+              text={
+                <Image
+                  src="/icons/feather-pen-white.svg"
+                  alt="投稿"
+                  width={25}
+                  height={25}
+                  color="white"
+                />
+              }
               link={`/contributes/${contribute.identityCode}/edit`}
             />
           </div>
