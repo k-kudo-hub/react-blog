@@ -30,8 +30,13 @@ export const updateContributeStatus = async (
       });
     }
 
-    existContribute.status = params.status;
-    await contributeRepository.update(existContribute);
+    if (existContribute.isPublished()) {
+      existContribute.unpublish();
+    } else {
+      existContribute.publish();
+    }
+
+    await contributeRepository.updateStatus(existContribute);
     return existContribute;
   });
 };

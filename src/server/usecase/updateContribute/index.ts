@@ -32,7 +32,7 @@ export const updateContribute = async (
 
     existContribute.title = contribute.title;
     existContribute.content = contribute.content;
-    await contributeRepository.update(existContribute);
+    await contributeRepository.updateContent(existContribute);
     return existContribute;
   });
 };

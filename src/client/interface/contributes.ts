@@ -1,5 +1,5 @@
 import { get, post, put } from "@utils/server";
-import { Contribute } from "../models/contribute";
+import { Contribute, ContributeStatus } from "../models/contribute";
 
 interface CreateContributeParam {
   identityCode: string;
@@ -29,6 +29,11 @@ export class ContributeInterface {
     contribute: CreateContributeParam,
   ): Promise<Contribute> {
     const response = await put(`/contribute`, { contribute });
+    return response?.data;
+  }
+
+  async updateContributeStatus(contribute: Contribute): Promise<Contribute> {
+    const response = await put(`/contribute/status`, { contribute });
     return response?.data;
   }
 }

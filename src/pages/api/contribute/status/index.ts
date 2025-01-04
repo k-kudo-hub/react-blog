@@ -6,16 +6,12 @@ import {
 } from "@server/presentation/middleware/httpMethodHandler";
 import CustomError from "@server/domain/entity/error";
 import { Codes, StatusCodes } from "@constants/http";
-import {
-  contributeStatus,
-  ContributeStatus,
-} from "src/client/models/contribute";
+import { Contribute, contributeStatus } from "src/client/models/contribute";
 import { updateContributeStatus } from "@server/usecase/updateContributeStatus";
 
 interface IContributeStatusPutParams extends INextRequestWithUser {
   body: ReadableStream<Uint8Array> & {
-    identityCode: string;
-    status: ContributeStatus;
+    contribute: Contribute;
   };
 }
 
@@ -34,7 +30,7 @@ export default async function handler(
         });
       }
 
-      const { identityCode, status } = request.body;
+      const { identityCode, status } = request.body.contribute;
       if (!identityCode) {
         throw new CustomError({
           statusCode: StatusCodes.INTERNAL_SERVER_ERROR,

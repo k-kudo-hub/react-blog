@@ -32,7 +32,12 @@ abstract class IContributeRepository {
   abstract create: (
     contribute: CreateContributeParam,
   ) => Promise<ContributeEntity>;
-  abstract update: (contribute: ContributeEntity) => Promise<ContributeDetail>;
+  abstract updateContent: (
+    contribute: ContributeEntity,
+  ) => Promise<ContributeEntity>;
+  abstract updateStatus: (
+    contribute: ContributeEntity,
+  ) => Promise<ContributeEntity>;
 }
 
 const contributeFactory = new ContributeFactory();
@@ -89,16 +94,11 @@ export default class ContributeRepository
     );
   };
 
-  public update = async (contribute: ContributeEntity) => {
+  public updateContent = async (contribute: ContributeEntity) => {
     // コンテンツの更新
-    const createdContributeData = await this.db.contributeDetail.upsert({
+    await this.db.contributeDetail.update({
       where: { contributeId: contribute.id },
-      update: {
-        title: contribute.title,
-        content: contribute.content,
-      },
-      create: {
-        contributeId: contribute.id,
+      data: {
         title: contribute.title,
         content: contribute.content,
       },
@@ -110,7 +110,34 @@ export default class ContributeRepository
         lastEditedAt: dayjs().format(),
       },
     });
-    return createdContributeData;
+
+    const updatedContribute = await this.getByIdentityCode(
+      contribute.identityCode,
+    );
+    if (!updatedContribute) {
+      throw new Error("投稿データの更新時に予期せぬエラーが発生しました。");
+    }
+    return updatedContribute;
+  };
+
+  public updateStatus = async (
+    contribute: ContributeEntity,
+  ): Promise<ContributeEntity> => {
+    const updateContributeData = await this.db.contribute.update({
+      where: { id: contribute.id },
+      data: {
+        status: contribute.status,
+        publishedAt: contribute.publishedAt,
+      },
+    });
+    const updatedContribute = await this.getByIdentityCode(
+      updateContributeData.identityCode,
+    );
+    if (!updatedContribute) {
+      throw new Error("投稿データの更新時に予期せぬエラーが発生しました。");
+    }
+
+    return updatedContribute;
   };
 
   // any型にしなければprisma側の型と適合しなかったのでやむなくany

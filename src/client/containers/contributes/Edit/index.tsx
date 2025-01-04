@@ -11,6 +11,9 @@ import { NextPage } from "next";
 import Textarea from "@components/atoms/Textarea";
 import TextForm from "@components/atoms/TextForm";
 import FloatButton from "@components/atoms/Buttons/FloatButton/index";
+import useContributeState from "src/client/state/contributes/contribute";
+import Button from "@components/atoms/Buttons";
+import Modal from "@components/molecules/Modal";
 
 // ここに置くべきではなさそう
 const AUTO_SAVE_INTERVAL = 10000; // 自動保存の間隔 (単位:ms)
@@ -20,12 +23,19 @@ const contributeInterface = new ContributeInterface();
 const EditContribute: NextPage = () => {
   const router = useRouter();
   const exclude = useExclusiveControl();
-  const [title, setTitle] = useState<string>("");
-  const [content, setContent] = useState<string>("");
-  const [identityCode, setIdentityCode] = useState<string>("");
+  const { contribute, setContribute } = useContributeState();
   const [saveTimer, setSaveTimer] = useState<NodeJS.Timeout | undefined>(
     undefined,
   );
+  const [isOpenStatusModal, setIsOpenStatusModal] = useState<boolean>(false);
+  const changeableStatus =
+    contribute?.status === "DRAFT" ? "PUBLISHED" : "DRAFT";
+  const changeableStatusString =
+    contribute?.status === "DRAFT" ? "公開" : "下書き";
+  const changeableStatusDescription =
+    contribute?.status === "DRAFT"
+      ? "この記事を、全てのユーザーが閲覧できるようになります。"
+      : "この記事は、あなた以外のユーザーが閲覧できないようになります。";
 
   useEffect(() => {
     if (router.query.identityCode) {
@@ -36,32 +46,70 @@ const EditContribute: NextPage = () => {
   useUpdateEffect(() => {
     clearTimeout(saveTimer);
     setSaveTimer(setTimeout(updateContribute, AUTO_SAVE_INTERVAL));
-  }, [title, content]);
+  }, [contribute]);
 
   const fetchContribute = async (identityCode: string) => {
     try {
-      const existContribute =
-        await contributeInterface.getContribute(identityCode);
-      setTitle(existContribute?.title || "");
-      setContent(existContribute?.content || "");
-      setIdentityCode(existContribute?.identityCode || "");
+      const contribute = await contributeInterface.getContribute(identityCode);
+      setContribute(contribute);
     } catch (e) {
       // TODO: エラー処理
     }
   };
 
+  const setTitle = (title: string) => {
+    if (!contribute) {
+      return;
+    }
+    setContribute({ ...contribute, title });
+  };
+
+  const setContent = (content: string) => {
+    if (!contribute) {
+      return;
+    }
+    setContribute({ ...contribute, content });
+  };
+
   const updateContribute = async () => {
-    if (!identityCode) {
+    if (!contribute?.identityCode) {
       return;
     }
 
     exclude(async () => {
-      await contributeInterface.updateContribute({
-        title,
-        content,
-        identityCode,
-      });
+      await contributeInterface.updateContribute(contribute);
     }, 500);
+  };
+
+  const updateContributeStatus = async () => {
+    if (!contribute?.identityCode) {
+      return;
+    }
+
+    exclude(async () => {
+      setContribute({
+        ...contribute,
+        status: changeableStatus,
+      });
+      const updatedContribute =
+        await contributeInterface.updateContributeStatus({
+          ...contribute,
+          status: changeableStatus,
+        });
+      if (!updatedContribute) {
+        closeStatusModal();
+      } else {
+        router.push(PAGES.HOME.PATH);
+      }
+    }, 500);
+  };
+
+  const openStatusModal = () => {
+    setIsOpenStatusModal(true);
+  };
+
+  const closeStatusModal = () => {
+    setIsOpenStatusModal(false);
   };
 
   return (
@@ -69,25 +117,57 @@ const EditContribute: NextPage = () => {
       pageTitle={PAGES.CONTRIBUTES_NEW.TITLE}
       pageDescription={PAGES.CONTRIBUTES_NEW.DESCRIPTION}
     >
-      <TextForm
-        content={title}
-        placeholder="まずはタイトルを入力しましょう"
-        onChange={setTitle}
-      />
-      <div className={styles.contentContainer}>
-        <div className={styles.writeContainer}>
-          <Textarea
-            content={content}
-            placeholder="本文を入力しましょう。マークダウン記法に対応しています。"
-            onChange={setContent}
+      {!contribute ? (
+        // TODO: ローディングコンポーネントを作成する
+        // ローディングコンポーネントの粒度についても検討する
+        <div>読み込み中...</div>
+      ) : (
+        <section>
+          <TextForm
+            content={contribute?.title || ""}
+            placeholder="まずはタイトルを入力しましょう"
+            onChange={setTitle}
           />
-        </div>
-        <div className={styles.previewContainer}>
-          <div className={styles.preview}>
-            <MarkdownRenderer content={content} />
+          <div className={styles.contentContainer}>
+            <div className={styles.writeContainer}>
+              <Textarea
+                content={contribute?.content || ""}
+                placeholder="本文を入力しましょう。マークダウン記法に対応しています。"
+                onChange={setContent}
+              />
+            </div>
+            <div className={styles.previewContainer}>
+              <div className={styles.preview}>
+                <MarkdownRenderer
+                  content={
+                    contribute?.content || "ここにプレビューが表示されます。"
+                  }
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+          <div className={styles.floatButtonContainer}>
+            <FloatButton text="→" onClick={openStatusModal} />
+          </div>
+          {isOpenStatusModal && (
+            <Modal onCancel={closeStatusModal}>
+              <h2 className={styles.modalTitle}>
+                この記事を「{changeableStatusString}」にしますか？
+              </h2>
+              <p className={styles.modalContent}>
+                {changeableStatusDescription}
+              </p>
+              <div className={styles.modalButtonContainer}>
+                <Button
+                  text={changeableStatusString}
+                  onClick={updateContributeStatus}
+                  type="main"
+                />
+              </div>
+            </Modal>
+          )}
+        </section>
+      )}
     </SingleLineWideTemplate>
   );
 };

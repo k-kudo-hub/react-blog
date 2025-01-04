@@ -27,4 +27,18 @@ export default class ContributeEntity extends BaseEntity {
   @Expose()
   @Type(() => UserEntity)
   user: UserEntity;
+
+  isPublished() {
+    return this.status === "PUBLISHED";
+  }
+
+  publish() {
+    this.status = "PUBLISHED";
+    this.publishedAt = new Date();
+  }
+
+  unpublish() {
+    this.status = "DRAFT";
+    this.publishedAt = null;
+  }
 }
