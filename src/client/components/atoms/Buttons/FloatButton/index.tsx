@@ -28,9 +28,9 @@ const FloatButton = (props: ButtonProps) => {
         </Link>
       ) : (
         // onClickが指定されている場合
-        <button className={styles.buttonText} onClick={onClick}>
+        <a className={styles.buttonText} onClick={onClick}>
           {text}
-        </button>
+        </a>
       )}
     </div>
   );

@@ -7,7 +7,7 @@ import { ContributeInterface } from "../../../interface/contributes";
 import styles from "./style.module.scss";
 import SingleLineTemplate from "@components/templates/SingleLineTemplate";
 import ContributeContent from "@components/organisms/Contribute";
-import FloatButton from "@components/atoms/Buttons/FloatButton";
+import FloatButton from "@components/atoms/Buttons/FloatButton/index";
 import useMeState from "src/client/state/me";
 import useContributeState from "src/client/state/contributes/contribute";
 

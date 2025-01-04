@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import type { NextPage } from "next";
-import FloatButton from "@components/atoms/Buttons/FloatButton";
+import FloatButton from "@components/atoms/Buttons/FloatButton/index";
 import Contributes from "@components/organisms/Contributes";
 import DoubleLineTemplate from "@components/templates/DoubleLineTemplate";
 import PAGES from "../../../common/constants/pages";
