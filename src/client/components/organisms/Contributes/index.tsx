@@ -5,9 +5,11 @@ import Tag from "@components/atoms/Tags";
 import Card from "@components/molecules/Card";
 import { Tag as TagType } from "../../../models/tag";
 import { Contribute as ContributeType } from "../../../models/contribute";
+import { CONTRIBUTE_STATUS } from "@server/domain/entity/contribute";
 
+// TODO: componentsがドメイン情報を持つべきではない
 const createPublicStatusElement = (contribute: ContributeType): JSX.Element => {
-  return contribute.status === "PUBLISHED" ? (
+  return contribute.status === CONTRIBUTE_STATUS.PUBLISHED ? (
     <LastEditedAt lastEditedAt={contribute?.lastEditedAt} />
   ) : (
     <Draft />
@@ -15,13 +17,7 @@ const createPublicStatusElement = (contribute: ContributeType): JSX.Element => {
 };
 
 const createTagsElement = (tags: TagType[]): JSX.Element => {
-  return (
-    <>
-      {tags?.map((tag) => (
-        <Tag tag={tag} key={tag.id} />
-      ))}
-    </>
-  );
+  return <>{tags?.map((tag) => <Tag tag={tag} key={tag.id} />)}</>;
 };
 
 const Contributes = ({ contributes }: { contributes: ContributeType[] }) => {

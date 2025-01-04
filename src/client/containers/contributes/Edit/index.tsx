@@ -14,6 +14,7 @@ import FloatButton from "@components/atoms/Buttons/FloatButton/index";
 import useContributeState from "src/client/state/contributes/contribute";
 import Button from "@components/atoms/Buttons";
 import Modal from "@components/molecules/Modal";
+import { CONTRIBUTE_STATUS } from "@server/domain/entity/contribute";
 
 // ここに置くべきではなさそう
 const AUTO_SAVE_INTERVAL = 10000; // 自動保存の間隔 (単位:ms)
@@ -28,12 +29,16 @@ const EditContribute: NextPage = () => {
     undefined,
   );
   const [isOpenStatusModal, setIsOpenStatusModal] = useState<boolean>(false);
+
+  // TODO: 綺麗にする
   const changeableStatus =
-    contribute?.status === "DRAFT" ? "PUBLISHED" : "DRAFT";
+    contribute?.status === CONTRIBUTE_STATUS.DRAFT
+      ? CONTRIBUTE_STATUS.PUBLISHED
+      : CONTRIBUTE_STATUS.DRAFT;
   const changeableStatusString =
-    contribute?.status === "DRAFT" ? "公開" : "下書き";
+    contribute?.status === CONTRIBUTE_STATUS.DRAFT ? "公開" : "下書き";
   const changeableStatusDescription =
-    contribute?.status === "DRAFT"
+    contribute?.status === CONTRIBUTE_STATUS.DRAFT
       ? "この記事を、全てのユーザーが閲覧できるようになります。"
       : "この記事は、あなた以外のユーザーが閲覧できないようになります。";
 

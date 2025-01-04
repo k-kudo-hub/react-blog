@@ -1,5 +1,5 @@
 import { get, post, put } from "@utils/server";
-import { Contribute, ContributeStatus } from "../models/contribute";
+import { Contribute } from "../models/contribute";
 
 interface CreateContributeParam {
   identityCode: string;

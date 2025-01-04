@@ -1,10 +1,11 @@
 import { Codes, StatusCodes } from "@constants/http";
 import { PrismaClient } from "@prisma/client";
-import ContributeEntity from "@server/domain/entity/contribute";
+import ContributeEntity, {
+  ContributeStatus,
+} from "@server/domain/entity/contribute";
 import CustomError from "@server/domain/entity/error";
 import ContributeRepository from "@server/infrastructure/repository/contribute";
 import TransactionManager from "@server/infrastructure/repository/prisma/transaction";
-import { ContributeStatus } from "src/client/models/contribute";
 
 interface Params {
   identityCode: string;

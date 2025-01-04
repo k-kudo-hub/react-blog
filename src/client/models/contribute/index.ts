@@ -1,8 +1,6 @@
+import { ContributeStatus } from "@server/domain/entity/contribute";
 import { Tag } from "../tag";
 import { User } from "../user";
-
-export const contributeStatus = ["PUBLISHED", "DRAFT"] as const;
-export type ContributeStatus = (typeof contributeStatus)[number];
 
 export interface Contribute {
   id: number;

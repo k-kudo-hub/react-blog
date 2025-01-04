@@ -6,8 +6,9 @@ import {
 } from "@server/presentation/middleware/httpMethodHandler";
 import CustomError from "@server/domain/entity/error";
 import { Codes, StatusCodes } from "@constants/http";
-import { Contribute, contributeStatus } from "src/client/models/contribute";
+import { Contribute } from "src/client/models/contribute";
 import { updateContributeStatus } from "@server/usecase/updateContributeStatus";
+import { CONTRIBUTE_STATUS_LIST } from "@server/domain/entity/contribute";
 
 interface IContributeStatusPutParams extends INextRequestWithUser {
   body: ReadableStream<Uint8Array> & {
@@ -47,7 +48,7 @@ export default async function handler(
         });
       }
 
-      if (!contributeStatus.includes(status)) {
+      if (!CONTRIBUTE_STATUS_LIST.includes(status)) {
         throw new CustomError({
           statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
           message: "公開状態の指定が不正です。",

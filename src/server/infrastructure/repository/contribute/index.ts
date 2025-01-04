@@ -1,7 +1,9 @@
 import dayjs from "dayjs";
 import { ContributeDetail, Prisma, PrismaClient } from "@prisma/client";
 import { ContributeFactory } from "@server/domain/factory/contribute";
-import ContributeEntity from "@server/domain/entity/contribute";
+import ContributeEntity, {
+  CONTRIBUTE_STATUS,
+} from "@server/domain/entity/contribute";
 import { PrismaFindManyQuery, PrismaFindUniqueQuery } from "../prisma/query";
 import RepositoryBase from "../base";
 
@@ -53,6 +55,9 @@ export default class ContributeRepository
   public getAll = async (): Promise<ContributeEntity[]> => {
     const query: PrismaFindManyQuery = {
       ...this.getBaseQuery(),
+      where: {
+        status: CONTRIBUTE_STATUS.PUBLISHED,
+      },
       orderBy: [{ lastEditedAt: "desc" }, { id: "desc" }],
     };
 
