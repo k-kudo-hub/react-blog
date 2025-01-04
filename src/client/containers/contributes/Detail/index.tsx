@@ -7,7 +7,7 @@ import { ContributeInterface } from "../../../interface/contributes";
 import styles from "./style.module.scss";
 import SingleLineTemplate from "@components/templates/SingleLineTemplate";
 import ContributeContent from "@components/organisms/Contribute";
-import Button from "@components/atoms/Buttons";
+import FloatButton from "@components/atoms/Buttons/FloatButton";
 import useMeState from "src/client/state/me";
 import useContributeState from "src/client/state/contributes/contribute";
 
@@ -44,7 +44,7 @@ const ContributeDetail: NextPage = () => {
         <ContributeContent contribute={contribute as Contribute} />
         {isEditableContribute.current ? (
           <div className={styles.floatButtonContainer}>
-            <Button
+            <FloatButton
               text="#"
               link={`/contributes/${contribute?.identityCode}/edit`}
             />

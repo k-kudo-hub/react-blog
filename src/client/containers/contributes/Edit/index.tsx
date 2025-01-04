@@ -10,6 +10,7 @@ import { useUpdateEffect } from "src/client/hooks/useUpdateEffect";
 import { NextPage } from "next";
 import Textarea from "@components/atoms/Textarea";
 import TextForm from "@components/atoms/TextForm";
+import FloatButton from "@components/atoms/Buttons/FloatButton";
 
 // ここに置くべきではなさそう
 const AUTO_SAVE_INTERVAL = 10000; // 自動保存の間隔 (単位:ms)

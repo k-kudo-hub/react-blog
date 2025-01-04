@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import type { NextPage } from "next";
-import Button from "@components/atoms/Buttons";
+import FloatButton from "@components/atoms/Buttons/FloatButton";
 import Contributes from "@components/organisms/Contributes";
 import DoubleLineTemplate from "@components/templates/DoubleLineTemplate";
 import PAGES from "../../../common/constants/pages";
@@ -35,7 +35,7 @@ const Home: NextPage = () => {
     >
       <Contributes contributes={contributes} />
       <div className={styles.floatButtonContainer}>
-        <Button text="+" link={PAGES.CONTRIBUTES_NEW.PATH} />
+        <FloatButton text="+" link={PAGES.CONTRIBUTES_NEW.PATH} />
       </div>
     </DoubleLineTemplate>
   );
