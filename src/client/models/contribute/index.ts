@@ -1,7 +1,6 @@
+import { ContributeStatus } from "@server/domain/entity/contribute";
 import { Tag } from "../tag";
 import { User } from "../user";
-
-export type ContributeStatus = "PUBLISHED" | "DRAFT";
 
 export interface Contribute {
   id: number;

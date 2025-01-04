@@ -1,25 +1,26 @@
-import ContributeRepository from "../../infrastructure/repository/contribute";
-import TransactionManager from "@server/infrastructure/repository/prisma/transaction";
-import ContributeEntity from "@server/domain/entity/contribute";
-import { PrismaClient } from "@prisma/client";
-import CustomError from "@server/domain/entity/error";
 import { Codes, StatusCodes } from "@constants/http";
+import { PrismaClient } from "@prisma/client";
+import ContributeEntity, {
+  ContributeStatus,
+} from "@server/domain/entity/contribute";
+import CustomError from "@server/domain/entity/error";
+import ContributeRepository from "@server/infrastructure/repository/contribute";
+import TransactionManager from "@server/infrastructure/repository/prisma/transaction";
 
-export interface ContributeParam {
+interface Params {
   identityCode: string;
-  title: string;
-  content: string;
+  status: ContributeStatus;
 }
 
-export const updateContribute = async (
-  contribute: ContributeParam,
+export const updateContributeStatus = async (
+  params: Params,
 ): Promise<ContributeEntity> => {
   const tM = new TransactionManager();
 
   return tM.execute(async (tx: PrismaClient) => {
     const contributeRepository = new ContributeRepository(tx);
     const existContribute = await contributeRepository.getByIdentityCode(
-      contribute.identityCode,
+      params.identityCode,
     );
 
     if (!existContribute) {
@@ -30,9 +31,13 @@ export const updateContribute = async (
       });
     }
 
-    existContribute.title = contribute.title;
-    existContribute.content = contribute.content;
-    await contributeRepository.updateContent(existContribute);
+    if (existContribute.isPublished()) {
+      existContribute.unpublish();
+    } else {
+      existContribute.publish();
+    }
+
+    await contributeRepository.updateStatus(existContribute);
     return existContribute;
   });
 };

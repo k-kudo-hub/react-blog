@@ -1,0 +1,28 @@
+@import "../../../styles/font-size";
+@import "../../../styles/colors";
+
+.flash {
+  position: fixed;
+  top: 0.6rem;
+  right: 0.6rem;
+  background: transparent;
+  border: none;
+  color: $white;
+  font-size: $fs-default;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  max-width: 50%;
+  overflow-wrap: break-word;
+}
+
+.success {
+  background: $dark-green;
+}
+
+.error {
+  background: $red;
+}
+
+.info {
+  background: $dark-gray;
+}

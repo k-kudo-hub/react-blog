@@ -1,20 +1,21 @@
-import Link from "next/link";
-import styles from "./style.module.scss";
+import style from "./style.module.scss";
 
 interface ButtonProps {
   text: string;
-  link: string;
+  onClick: () => void;
+  type: "main" | "sub";
 }
 
 const Button = (props: ButtonProps) => {
-  const { text, link } = props;
+  const { text, onClick, type } = props;
 
   return (
-    <div className={styles.floatButton}>
-      <Link href={link} className={styles.buttonText}>
-        {text}
-      </Link>
-    </div>
+    <button
+      className={type === "main" ? style.main : style.sub}
+      onClick={onClick}
+    >
+      {text}
+    </button>
   );
 };
 

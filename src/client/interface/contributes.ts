@@ -31,4 +31,9 @@ export class ContributeInterface {
     const response = await put(`/contribute`, { contribute });
     return response?.data;
   }
+
+  async updateContributeStatus(contribute: Contribute): Promise<Contribute> {
+    const response = await put(`/contribute/status`, { contribute });
+    return response?.data;
+  }
 }
