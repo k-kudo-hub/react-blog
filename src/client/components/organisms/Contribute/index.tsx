@@ -35,7 +35,8 @@ const createUserInfoElement = (props: UserInfoProps): JSX.Element => {
           src={imageUrl || IMAGE_PATH.FIRE_ICON}
           width={30}
           height={30}
-          alt="ユーザーアイコン"
+          alt={`${name}のユーザー画像`}
+          style={{ borderRadius: "50%" }}
         />
       </div>
       <span>@{name}</span>
@@ -67,7 +68,7 @@ const ContributeContent = (props: ContributeContentProps) => {
           userInfoElement={createUserInfoElement({
             name: contribute?.user.name,
             identityCode: contribute?.identityCode,
-            imageUrl: "",
+            imageUrl: contribute?.user.image,
           })}
           navigationElement={createPublicStatusElement({
             publishedAt: contribute?.publishedAt,

@@ -162,6 +162,7 @@ export default class ContributeRepository
           select: {
             id: true,
             name: true,
+            image: true,
           },
         },
       },
