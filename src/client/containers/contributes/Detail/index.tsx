@@ -1,17 +1,68 @@
 import { NextPage } from "next";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 
-import { Contribute } from "../../../models/contribute";
 import { ContributeInterface } from "../../../interface/contributes";
 import styles from "./style.module.scss";
 import SingleLineTemplate from "@components/templates/SingleLineTemplate";
-import ContributeContent from "@components/organisms/Contribute";
 import FloatButton from "@components/atoms/Buttons/FloatButton/index";
 import useMeState from "src/client/state/me";
 import useContributeState from "src/client/state/contributes/contribute";
+import MarkdownViewer from "@components/organisms/MarkdownViewer";
+import Image from "next/image";
+import IMAGE_PATH from "src/client/styles/images";
+import Tag from "@components/atoms/Tags";
+import { Tag as TagType } from "src/client/models/tag";
 
 const contributeInterface = new ContributeInterface();
+
+interface UserInfoProps {
+  name: string;
+  imageUrl: string;
+  identityCode: string;
+}
+
+interface PublicStatusProps {
+  lastEditedAt: string | null;
+  publishedAt: string | null;
+}
+
+interface TagsProps {
+  tags: TagType[];
+}
+
+const createUserInfoElement = (props: UserInfoProps): JSX.Element => {
+  const { name, imageUrl } = props;
+  return (
+    <>
+      <div className={styles.userIcon}>
+        <Image
+          src={imageUrl || IMAGE_PATH.FIRE_ICON}
+          width={30}
+          height={30}
+          alt={`${name}のユーザー画像`}
+          style={{ borderRadius: "50%" }}
+        />
+      </div>
+      <span>@{name}</span>
+    </>
+  );
+};
+
+const createPublicStatusElement = (props: PublicStatusProps): JSX.Element => {
+  const { lastEditedAt, publishedAt } = props;
+  return (
+    <>
+      {publishedAt ? <span>公開日: {publishedAt}</span> : null}
+      {lastEditedAt ? <span>更新日: {lastEditedAt}</span> : null}
+    </>
+  );
+};
+
+const createTagElement = (props: TagsProps) => {
+  const { tags } = props;
+  return <>{tags?.map((tag) => <Tag tag={tag} key={tag.id} />)}</>;
+};
 
 const ContributeDetail: NextPage = () => {
   const router = useRouter();
@@ -41,12 +92,29 @@ const ContributeDetail: NextPage = () => {
   return (
     <SingleLineTemplate pageTitle={contribute?.title}>
       <article className={styles.detailContainer}>
-        <ContributeContent contribute={contribute as Contribute} />
-        {isEditableContribute.current ? (
+        {contribute === undefined ? null : (
+          <MarkdownViewer
+            imageWithTextElement={createUserInfoElement({
+              name: contribute.user.name,
+              identityCode: contribute.identityCode,
+              imageUrl: contribute.user.image,
+            })}
+            navigationElement={createPublicStatusElement({
+              publishedAt: contribute.publishedAt,
+              lastEditedAt: contribute.lastEditedAt,
+            })}
+            tagElement={createTagElement({
+              tags: contribute.tags,
+            })}
+            title={contribute.title}
+            content={contribute.content}
+          />
+        )}
+        {!!contribute && isEditableContribute.current ? (
           <div className={styles.floatButtonContainer}>
             <FloatButton
               text="#"
-              link={`/contributes/${contribute?.identityCode}/edit`}
+              link={`/contributes/${contribute.identityCode}/edit`}
             />
           </div>
         ) : null}

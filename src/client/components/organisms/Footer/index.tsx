@@ -1,7 +1,7 @@
 import styles from "./style.module.scss";
 
-const footer = () => {
+const Footer = () => {
   return <div className={styles.footer}></div>;
 };
 
-export default footer;
+export default Footer;

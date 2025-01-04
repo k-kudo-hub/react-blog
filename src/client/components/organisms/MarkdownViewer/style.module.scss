@@ -4,8 +4,10 @@
 .userIcon {
   width: 30px;
   height: 30px;
-  border-radius: 32px;
   margin-right: 0.6rem;
+  image {
+    border-radius: 32px;
+  }
 }
 
 .detailHeader {
