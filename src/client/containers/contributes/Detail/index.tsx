@@ -40,7 +40,7 @@ const ContributeDetail: NextPage = () => {
 
   return (
     <SingleLineTemplate pageTitle={contribute?.title}>
-      <div className={styles.detailContainer}>
+      <article className={styles.detailContainer}>
         <ContributeContent contribute={contribute as Contribute} />
         {isEditableContribute.current ? (
           <div className={styles.floatButtonContainer}>
@@ -50,7 +50,7 @@ const ContributeDetail: NextPage = () => {
             />
           </div>
         ) : null}
-      </div>
+      </article>
     </SingleLineTemplate>
   );
 };
