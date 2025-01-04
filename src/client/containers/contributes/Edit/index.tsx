@@ -15,6 +15,7 @@ import useContributeState from "src/client/state/contributes/contribute";
 import Button from "@components/atoms/Buttons";
 import Modal from "@components/molecules/Modal";
 import { CONTRIBUTE_STATUS } from "@server/domain/entity/contribute";
+import { FLASH_TYPE, useFlashMessage } from "@components/atoms/Flash";
 
 // ここに置くべきではなさそう
 const AUTO_SAVE_INTERVAL = 10000; // 自動保存の間隔 (単位:ms)
@@ -29,6 +30,7 @@ const EditContribute: NextPage = () => {
     undefined,
   );
   const [isOpenStatusModal, setIsOpenStatusModal] = useState<boolean>(false);
+  const { showFlashMessage } = useFlashMessage();
 
   // TODO: 綺麗にする
   const changeableStatus =
@@ -102,8 +104,16 @@ const EditContribute: NextPage = () => {
           status: changeableStatus,
         });
       if (!updatedContribute) {
+        showFlashMessage(
+          "記事のステータスを更新できませんでした。もう1度お試しいただくか、カスタマーサポートまでご連絡ください。",
+          FLASH_TYPE.ERROR,
+        );
         closeStatusModal();
       } else {
+        showFlashMessage(
+          `記事のステータスを「${changeableStatusString}」に更新しました。`,
+          FLASH_TYPE.SUCCESS,
+        );
         router.push(PAGES.HOME.PATH);
       }
     }, 500);
