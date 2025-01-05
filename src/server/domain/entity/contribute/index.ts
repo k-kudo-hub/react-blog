@@ -3,6 +3,8 @@ import { Expose, Type } from "class-transformer";
 import BaseEntity from "../base";
 import TagEntity from "../tag";
 import UserEntity from "../user";
+import CustomError from "../error";
+import { Codes } from "@constants/http";
 
 export const CONTRIBUTE_STATUS = {
   DRAFT: "DRAFT",
@@ -41,21 +43,36 @@ export default class ContributeEntity extends BaseEntity {
     return this.status === CONTRIBUTE_STATUS.PUBLISHED;
   }
 
+  isDraft() {
+    return this.status === CONTRIBUTE_STATUS.DRAFT;
+  }
+
   isDeleted() {
     return this.status === CONTRIBUTE_STATUS.DELETED;
   }
 
   publish() {
+    if (!this.isDraft()) {
+      throw new CustomError({
+        message: "この記事はすでに公開されているか、削除されています。",
+        statusCode: 400,
+        code: Codes.BAD_REQUEST,
+      });
+    }
+
     this.status = CONTRIBUTE_STATUS.PUBLISHED;
     this.publishedAt = new Date();
   }
 
-  unpublish() {
-    this.status = CONTRIBUTE_STATUS.DRAFT;
-    this.publishedAt = null;
-  }
-
   delete() {
+    if (this.isDeleted()) {
+      throw new CustomError({
+        message: "この記事はすでに削除されています。",
+        statusCode: 400,
+        code: Codes.BAD_REQUEST,
+      });
+    }
+
     this.status = CONTRIBUTE_STATUS.DELETED;
   }
 }

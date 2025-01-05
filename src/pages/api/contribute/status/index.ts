@@ -7,7 +7,7 @@ import {
 import CustomError from "@server/domain/entity/error";
 import { Codes, StatusCodes } from "@constants/http";
 import { Contribute } from "src/client/models/contribute";
-import { updateContributeStatus } from "@server/usecase/updateContributeStatus";
+import { publishContribute } from "@server/usecase/publishContribute";
 import { CONTRIBUTE_STATUS_LIST } from "@server/domain/entity/contribute";
 
 interface IContributeStatusPutParams extends INextRequestWithUser {
@@ -56,7 +56,7 @@ export default async function handler(
         });
       }
 
-      return await updateContributeStatus({ identityCode, status });
+      return await publishContribute({ identityCode, status });
     },
   });
 
