@@ -18,6 +18,8 @@ type ContributeWithInformation = Prisma.ContributeGetPayload<
 
 export interface CreateContributeParam {
   userId: string;
+  title: string;
+  content: string;
 }
 
 export interface UpdateContributeParam {
@@ -88,15 +90,29 @@ export default class ContributeRepository
   public create = async (
     contribute: CreateContributeParam,
   ): Promise<ContributeEntity> => {
-    const createdContributeData = await this.db.contribute.create({
+    const _contribute = await this.db.contribute.create({
       data: {
+        status: CONTRIBUTE_STATUS.DRAFT,
         userId: contribute.userId,
         identityCode: contributeFactory.generateIdentityCode(),
+        details: {
+          create: {
+            title: contribute.title,
+            content: contribute.content,
+          },
+        },
       },
     });
-    return contributeFactory.reconstruct(
-      createdContributeData as ContributeWithInformation,
+
+    const createdContribute = await this.getByIdentityCode(
+      _contribute.identityCode,
     );
+
+    if (!createdContribute) {
+      throw new Error("投稿データの作成時に予期せぬエラーが発生しました。");
+    }
+
+    return createdContribute;
   };
 
   public updateContent = async (contribute: ContributeEntity) => {

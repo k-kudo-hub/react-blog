@@ -9,6 +9,7 @@ import CustomError from "@server/domain/entity/error";
 import { Codes, StatusCodes } from "@constants/http";
 import { updateContribute } from "@server/usecase/updateContribute";
 import { deleteContribute } from "@server/usecase/deleteContribute";
+import ContributeEntity from "@server/domain/entity/contribute";
 
 interface IContributePostParams extends INextRequestWithUser {
   body: ReadableStream<Uint8Array> & {
@@ -31,7 +32,7 @@ export default async function handler(
   res: NextApiResponse<ResponseData>,
 ) {
   const methodHandler = new HttpMethodHandler({
-    post: async () => {
+    post: async (): Promise<ContributeEntity> => {
       const request = req as IContributePostParams;
 
       if (!req.user) {
@@ -52,11 +53,7 @@ export default async function handler(
         contribute: contributeParam,
       });
 
-      return {
-        identityCode: contribute.identityCode,
-        title: contribute.title,
-        content: contribute.content,
-      };
+      return contribute;
     },
     put: async () => {
       const request = req as IContributePostParams;
