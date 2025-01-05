@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PAGES from "@constants/pages";
 import SingleLineWideTemplate from "@components/templates/SingleLineWideTemplate";
 import MarkdownRenderer from "@components/atoms/MarkdownRenderer";
-import { ContributeInterface } from "src/client/interface/contributes";
+import { ContributeInterface } from "../../../..//client/interface/contributes";
 import useExclusiveControl from "src/client/hooks/useExclusiveControl";
 import { useRouter } from "next/router";
 import styles from "./styles.module.scss";

@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import MarkdownRenderer from "@components/atoms/MarkdownRenderer";
 import { useEffect, useState } from "react";
 import PAGES from "@constants/pages";
-import { ContributeInterface } from "src/client/interface/contributes";
+import { ContributeInterface } from "../../../../client/interface/contributes";
 import useExclusiveControl from "src/client/hooks/useExclusiveControl";
 import { NextPage } from "next";
 import Textarea from "@components/atoms/Textarea";

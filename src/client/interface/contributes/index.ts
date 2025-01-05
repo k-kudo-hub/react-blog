@@ -1,5 +1,5 @@
 import { destroy, get, post, put } from "@utils/server";
-import { Contribute } from "../models/contribute";
+import { Contribute } from "../../models/contribute";
 import dayjs from "dayjs";
 
 interface CreateContributeParam {
