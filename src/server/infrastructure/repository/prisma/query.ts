@@ -8,6 +8,8 @@ export interface PrismaFindManyQuery {
     | { [key: string]: OrderByDesignation }
     | { [key: string]: OrderByDesignation }[]
     | undefined;
+  skip?: number | undefined;
+  take?: number | undefined;
 }
 
 export interface PrismaFindUniqueQuery {
