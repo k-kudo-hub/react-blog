@@ -17,6 +17,7 @@ import Modal from "@components/molecules/Modal";
 import Button from "@components/atoms/Buttons";
 import PAGES from "@constants/pages";
 import { FLASH_TYPE, useFlashMessage } from "@components/atoms/Flash";
+import { CONTRIBUTE_STATUS } from "@server/domain/entity/contribute";
 
 const contributeInterface = new ContributeInterface();
 
@@ -85,7 +86,10 @@ const ContributeDetail: NextPage = () => {
   }, [router.query]);
 
   useEffect(() => {
-    if (contribute?.userId === meId) {
+    if (
+      contribute?.userId === meId &&
+      contribute?.status !== CONTRIBUTE_STATUS.DELETED
+    ) {
       isEditableContribute.current = true;
     }
   });
