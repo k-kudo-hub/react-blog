@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { ContributeDetail, Prisma, PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { ContributeFactory } from "@server/domain/factory/contribute";
 import ContributeEntity, {
   CONTRIBUTE_STATUS,

@@ -8,6 +8,7 @@ import { createContribute } from "@server/usecase/createContribute";
 import CustomError from "@server/domain/entity/error";
 import { Codes, StatusCodes } from "@constants/http";
 import { updateContribute } from "@server/usecase/updateContribute";
+import { deleteContribute } from "@server/usecase/deleteContribute";
 
 interface IContributePostParams extends INextRequestWithUser {
   body: ReadableStream<Uint8Array> & {
@@ -71,6 +72,27 @@ export default async function handler(
       }
 
       return await updateContribute(contribute);
+    },
+    delete: async () => {
+      const request = req as IContributePostParams;
+      if (!request.user) {
+        throw new CustomError({
+          statusCode: StatusCodes.UNAUTHORIZED,
+          message: "投稿を削除するためには、ログインをしてください。",
+          code: Codes.UNAUTHORIZED,
+        });
+      }
+
+      const contribute = request.body?.contribute;
+      if (!contribute?.identityCode) {
+        throw new CustomError({
+          statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+          message: "投稿IDを指定してください。",
+          code: Codes.INTERNAL_SERVER_ERROR,
+        });
+      }
+
+      return await deleteContribute(contribute.identityCode);
     },
   });
 

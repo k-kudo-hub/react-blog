@@ -1,4 +1,4 @@
-import { get, post, put } from "@utils/server";
+import { destroy, get, post, put } from "@utils/server";
 import { Contribute } from "../models/contribute";
 
 interface CreateContributeParam {
@@ -34,6 +34,11 @@ export class ContributeInterface {
 
   async updateContributeStatus(contribute: Contribute): Promise<Contribute> {
     const response = await put(`/contribute/status`, { contribute });
+    return response?.data;
+  }
+
+  async deleteContribute(identityCode: string): Promise<void> {
+    const response = await destroy(`/contribute`, { identityCode });
     return response?.data;
   }
 }

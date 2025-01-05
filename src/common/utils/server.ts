@@ -57,6 +57,23 @@ export async function put(route: string, body: object) {
   }
 }
 
+export async function destroy(route: string, body: object) {
+  const url = generateUrl({ route });
+  const condition = _generateRequestCondition({
+    method: "DELETE",
+    body,
+  });
+  try {
+    const response = await fetch(url, condition);
+    if (!response.ok) {
+      throw new Error("データの削除に失敗しました。");
+    }
+    return response.json();
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 const _generateRequestCondition = ({
   method,
   body = {},

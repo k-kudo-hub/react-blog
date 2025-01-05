@@ -7,6 +7,7 @@ import UserEntity from "../user";
 export const CONTRIBUTE_STATUS = {
   DRAFT: "DRAFT",
   PUBLISHED: "PUBLISHED",
+  DELETED: "DELETED",
 } as const;
 export const CONTRIBUTE_STATUS_LIST = Object.values(CONTRIBUTE_STATUS);
 export type ContributeStatus =
@@ -40,6 +41,10 @@ export default class ContributeEntity extends BaseEntity {
     return this.status === CONTRIBUTE_STATUS.PUBLISHED;
   }
 
+  isDeleted() {
+    return this.status === CONTRIBUTE_STATUS.DELETED;
+  }
+
   publish() {
     this.status = CONTRIBUTE_STATUS.PUBLISHED;
     this.publishedAt = new Date();
@@ -48,5 +53,9 @@ export default class ContributeEntity extends BaseEntity {
   unpublish() {
     this.status = CONTRIBUTE_STATUS.DRAFT;
     this.publishedAt = null;
+  }
+
+  delete() {
+    this.status = CONTRIBUTE_STATUS.DELETED;
   }
 }
