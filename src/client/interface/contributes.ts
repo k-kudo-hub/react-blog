@@ -1,5 +1,6 @@
 import { destroy, get, post, put } from "@utils/server";
 import { Contribute } from "../models/contribute";
+import dayjs from "dayjs";
 
 interface CreateContributeParam {
   identityCode: string;
@@ -13,9 +14,23 @@ export class ContributeInterface {
     return response?.data || [];
   }
 
-  async getContribute(identityCode: string): Promise<Contribute> {
+  async getContribute(identityCode: string): Promise<Contribute | undefined> {
     const response = await get(`/contribute/${identityCode}`);
-    return response?.data;
+
+    if (!response?.data) {
+      return undefined;
+    }
+
+    // TODO: フロント用のFactoryを作成する
+    return {
+      ...response.data,
+      lastEditedAt: response.data.lastEditedAt
+        ? dayjs(response.data.lastEditedAt).format("YYYY年MM月DD日")
+        : null,
+      publishedAt: response.data.publishedAt
+        ? dayjs(response.data.publishedAt).format("YYYY年MM月DD日")
+        : null,
+    };
   }
 
   async createContribute(
@@ -37,7 +52,7 @@ export class ContributeInterface {
     return response?.data;
   }
 
-  async deleteContribute(identityCode: string): Promise<void> {
+  async deleteContribute(identityCode: string): Promise<Contribute> {
     const response = await destroy(`/contribute`, { identityCode });
     return response?.data;
   }

@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 
 import { ContributeInterface } from "../../../interface/contributes";
@@ -13,6 +13,10 @@ import Image from "next/image";
 import IMAGE_PATH from "src/client/styles/images";
 import Tag from "@components/atoms/Tags";
 import { Tag as TagType } from "src/client/models/tag";
+import Modal from "@components/molecules/Modal";
+import Button from "@components/atoms/Buttons";
+import PAGES from "@constants/pages";
+import { FLASH_TYPE, useFlashMessage } from "@components/atoms/Flash";
 
 const contributeInterface = new ContributeInterface();
 
@@ -71,6 +75,8 @@ const ContributeDetail: NextPage = () => {
   const {
     me: { id: meId },
   } = useMeState();
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState<boolean>(false);
+  const { showFlashMessage } = useFlashMessage();
 
   useEffect(() => {
     if (router.query.identityCode) {
@@ -83,6 +89,32 @@ const ContributeDetail: NextPage = () => {
       isEditableContribute.current = true;
     }
   });
+
+  const openDeleteModal = () => {
+    setIsOpenDeleteModal(true);
+  };
+
+  const closeDeleteModal = () => {
+    setIsOpenDeleteModal(false);
+  };
+
+  const deleteContribute = async () => {
+    if (!contribute) {
+      return;
+    }
+
+    const result = await contributeInterface.deleteContribute(
+      contribute.identityCode,
+    );
+    if (!result) {
+      showFlashMessage("投稿の削除に失敗しました。", FLASH_TYPE.ERROR);
+      closeDeleteModal();
+      return;
+    }
+
+    showFlashMessage("投稿を削除しました。", FLASH_TYPE.SUCCESS);
+    router.push(PAGES.HOME.PATH);
+  };
 
   const fetchContribute = async (identityCode: string) => {
     const contribute = await contributeInterface.getContribute(identityCode);
@@ -115,8 +147,20 @@ const ContributeDetail: NextPage = () => {
             <FloatButton
               text={
                 <Image
+                  src="/icons/trash.svg"
+                  alt="投稿の削除"
+                  width={25}
+                  height={25}
+                  color="white"
+                />
+              }
+              onClick={openDeleteModal}
+            />
+            <FloatButton
+              text={
+                <Image
                   src="/icons/feather-pen-white.svg"
-                  alt="投稿"
+                  alt="投稿の更新"
                   width={25}
                   height={25}
                   color="white"
@@ -127,6 +171,17 @@ const ContributeDetail: NextPage = () => {
           </div>
         ) : null}
       </article>
+      {isOpenDeleteModal && (
+        <Modal onCancel={closeDeleteModal}>
+          <h2 className={styles.modalTitle}>この記事を削除しますか？</h2>
+          <p className={styles.modalContent}>
+            削除した投稿を元に戻すことはできません。本当に削除しますか？
+          </p>
+          <div className={styles.modalButtonContainer}>
+            <Button text="削除する" onClick={deleteContribute} type="main" />
+          </div>
+        </Modal>
+      )}
     </SingleLineTemplate>
   );
 };

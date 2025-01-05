@@ -10,10 +10,26 @@
   position: fixed;
   right: 1.4rem;
   bottom: 1.4rem;
+  display: flex;
+  > * {
+    margin-left: 1.2rem;
+  }
 }
 
 .userIcon {
   width: 30px;
   height: 30px;
   margin-right: 0.6rem;
+}
+
+.modalTitle {
+  font-size: $fs-2x;
+  margin-bottom: 1rem;
+}
+.modalContent {
+  margin-bottom: 1rem;
+}
+.modalButtonContainer {
+  display: flex;
+  justify-content: flex-end;
 }

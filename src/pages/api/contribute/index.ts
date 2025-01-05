@@ -20,6 +20,12 @@ interface IContributePostParams extends INextRequestWithUser {
   };
 }
 
+interface IContributeDeleteParams extends INextRequestWithUser {
+  body: ReadableStream<Uint8Array> & {
+    identityCode: string;
+  };
+}
+
 export default async function handler(
   req: INextRequestWithUser,
   res: NextApiResponse<ResponseData>,
@@ -74,7 +80,7 @@ export default async function handler(
       return await updateContribute(contribute);
     },
     delete: async () => {
-      const request = req as IContributePostParams;
+      const request = req as IContributeDeleteParams;
       if (!request.user) {
         throw new CustomError({
           statusCode: StatusCodes.UNAUTHORIZED,
@@ -83,8 +89,8 @@ export default async function handler(
         });
       }
 
-      const contribute = request.body?.contribute;
-      if (!contribute?.identityCode) {
+      const identityCode = request.body?.identityCode;
+      if (!identityCode) {
         throw new CustomError({
           statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
           message: "投稿IDを指定してください。",
@@ -92,7 +98,7 @@ export default async function handler(
         });
       }
 
-      return await deleteContribute(contribute.identityCode);
+      return await deleteContribute(identityCode);
     },
   });
 
