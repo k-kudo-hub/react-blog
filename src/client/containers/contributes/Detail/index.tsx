@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { ContributeInterface } from "../../../interface/contributes";
 import styles from "./style.module.scss";
 import SingleLineTemplate from "@components/templates/SingleLineTemplate";
-import FloatButton from "@components/atoms/Buttons/FloatButton/index";
+import FloatButton from "@components/atoms/Buttons/FloatButton";
 import useMeState from "src/client/state/me";
 import useContributeState from "src/client/state/contributes/contribute";
 import MarkdownViewer from "@components/organisms/MarkdownViewer";

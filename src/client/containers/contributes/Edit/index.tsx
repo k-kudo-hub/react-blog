@@ -10,7 +10,7 @@ import { useUpdateEffect } from "src/client/hooks/useUpdateEffect";
 import { NextPage } from "next";
 import Textarea from "@components/atoms/Textarea";
 import TextForm from "@components/atoms/TextForm";
-import FloatButton from "@components/atoms/Buttons/FloatButton/index";
+import FloatButton from "@components/atoms/Buttons/FloatButton";
 import useContributeState from "src/client/state/contributes/contribute";
 import Button from "@components/atoms/Buttons";
 import Modal from "@components/molecules/Modal";

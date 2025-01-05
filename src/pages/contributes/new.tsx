@@ -1,3 +1,3 @@
-import CreateContribute from "@containers/contributes/New/index";
+import CreateContribute from "@containers/contributes/New";
 
 export default CreateContribute;
