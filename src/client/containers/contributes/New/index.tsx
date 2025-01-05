@@ -3,11 +3,12 @@ import styles from "./styles.module.scss";
 import MarkdownRenderer from "@components/atoms/MarkdownRenderer";
 import { useEffect, useState } from "react";
 import PAGES from "@constants/pages";
-import { ContributeInterface } from "src/client/interface/contributes";
+import { ContributeInterface } from "../../../../client/interface/contributes";
 import useExclusiveControl from "src/client/hooks/useExclusiveControl";
 import { NextPage } from "next";
 import Textarea from "@components/atoms/Textarea";
 import TextForm from "@components/atoms/TextForm";
+import { FLASH_TYPE, useFlashMessage } from "@components/atoms/Flash";
 
 // ここに置くべきではなさそう
 const AUTO_SAVE_INTERVAL = 10000; // 自動保存の間隔 (単位:ms)
@@ -22,33 +23,62 @@ const CreateContribute: NextPage = () => {
   const [saveTimer, setSaveTimer] = useState<NodeJS.Timeout | undefined>(
     undefined,
   );
+  const { showFlashMessage } = useFlashMessage();
 
   useEffect(() => {
     clearTimeout(saveTimer);
-    setSaveTimer(setTimeout(createContribute, AUTO_SAVE_INTERVAL));
+    setSaveTimer(setTimeout(saveContribute, AUTO_SAVE_INTERVAL));
+
+    return () => {
+      clearTimeout(saveTimer);
+    };
   }, [identityCode, title, content]);
 
   const createContribute = async () => {
-    if (!title || !content) {
+    if (!title || !content || identityCode) {
       return;
     }
 
+    const contribute = await contributeInterface.createContribute({
+      title,
+      content,
+      identityCode,
+    });
+
+    if (!contribute) {
+      showFlashMessage("記事の保存に失敗しました。", FLASH_TYPE.ERROR);
+      return;
+    }
+
+    showFlashMessage("記事を下書きとして保存しました。", FLASH_TYPE.SUCCESS);
+    setIdentityCode(contribute.identityCode);
+    return;
+  };
+
+  const updateContribute = async () => {
+    if (!identityCode) {
+      return;
+    }
+
+    const updatedContribute = await contributeInterface.updateContribute({
+      title,
+      content,
+      identityCode,
+    });
+
+    if (!updatedContribute) {
+      showFlashMessage("記事の保存に失敗しました。", FLASH_TYPE.ERROR);
+    }
+
+    return;
+  };
+
+  const saveContribute = async () => {
     exclude(async () => {
       if (identityCode) {
-        await contributeInterface.updateContribute({
-          title,
-          content,
-          identityCode,
-        });
-        return;
-      } else {
-        const contribute = await contributeInterface.createContribute({
-          title,
-          content,
-          identityCode,
-        });
-        setIdentityCode(contribute?.identityCode);
+        return updateContribute();
       }
+      return createContribute();
     }, 500);
   };
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PAGES from "@constants/pages";
 import SingleLineWideTemplate from "@components/templates/SingleLineWideTemplate";
 import MarkdownRenderer from "@components/atoms/MarkdownRenderer";
-import { ContributeInterface } from "src/client/interface/contributes";
+import { ContributeInterface } from "../../../..//client/interface/contributes";
 import useExclusiveControl from "src/client/hooks/useExclusiveControl";
 import { useRouter } from "next/router";
 import styles from "./styles.module.scss";
@@ -10,7 +10,7 @@ import { useUpdateEffect } from "src/client/hooks/useUpdateEffect";
 import { NextPage } from "next";
 import Textarea from "@components/atoms/Textarea";
 import TextForm from "@components/atoms/TextForm";
-import FloatButton from "@components/atoms/Buttons/FloatButton/index";
+import FloatButton from "@components/atoms/Buttons/FloatButton";
 import useContributeState from "src/client/state/contributes/contribute";
 import Button from "@components/atoms/Buttons";
 import Modal from "@components/molecules/Modal";
@@ -33,17 +33,7 @@ const EditContribute: NextPage = () => {
   const [isOpenStatusModal, setIsOpenStatusModal] = useState<boolean>(false);
   const { showFlashMessage } = useFlashMessage();
 
-  // TODO: 綺麗にする
-  const changeableStatus =
-    contribute?.status === CONTRIBUTE_STATUS.DRAFT
-      ? CONTRIBUTE_STATUS.PUBLISHED
-      : CONTRIBUTE_STATUS.DRAFT;
-  const changeableStatusString =
-    contribute?.status === CONTRIBUTE_STATUS.DRAFT ? "公開" : "下書き";
-  const changeableStatusDescription =
-    contribute?.status === CONTRIBUTE_STATUS.DRAFT
-      ? "この記事を、全てのユーザーが閲覧できるようになります。"
-      : "この記事は、あなた以外のユーザーが閲覧できないようになります。";
+  const canPublish = contribute?.status === CONTRIBUTE_STATUS.DRAFT;
 
   useEffect(() => {
     if (router.query.identityCode) {
@@ -97,24 +87,21 @@ const EditContribute: NextPage = () => {
     exclude(async () => {
       setContribute({
         ...contribute,
-        status: changeableStatus,
+        status: CONTRIBUTE_STATUS.PUBLISHED,
       });
       const updatedContribute =
         await contributeInterface.updateContributeStatus({
           ...contribute,
-          status: changeableStatus,
+          status: CONTRIBUTE_STATUS.PUBLISHED,
         });
       if (!updatedContribute) {
         showFlashMessage(
-          "記事のステータスを更新できませんでした。もう1度お試しいただくか、カスタマーサポートまでご連絡ください。",
+          "記事の公開に失敗しました。もう1度お試しいただくか、カスタマーサポートまでご連絡ください。",
           FLASH_TYPE.ERROR,
         );
         closeStatusModal();
       } else {
-        showFlashMessage(
-          `記事のステータスを「${changeableStatusString}」に更新しました。`,
-          FLASH_TYPE.SUCCESS,
-        );
+        showFlashMessage(`記事を公開しました。`, FLASH_TYPE.SUCCESS);
         router.push(PAGES.HOME.PATH);
       }
     }, 500);
@@ -130,8 +117,8 @@ const EditContribute: NextPage = () => {
 
   return (
     <SingleLineWideTemplate
-      pageTitle={PAGES.CONTRIBUTES_NEW.TITLE}
-      pageDescription={PAGES.CONTRIBUTES_NEW.DESCRIPTION}
+      pageTitle={PAGES.CONTRIBUTES_EDIT.TITLE}
+      pageDescription={PAGES.CONTRIBUTES_EDIT.DESCRIPTION}
     >
       {!contribute ? (
         // TODO: ローディングコンポーネントを作成する
@@ -162,31 +149,31 @@ const EditContribute: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className={styles.floatButtonContainer}>
-            <FloatButton
-              text={
-                <Image
-                  src="/icons/earth.svg"
-                  alt="投稿"
-                  width={25}
-                  height={25}
-                  color="white"
-                />
-              }
-              onClick={openStatusModal}
-            />
-          </div>
+          {canPublish && (
+            <div className={styles.floatButtonContainer}>
+              <FloatButton
+                text={
+                  <Image
+                    src="/icons/earth.svg"
+                    alt="公開"
+                    width={25}
+                    height={25}
+                    color="white"
+                  />
+                }
+                onClick={openStatusModal}
+              />
+            </div>
+          )}
           {isOpenStatusModal && (
             <Modal onCancel={closeStatusModal}>
-              <h2 className={styles.modalTitle}>
-                この記事を「{changeableStatusString}」にしますか？
-              </h2>
+              <h2 className={styles.modalTitle}>この記事を公開しますか？</h2>
               <p className={styles.modalContent}>
-                {changeableStatusDescription}
+                この記事を公開すると、全てのユーザーが閲覧できるようになります。
               </p>
               <div className={styles.modalButtonContainer}>
                 <Button
-                  text={changeableStatusString}
+                  text="公開する"
                   onClick={updateContributeStatus}
                   type="main"
                 />

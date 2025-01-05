@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { ContributeDetail, Prisma, PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { ContributeFactory } from "@server/domain/factory/contribute";
 import ContributeEntity, {
   CONTRIBUTE_STATUS,
@@ -15,9 +15,18 @@ const contributeWithInformation =
 type ContributeWithInformation = Prisma.ContributeGetPayload<
   typeof contributeWithInformation
 >;
+const DEFAULT_LIMIT = 100;
+
+export interface GetManyContributesParam {
+  status?: string;
+  limit?: number;
+  offset?: number;
+}
 
 export interface CreateContributeParam {
   userId: string;
+  title: string;
+  content: string;
 }
 
 export interface UpdateContributeParam {
@@ -27,7 +36,9 @@ export interface UpdateContributeParam {
 }
 
 abstract class IContributeRepository {
-  abstract getAll: () => Promise<ContributeEntity[]>;
+  abstract getAll: (
+    params: GetManyContributesParam,
+  ) => Promise<ContributeEntity[]>;
   abstract getByIdentityCode: (
     identityCode: string,
   ) => Promise<ContributeEntity | null>;
@@ -52,14 +63,19 @@ export default class ContributeRepository
     super(db);
   }
 
-  public getAll = async (): Promise<ContributeEntity[]> => {
+  public getAll = async (
+    params?: GetManyContributesParam,
+  ): Promise<ContributeEntity[]> => {
     const query: PrismaFindManyQuery = {
       ...this.getBaseQuery(),
-      where: {
-        status: CONTRIBUTE_STATUS.PUBLISHED,
-      },
-      orderBy: [{ lastEditedAt: "desc" }, { id: "desc" }],
+      orderBy: [{ publishedAt: "desc" }],
+      take: params?.limit || DEFAULT_LIMIT,
+      skip: params?.offset || 0,
     };
+
+    if (params?.status) {
+      query.where.status = params.status;
+    }
 
     const contributes = await this.db.contribute.findMany(query);
     return contributeFactory.reconstructList(
@@ -88,15 +104,29 @@ export default class ContributeRepository
   public create = async (
     contribute: CreateContributeParam,
   ): Promise<ContributeEntity> => {
-    const createdContributeData = await this.db.contribute.create({
+    const _contribute = await this.db.contribute.create({
       data: {
+        status: CONTRIBUTE_STATUS.DRAFT,
         userId: contribute.userId,
         identityCode: contributeFactory.generateIdentityCode(),
+        details: {
+          create: {
+            title: contribute.title,
+            content: contribute.content,
+          },
+        },
       },
     });
-    return contributeFactory.reconstruct(
-      createdContributeData as ContributeWithInformation,
+
+    const createdContribute = await this.getByIdentityCode(
+      _contribute.identityCode,
     );
+
+    if (!createdContribute) {
+      throw new Error("投稿データの作成時に予期せぬエラーが発生しました。");
+    }
+
+    return createdContribute;
   };
 
   public updateContent = async (contribute: ContributeEntity) => {
@@ -145,7 +175,6 @@ export default class ContributeRepository
     return updatedContribute;
   };
 
-  // any型にしなければprisma側の型と適合しなかったのでやむなくany
   private getBaseQuery = () => {
     return {
       include: {

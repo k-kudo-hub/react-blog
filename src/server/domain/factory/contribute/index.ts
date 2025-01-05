@@ -14,13 +14,13 @@ export class ContributeFactory extends BaseFactory {
   reconstruct(param: ContributeDataType): ContributeEntity {
     const tags =
       param.tags?.map(
-        (tagRelation: ContributeTagRelationDataType) => tagRelation.tag
+        (tagRelation: ContributeTagRelationDataType) => tagRelation.tag,
       ) || [];
     const publishedAt = param.publishedAt
-      ? dayjs(param.publishedAt).format("YYYY年MM月DD日")
+      ? dayjs(param.publishedAt).toDate()
       : null;
     const lastEditedAt = param.lastEditedAt
-      ? dayjs(param.lastEditedAt).format("YYYY年MM月DD日")
+      ? dayjs(param.lastEditedAt).toDate()
       : null;
     const title = param.details ? param.details.title : null;
     const content = param.details ? param.details.content : null;

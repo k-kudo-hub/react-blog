@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import type { NextPage } from "next";
-import FloatButton from "@components/atoms/Buttons/FloatButton/index";
+import FloatButton from "@components/atoms/Buttons/FloatButton";
 import DoubleLineTemplate from "@components/templates/DoubleLineTemplate";
 import PAGES from "../../../common/constants/pages";
 import { ContributeInterface } from "../../../client/interface/contributes";
@@ -20,16 +20,32 @@ const {
 } = PAGES;
 
 const createPublicStatusElement = (contribute: ContributeType): JSX.Element => {
-  return contribute.status === CONTRIBUTE_STATUS.PUBLISHED &&
-    !!contribute.publishedAt ? (
-    <TextWithIcon
-      iconName="feather-pen.svg"
-      iconAlt="公開"
-      text={contribute.publishedAt}
-    />
-  ) : (
-    <TextWithIcon iconName="lock.svg" iconAlt="下書き" text="下書き" />
-  );
+  switch (contribute.status) {
+    case CONTRIBUTE_STATUS.PUBLISHED:
+      return (
+        <TextWithIcon
+          iconName="feather-pen.svg"
+          iconAlt="公開"
+          text={contribute.publishedDate}
+        />
+      );
+    case CONTRIBUTE_STATUS.DRAFT:
+      return (
+        <TextWithIcon iconName="lock.svg" iconAlt="下書き" text="下書き" />
+      );
+    case CONTRIBUTE_STATUS.DELETED:
+      return (
+        <TextWithIcon
+          iconName="trash-gray.svg"
+          iconAlt="削除"
+          text="削除済み"
+        />
+      );
+    default:
+      return (
+        <TextWithIcon iconName="lock.svg" iconAlt="下書き" text="下書き" />
+      );
+  }
 };
 
 const createTagsElement = (tags: TagType[]): JSX.Element => {

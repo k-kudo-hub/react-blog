@@ -12,7 +12,7 @@ interface Params {
   status: ContributeStatus;
 }
 
-export const updateContributeStatus = async (
+export const publishContribute = async (
   params: Params,
 ): Promise<ContributeEntity> => {
   const tM = new TransactionManager();
@@ -32,10 +32,14 @@ export const updateContributeStatus = async (
     }
 
     if (existContribute.isPublished()) {
-      existContribute.unpublish();
-    } else {
-      existContribute.publish();
+      throw new CustomError({
+        statusCode: StatusCodes.BAD_REQUEST,
+        code: Codes.BAD_REQUEST,
+        message: "この記事はすでに公開されています。",
+      });
     }
+
+    existContribute.publish();
 
     await contributeRepository.updateStatus(existContribute);
     return existContribute;

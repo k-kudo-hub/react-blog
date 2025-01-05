@@ -8,6 +8,8 @@ import { createContribute } from "@server/usecase/createContribute";
 import CustomError from "@server/domain/entity/error";
 import { Codes, StatusCodes } from "@constants/http";
 import { updateContribute } from "@server/usecase/updateContribute";
+import { deleteContribute } from "@server/usecase/deleteContribute";
+import ContributeEntity from "@server/domain/entity/contribute";
 
 interface IContributePostParams extends INextRequestWithUser {
   body: ReadableStream<Uint8Array> & {
@@ -19,12 +21,18 @@ interface IContributePostParams extends INextRequestWithUser {
   };
 }
 
+interface IContributeDeleteParams extends INextRequestWithUser {
+  body: ReadableStream<Uint8Array> & {
+    identityCode: string;
+  };
+}
+
 export default async function handler(
   req: INextRequestWithUser,
   res: NextApiResponse<ResponseData>,
 ) {
   const methodHandler = new HttpMethodHandler({
-    post: async () => {
+    post: async (): Promise<ContributeEntity> => {
       const request = req as IContributePostParams;
 
       if (!req.user) {
@@ -45,11 +53,7 @@ export default async function handler(
         contribute: contributeParam,
       });
 
-      return {
-        identityCode: contribute.identityCode,
-        title: contribute.title,
-        content: contribute.content,
-      };
+      return contribute;
     },
     put: async () => {
       const request = req as IContributePostParams;
@@ -71,6 +75,27 @@ export default async function handler(
       }
 
       return await updateContribute(contribute);
+    },
+    delete: async () => {
+      const request = req as IContributeDeleteParams;
+      if (!request.user) {
+        throw new CustomError({
+          statusCode: StatusCodes.UNAUTHORIZED,
+          message: "投稿を削除するためには、ログインをしてください。",
+          code: Codes.UNAUTHORIZED,
+        });
+      }
+
+      const identityCode = request.body?.identityCode;
+      if (!identityCode) {
+        throw new CustomError({
+          statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+          message: "投稿IDを指定してください。",
+          code: Codes.INTERNAL_SERVER_ERROR,
+        });
+      }
+
+      return await deleteContribute(identityCode);
     },
   });
 
