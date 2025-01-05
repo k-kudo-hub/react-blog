@@ -27,8 +27,8 @@ interface UserInfoProps {
 }
 
 interface PublicStatusProps {
-  lastEditedAt: string | null;
-  publishedAt: string | null;
+  lastEditedDate: string | null;
+  publishedDate: string | null;
 }
 
 interface TagsProps {
@@ -54,11 +54,11 @@ const createUserInfoElement = (props: UserInfoProps): JSX.Element => {
 };
 
 const createPublicStatusElement = (props: PublicStatusProps): JSX.Element => {
-  const { lastEditedAt, publishedAt } = props;
+  const { lastEditedDate, publishedDate } = props;
   return (
     <>
-      {publishedAt ? <span>公開日: {publishedAt}</span> : null}
-      {lastEditedAt ? <span>更新日: {lastEditedAt}</span> : null}
+      {publishedDate ? <span>公開日: {publishedDate}</span> : null}
+      {lastEditedDate ? <span>更新日: {lastEditedDate}</span> : null}
     </>
   );
 };
@@ -132,8 +132,8 @@ const ContributeDetail: NextPage = () => {
               imageUrl: contribute.user.image,
             })}
             navigationElement={createPublicStatusElement({
-              publishedAt: contribute.publishedAt,
-              lastEditedAt: contribute.lastEditedAt,
+              publishedDate: contribute.publishedDate,
+              lastEditedDate: contribute.lastEditedDate,
             })}
             tagElement={createTagElement({
               tags: contribute.tags,

@@ -9,8 +9,10 @@ export interface Contribute {
   title: string;
   content: string;
   identityCode: string;
-  lastEditedAt: string | null;
-  publishedAt: string | null;
+  lastEditedAt: Date | null;
+  lastEditedDate: string;
+  publishedAt: Date | null;
+  publishedDate: string;
   tags: Tag[];
   user: User;
 }

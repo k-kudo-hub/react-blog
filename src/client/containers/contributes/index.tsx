@@ -25,7 +25,7 @@ const createPublicStatusElement = (contribute: ContributeType): JSX.Element => {
     <TextWithIcon
       iconName="feather-pen.svg"
       iconAlt="公開"
-      text={contribute.publishedAt}
+      text={contribute.publishedDate}
     />
   ) : (
     <TextWithIcon iconName="lock.svg" iconAlt="下書き" text="下書き" />
