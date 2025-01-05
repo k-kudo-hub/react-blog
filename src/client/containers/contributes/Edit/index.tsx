@@ -117,8 +117,8 @@ const EditContribute: NextPage = () => {
 
   return (
     <SingleLineWideTemplate
-      pageTitle={PAGES.CONTRIBUTES_NEW.TITLE}
-      pageDescription={PAGES.CONTRIBUTES_NEW.DESCRIPTION}
+      pageTitle={PAGES.CONTRIBUTES_EDIT.TITLE}
+      pageDescription={PAGES.CONTRIBUTES_EDIT.DESCRIPTION}
     >
       {!contribute ? (
         // TODO: ローディングコンポーネントを作成する
@@ -155,7 +155,7 @@ const EditContribute: NextPage = () => {
                 text={
                   <Image
                     src="/icons/earth.svg"
-                    alt="投稿"
+                    alt="公開"
                     width={25}
                     height={25}
                     color="white"
