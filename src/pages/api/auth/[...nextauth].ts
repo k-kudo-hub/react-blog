@@ -1,10 +1,8 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
 import NextAuth, { SessionStrategy } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import { IAuthOptions } from "./type";
-
-const prisma = new PrismaClient();
+import prisma from "@server/infrastructure/repository/prisma";
 
 const authOptions: IAuthOptions = {
   providers: [
