@@ -13,6 +13,11 @@ const PAGES = {
     TITLE: "投稿編集",
     DESCRIPTION: "投稿を編集してみましょう",
   },
+  MYPAGE: {
+    PATH: "/mypage",
+    TITLE: "マイページ",
+    DESCRIPTION: "マイページです",
+  },
 } as const;
 
 export default PAGES;
