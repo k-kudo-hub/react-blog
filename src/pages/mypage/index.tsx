@@ -1,3 +1,3 @@
-import MyPage from "@containers/Mypage";
+import MyPage from "@containers/mypage";
 
 export default MyPage;
