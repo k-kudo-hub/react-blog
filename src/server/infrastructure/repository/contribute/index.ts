@@ -4,8 +4,8 @@ import { ContributeFactory } from "@server/domain/factory/contribute";
 import ContributeEntity, {
   CONTRIBUTE_STATUS,
 } from "@server/domain/entity/contribute";
-import { PrismaFindManyQuery, PrismaFindUniqueQuery } from "../prisma/query";
 import RepositoryBase from "../base";
+import { DefaultArgs } from "@prisma/client/runtime/library";
 
 // TODO: ここに置いておくのが適切か検討して必要であれば移す
 const contributeWithInformation =
@@ -67,19 +67,25 @@ export default class ContributeRepository
   public getAll = async (
     params?: GetManyContributesParam,
   ): Promise<ContributeEntity[]> => {
-    const query: PrismaFindManyQuery = {
+    const query: Prisma.ContributeFindManyArgs<DefaultArgs> = {
       ...this.getBaseQuery(),
-      orderBy: [{ publishedAt: "desc" }],
+      orderBy: [{ publishedAt: { sort: "desc" } }],
       take: params?.limit || DEFAULT_LIMIT,
       skip: params?.offset || 0,
     };
 
     if (params?.status) {
-      query.where.status = params.status;
+      query.where = {
+        ...query.where,
+        status: params.status,
+      };
     }
 
     if (params?.userId) {
-      query.where.userId = params.userId;
+      query.where = {
+        ...query.where,
+        userId: params.userId,
+      };
     }
 
     const contributes = await this.db.contribute.findMany(query);
@@ -91,7 +97,7 @@ export default class ContributeRepository
   public getByIdentityCode = async (
     identityCode: string,
   ): Promise<ContributeEntity | null> => {
-    const query: PrismaFindUniqueQuery = {
+    const query = {
       ...this.getBaseQuery(),
       where: { identityCode },
     };
@@ -200,7 +206,11 @@ export default class ContributeRepository
           },
         },
       },
-      where: {},
+      where: {
+        status: {
+          not: CONTRIBUTE_STATUS.DELETED,
+        },
+      },
     };
   };
 }
