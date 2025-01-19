@@ -5,11 +5,22 @@ import IMAGE_PATH from "../../../styles/images";
 import styles from "./style.module.scss";
 import useMeState from "src/client/state/me";
 import { signIn } from "next-auth/react";
+import PAGES from "@constants/pages";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const {
-    me: { isLoggedIn, image: userImage },
+    me: { isLoggedIn, image: userImage, name },
   } = useMeState();
+  const router = useRouter();
+
+  const goToMypage = () => {
+    if (!isLoggedIn) {
+      signIn();
+    } else {
+      router.push(PAGES.MYPAGE.PATH);
+    }
+  };
 
   return (
     <header className={styles.header}>
@@ -22,7 +33,7 @@ const Header = () => {
           alt="ヘッダー画像"
         />
         <div className={styles.heroTextContainer}>
-          <Link href={"/"}>
+          <Link href={PAGES.HOME.PATH}>
             <p className={styles.heroText}>{SITE_INFO.TITLE}</p>
           </Link>
         </div>
@@ -40,11 +51,12 @@ const Header = () => {
       ) : (
         <Image
           className={styles.iconButton}
+          onClick={() => goToMypage()}
           src={userImage}
           objectFit="cover"
           height={36}
           width={36}
-          alt="ユーザー"
+          alt={`${name}のユーザーアイコン`}
         />
       )}
     </header>

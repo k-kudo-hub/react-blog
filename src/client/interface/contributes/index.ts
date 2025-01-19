@@ -4,6 +4,7 @@ import {
   createContributeFromResponse,
   createContributeListFromResponse,
 } from "./factory";
+import { CONTRIBUTE_STATUS } from "@server/domain/entity/contribute";
 
 interface CreateContributeParam {
   identityCode: string;
@@ -12,8 +13,22 @@ interface CreateContributeParam {
 }
 
 export class ContributeInterface {
-  async getAllContributes(): Promise<Contribute[]> {
-    const response = await get("/contributes");
+  async getRecentContributes(): Promise<Contribute[]> {
+    const response = await get("/contributes", {
+      status: CONTRIBUTE_STATUS.PUBLISHED,
+    });
+
+    if (!response?.data) {
+      return [];
+    }
+
+    return createContributeListFromResponse(response.data);
+  }
+
+  async getMyContributes(userId: string): Promise<Contribute[]> {
+    const response = await get("/contributes", {
+      userId,
+    });
 
     if (!response?.data) {
       return [];
