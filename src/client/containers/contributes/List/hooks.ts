@@ -7,7 +7,7 @@ export const useContributes = () => {
   const { contributes, setContributes } = useContributesState();
 
   const fetchContributes = async () => {
-    const contributes = await contributeInterface.getAllContributes();
+    const contributes = await contributeInterface.getRecentContributes();
     setContributes(contributes);
   };
 

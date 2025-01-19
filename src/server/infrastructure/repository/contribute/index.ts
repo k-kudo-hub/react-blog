@@ -19,6 +19,7 @@ const DEFAULT_LIMIT = 100;
 
 export interface GetManyContributesParam {
   status?: string;
+  userId?: string;
   limit?: number;
   offset?: number;
 }
@@ -75,6 +76,10 @@ export default class ContributeRepository
 
     if (params?.status) {
       query.where.status = params.status;
+    }
+
+    if (params?.userId) {
+      query.where.userId = params.userId;
     }
 
     const contributes = await this.db.contribute.findMany(query);
