@@ -24,7 +24,7 @@ const authOptions: IAuthOptions = {
   theme: {
     brandColor: "#b30000",
     colorScheme: "auto" as const,
-    logo: "	http://localhost:3000/fire.png",
+    logo: "/fire.png",
   },
   callbacks: {
     async session({ session, token }) {
