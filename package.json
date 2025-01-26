@@ -8,6 +8,7 @@
     "lint": "next lint",
     "prepare": "husky install",
     "lint-staged": "lint-staged",
+    "postinstall": "prisma generate",
     "migrate:dev": "prisma migrate dev"
   },
   "lint-staged": {
