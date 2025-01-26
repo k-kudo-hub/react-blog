@@ -7,8 +7,9 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DB_HOST")
+  directUrl = env("DB_DIRECT_HOST")
 }
 
 model User {
