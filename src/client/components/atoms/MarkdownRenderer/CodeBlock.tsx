@@ -1,9 +1,19 @@
-import { CodeComponent } from "react-markdown/lib/ast-to-react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import styles from "./style.module.scss";
+import { ComponentPropsWithoutRef } from "react";
+import { Components } from "react-markdown";
 
-const CodeBlock: CodeComponent = ({ inline, className, children }) => {
+type TCodeBlockProps = ComponentPropsWithoutRef<"code"> & {
+  inline?: boolean;
+  className?: string;
+};
+
+const CodeBlock: Components["code"] = ({
+  inline,
+  className,
+  children,
+}: TCodeBlockProps) => {
   const match = /language-(\w+)(:.+)/.exec(className || "");
   const language = match && match[1] ? match[1] : "";
   const name = match && match[2] ? match[2].slice(1) : "";
