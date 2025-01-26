@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getAllContributes } from "@server/usecase/getAllContributes";
 import {

@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import type { NextApiResponse } from "next";
 import {
   HttpMethodHandler,

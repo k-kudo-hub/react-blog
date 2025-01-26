@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth, { SessionStrategy } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
