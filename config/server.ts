@@ -1,7 +1,7 @@
 export const config = {
   SERVER: {
     HOST: process.env.SERVER_HOST || "localhost",
-    PORT: process.env.SERVER_PORT || 3000,
+    PORT: process.env.SERVER_PORT,
     PROTOCOL: process.env.SERVER_PROTOCOL || "http",
   },
   DB: {
