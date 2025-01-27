@@ -4,4 +4,8 @@
   color: $dark-gray;
   display: flex;
   align-items: center;
+  .iconImage {
+    margin-right: 0.4em;
+    object-fit: cover;
+  }
 }

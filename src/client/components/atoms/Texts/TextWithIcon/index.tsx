@@ -13,9 +13,8 @@ const TextWithIcon = (params: ITextWithIconProps) => {
   return (
     <div className={styles.textWithIconContainer}>
       <Image
-        style={{ marginRight: "3px" }}
         src={`/icons/${iconName}`}
-        objectFit="cover"
+        className={styles.iconImage}
         alt={iconAlt}
         height={12}
         width={12}

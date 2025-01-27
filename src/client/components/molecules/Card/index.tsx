@@ -26,9 +26,9 @@ const Card = (props: CardProps): JSX.Element => {
     <div className={styles.card} key={uniqueKey}>
       <div className={styles.cardHeader}>
         <Image
+          className={styles.cardImage}
           src={coverImageUrl || IMAGE_PATH.HERO_ORIGIN}
           layout="fill"
-          objectFit="cover"
           alt="カードの画像"
         />
       </div>

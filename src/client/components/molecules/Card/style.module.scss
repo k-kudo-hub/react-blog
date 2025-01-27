@@ -8,6 +8,10 @@
   .cardHeader {
     height: 174px;
     position: relative;
+    .cardImage {
+      object-fit: cover;
+      width: 100%;
+    }
   }
   .cardBody {
     background-color: $white;

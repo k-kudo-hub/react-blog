@@ -10,6 +10,9 @@
     align-items: center;
     width: 100%;
     height: $header-height;
+    .heroImage {
+      object-fit: cover;
+    }
   }
   .heroTextContainer {
     margin: 0 auto;
@@ -24,6 +27,7 @@
   }
   .loginButton {
     position: absolute;
+    object-fit: cover;
     top: 0;
     right: 0;
     margin: 1rem 1rem 0 0;
@@ -33,6 +37,7 @@
   }
   .iconButton {
     position: absolute;
+    object-fit: cover;
     top: 0;
     right: 0;
     margin: 1rem 1rem 0 0;
