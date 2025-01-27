@@ -3,6 +3,7 @@
 import { ContributeDetailPresenter } from "./presenter";
 import { useContribute, useDeleteModal } from "./hooks";
 import { useEffect } from "react";
+import { ContributeDetailPresenterSkeleton } from "./Skeleton";
 
 type PageProps = {
   params: {
@@ -36,6 +37,8 @@ const ContributeDetail = (props: PageProps) => {
       closeDeleteModal={closeDeleteModal}
       deleteContribute={deleteContribute}
     />
-  ) : null;
+  ) : (
+    <ContributeDetailPresenterSkeleton />
+  );
 };
 export default ContributeDetail;

@@ -1,5 +1,6 @@
 @import '../../../styles/colors';
 @import '../../../styles/font-size';
+@import '../../../styles/skeleton';
 
 .card {
   height: 374px;
@@ -46,4 +47,8 @@
       margin: 0 5px 0 0;
     }
   }
+}
+
+.skeleton {
+  @include skeleton;
 }

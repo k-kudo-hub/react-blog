@@ -1,0 +1,22 @@
+/* スケルトン用クラス */
+@mixin skeleton {
+  background-color: #eee;
+  border-radius: 4px;
+  animation: skeleton-loading 2s infinite linear;
+  background: linear-gradient(
+    90deg,
+    #eee 25%,
+    #ddd 50%,
+    #eee 75%
+  );
+  background-size: 200% 100%;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

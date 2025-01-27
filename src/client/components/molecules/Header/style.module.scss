@@ -1,5 +1,6 @@
 @import '../../../styles/colors';
 @import '../../../styles/font-size';
+@import '../../../styles/skeleton';
 
 .userInfoContainer {
   margin-bottom: 1rem;
@@ -31,4 +32,8 @@
   >* {
     margin-right: 0.6rem;
   }
+}
+
+.skeleton {
+  @include skeleton;
 }

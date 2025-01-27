@@ -69,10 +69,7 @@ export const ContributeListPresenter: React.FC<TProps> = ({ contributes }) => {
       pageTitle={TITLE}
       pageDescription={DESCRIPTION}
     >
-      <CardList
-        contents={generateContributeContents()}
-        emptyMessage="投稿がありません"
-      />
+      <CardList contents={generateContributeContents()} />
       <div className={styles.floatButtonContainer}>
         <FloatButton
           text={
