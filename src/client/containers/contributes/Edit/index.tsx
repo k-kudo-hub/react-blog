@@ -4,7 +4,7 @@ import SingleLineWideTemplate from "@components/templates/SingleLineWideTemplate
 import MarkdownRenderer from "@components/atoms/MarkdownRenderer";
 import { ContributeInterface } from "../../../..//client/interface/contributes";
 import useExclusiveControl from "src/client/hooks/useExclusiveControl";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./styles.module.scss";
 import { useUpdateEffect } from "src/client/hooks/useUpdateEffect";
 import { NextPage } from "next";
@@ -25,6 +25,7 @@ const contributeInterface = new ContributeInterface();
 
 const EditContribute: NextPage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const exclude = useExclusiveControl();
   const { contribute, setContribute } = useContributeState();
   const [saveTimer, setSaveTimer] = useState<NodeJS.Timeout | undefined>(
@@ -36,10 +37,11 @@ const EditContribute: NextPage = () => {
   const canPublish = contribute?.status === CONTRIBUTE_STATUS.DRAFT;
 
   useEffect(() => {
-    if (router.query.identityCode) {
-      fetchContribute(router.query.identityCode as string);
+    const identityCode = searchParams.get("identityCode");
+    if (identityCode) {
+      fetchContribute(identityCode as string);
     }
-  }, [router.query.identityCode]);
+  }, []);
 
   useUpdateEffect(() => {
     clearTimeout(saveTimer);

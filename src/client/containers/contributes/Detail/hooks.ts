@@ -5,18 +5,10 @@ import { ContributeInterface } from "../../../interface/contributes";
 import { Contribute } from "src/client/models/contribute";
 import useContributeState from "src/client/state/contributes/contribute";
 import useMeState from "src/client/state/me";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import PAGES from "@constants/pages";
 
 const contributeInterface = new ContributeInterface();
-
-export const useRouterProps = () => {
-  const {
-    query: { identityCode },
-    query,
-  } = useRouter();
-  return { query, identityCode };
-};
 
 export const useDeleteModal = () => {
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);

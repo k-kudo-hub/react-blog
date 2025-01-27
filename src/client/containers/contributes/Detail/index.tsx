@@ -1,10 +1,17 @@
-import { NextPage } from "next";
-import { useEffect } from "react";
-import { ContributeDetailPresenter } from "./presenter";
-import { useContribute, useDeleteModal, useRouterProps } from "./hooks";
+"use client";
 
-const ContributeDetail: NextPage = () => {
-  const { query, identityCode } = useRouterProps();
+import { ContributeDetailPresenter } from "./presenter";
+import { useContribute, useDeleteModal } from "./hooks";
+import { useEffect } from "react";
+
+type PageProps = {
+  params: {
+    identityCode: string;
+  };
+};
+
+const ContributeDetail = (props: PageProps) => {
+  const { identityCode } = props.params;
   const {
     contribute,
     isEditableContribute,
@@ -18,7 +25,7 @@ const ContributeDetail: NextPage = () => {
     if (identityCode) {
       fetchContribute(identityCode as string);
     }
-  }, [query]);
+  }, [props.params, identityCode]);
 
   return contribute ? (
     <ContributeDetailPresenter

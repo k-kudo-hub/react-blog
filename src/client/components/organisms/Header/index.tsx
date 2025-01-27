@@ -6,7 +6,7 @@ import styles from "./style.module.scss";
 import useMeState from "src/client/state/me";
 import { signIn } from "next-auth/react";
 import PAGES from "@constants/pages";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const {
