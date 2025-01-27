@@ -21,9 +21,13 @@
     }
   }
   ul {
-    
-    * {
+    margin-left: 12px;
+    li {
       margin-bottom: 6px;
+      list-style-type: disc;
+      ul {
+        margin-top: 6px;
+      }
     }
   }
   p {
@@ -45,6 +49,14 @@
     }
     th {
       background-color: $light-pink;
+    }
+  }
+  blockquote {
+    margin: 12px 0;
+    padding-left: 6px;
+    border-left: 4px solid $gray;
+    p {
+      color: $dark-gray;
     }
   }
 }
