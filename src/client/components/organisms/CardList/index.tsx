@@ -1,3 +1,4 @@
+import EmptyCard from "../../molecules/Card/Skeleton";
 import styles from "./style.module.scss";
 import Card from "@components/molecules/Card";
 
@@ -12,11 +13,10 @@ interface IContent {
 
 interface ICardListParams {
   contents: IContent[];
-  emptyMessage: string;
 }
 
 const CardList = (params: ICardListParams) => {
-  const { contents, emptyMessage } = params;
+  const { contents } = params;
 
   return (
     <section className={styles.cardListContainer}>
@@ -32,7 +32,7 @@ const CardList = (params: ICardListParams) => {
           />
         ))
       ) : (
-        <p>{emptyMessage}</p>
+        <EmptyCard />
       )}
     </section>
   );

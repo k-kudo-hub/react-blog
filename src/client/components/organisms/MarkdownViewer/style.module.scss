@@ -1,5 +1,6 @@
 @import '../../../styles/colors';
 @import '../../../styles/font-size';
+@import '../../../styles/skeleton';
 
 .userIcon {
   width: 30px;
@@ -12,4 +13,8 @@
 
 .detailHeader {
   margin-bottom: 2rem;
+}
+
+.skeleton {
+  @include skeleton;
 }

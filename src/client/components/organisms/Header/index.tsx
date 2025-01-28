@@ -6,7 +6,7 @@ import styles from "./style.module.scss";
 import useMeState from "src/client/state/me";
 import { signIn } from "next-auth/react";
 import PAGES from "@constants/pages";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const {
@@ -27,8 +27,8 @@ const Header = () => {
       <div className={styles.hero}>
         <Image
           src={IMAGE_PATH.HERO}
+          className={styles.heroImage}
           layout="fill"
-          objectFit="cover"
           priority={true}
           alt="ヘッダー画像"
         />
@@ -43,7 +43,6 @@ const Header = () => {
           className={styles.loginButton}
           onClick={() => signIn()}
           src="/icons/login.svg"
-          objectFit="cover"
           height={32}
           width={32}
           alt="ログイン"
@@ -53,7 +52,6 @@ const Header = () => {
           className={styles.iconButton}
           onClick={() => goToMypage()}
           src={userImage}
-          objectFit="cover"
           height={36}
           width={36}
           alt={`${name}のユーザーアイコン`}

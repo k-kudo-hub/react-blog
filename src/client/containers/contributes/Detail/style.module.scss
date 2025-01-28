@@ -1,5 +1,6 @@
 @import '../../../styles/colors';
 @import '../../../styles/font-size';
+@import '../../../styles/skeleton';
 
 .detailContainer {
   background-color: $white;
@@ -32,4 +33,8 @@
 .modalButtonContainer {
   display: flex;
   justify-content: flex-end;
+}
+
+.skeleton {
+  @include skeleton;
 }
