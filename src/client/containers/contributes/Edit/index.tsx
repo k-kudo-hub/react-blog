@@ -4,7 +4,7 @@ import SingleLineWideTemplate from "@components/templates/SingleLineWideTemplate
 import MarkdownRenderer from "@components/atoms/MarkdownRenderer";
 import { ContributeInterface } from "../../../..//client/interface/contributes";
 import useExclusiveControl from "src/client/hooks/useExclusiveControl";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import styles from "./styles.module.scss";
 import { useUpdateEffect } from "src/client/hooks/useUpdateEffect";
 import { NextPage } from "next";
@@ -23,9 +23,16 @@ const AUTO_SAVE_INTERVAL = 10000; // 自動保存の間隔 (単位:ms)
 
 const contributeInterface = new ContributeInterface();
 
-const EditContribute: NextPage = () => {
+type IContributeEditProps = {
+  params: {
+    identityCode: string;
+  };
+};
+
+const EditContribute: NextPage<IContributeEditProps> = ({
+  params,
+}: IContributeEditProps) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const exclude = useExclusiveControl();
   const { contribute, setContribute } = useContributeState();
   const [saveTimer, setSaveTimer] = useState<NodeJS.Timeout | undefined>(
@@ -33,15 +40,14 @@ const EditContribute: NextPage = () => {
   );
   const [isOpenStatusModal, setIsOpenStatusModal] = useState<boolean>(false);
   const { showFlashMessage } = useFlashMessage();
-
+  const { identityCode } = params;
   const canPublish = contribute?.status === CONTRIBUTE_STATUS.DRAFT;
 
   useEffect(() => {
-    const identityCode = searchParams.get("identityCode");
     if (identityCode) {
       fetchContribute(identityCode as string);
     }
-  }, []);
+  }, [identityCode]);
 
   useUpdateEffect(() => {
     clearTimeout(saveTimer);
