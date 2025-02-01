@@ -1,20 +1,23 @@
+import SingleLineTemplate from "@/client/components/templates/SingleLineTemplate";
 import styles from "./styles.module.scss";
 import TextFormSkeleton from "@/client/components/atoms/TextForm/Skeleton";
 
-const EditContributeSkeleton = () => {
+const EditContributeSkeletonPresenter = () => {
   return (
-    <section>
-      <TextFormSkeleton />
-      <div className={styles.contentContainer}>
-        <div
-          className={[styles.writeContainer, styles.skeleton].join(" ")}
-        ></div>
-        <div className={[styles.previewContainer, styles.skeleton].join(" ")}>
-          <div className={styles.preview}></div>
+    <SingleLineTemplate>
+      <section>
+        <TextFormSkeleton />
+        <div className={styles.contentContainer}>
+          <div
+            className={[styles.writeContainer, styles.skeleton].join(" ")}
+          ></div>
+          <div className={[styles.previewContainer, styles.skeleton].join(" ")}>
+            <div className={styles.preview}></div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </SingleLineTemplate>
   );
 };
 
-export default EditContributeSkeleton;
+export default EditContributeSkeletonPresenter;
