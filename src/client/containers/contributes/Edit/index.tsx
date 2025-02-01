@@ -17,6 +17,7 @@ import Modal from "@components/molecules/Modal";
 import { CONTRIBUTE_STATUS } from "@server/domain/entity/contribute";
 import { FLASH_TYPE, useFlashMessage } from "@components/atoms/Flash";
 import Image from "next/image";
+import EditContributeSkeleton from "./Skeleton";
 
 // ここに置くべきではなさそう
 const AUTO_SAVE_INTERVAL = 10000; // 自動保存の間隔 (単位:ms)
@@ -129,9 +130,7 @@ const EditContribute: NextPage<IContributeEditProps> = ({
       pageDescription={PAGES.CONTRIBUTES_EDIT.DESCRIPTION}
     >
       {!contribute ? (
-        // TODO: ローディングコンポーネントを作成する
-        // ローディングコンポーネントの粒度についても検討する
-        <div>読み込み中...</div>
+        <EditContributeSkeleton />
       ) : (
         <section>
           <TextForm
