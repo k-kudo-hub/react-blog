@@ -1,6 +1,7 @@
 const SITE_INFO = {
   TITLE: "Cut Blog",
-  DESCRIPTION: "",
+  DESCRIPTION:
+    "フルスタックエンジニアによる技術ブログです。フロントエンド、バックエンド、インフラ、監視やセキュリティ、コストに至るまで幅広く発信します。",
 };
 
 export default SITE_INFO;

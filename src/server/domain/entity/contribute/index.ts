@@ -1,5 +1,6 @@
-import { Expose, Type } from "class-transformer";
+import "reflect-metadata";
 
+import { Expose, Type } from "class-transformer";
 import BaseEntity from "../base";
 import TagEntity from "../tag";
 import UserEntity from "../user";
