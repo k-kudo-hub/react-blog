@@ -29,6 +29,7 @@ export const createOpenGraphImage = (props: TOpenGraphImageProps) => {
       title: `${title} - ${SITE_INFO.TITLE}`,
       card: "summary_large_image",
       description: `${shortDescription}...`,
+      image: `${BASE_URL}${imagePath}`,
     },
   };
 };
