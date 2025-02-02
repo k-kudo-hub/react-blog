@@ -1,6 +1,6 @@
 import { FLASH_TYPE, useFlashMessage } from "@components/atoms/Flash";
 import { CONTRIBUTE_STATUS } from "@server/domain/entity/contribute";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ContributeInterface } from "../../../interface/contributes";
 import { Contribute } from "src/client/models/contribute";
 import useContributeState from "src/client/state/contributes/contribute";
@@ -27,6 +27,10 @@ export const useContribute = () => {
   const { contribute, setContribute } = useContributeState();
   const { closeDeleteModal } = useDeleteModal();
   const { showFlashMessage } = useFlashMessage();
+
+  useEffect(() => {
+    setIsEditableContribute(contribute);
+  }, [meId, contribute]);
 
   const fetchContribute = async (identityCode: string) => {
     const contribute = await contributeInterface.getContribute(identityCode);
