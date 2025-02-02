@@ -45,15 +45,8 @@ export const useContributeEditor = (identityCode: string) => {
   }, [contribute]);
 
   const fetchContribute = async (identityCode: string) => {
-    try {
-      const contribute = await contributeInterface.getContribute(identityCode);
-      setContribute(contribute);
-    } catch (e) {
-      showFlashMessage(
-        "記事の取得に失敗しました。もう1度お試しいただくか、カスタマーサポートまでご連絡ください。",
-        FLASH_TYPE.ERROR,
-      );
-    }
+    const contribute = await contributeInterface.getContribute(identityCode);
+    setContribute(contribute);
   };
 
   const setTitle = (title: string) => {
