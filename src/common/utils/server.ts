@@ -1,7 +1,7 @@
 /**
  * httpリクエストに関する共通関数群
  */
-import { generateUrl } from "./url";
+import { generateApiUrl } from "./url";
 
 interface RequestConditionType {
   method: "GET" | "POST" | "PUT" | "DELETE";
@@ -9,7 +9,7 @@ interface RequestConditionType {
 }
 
 export async function get(route: string, params = {}) {
-  const url = generateUrl({ route, params });
+  const url = generateApiUrl({ route, params });
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -23,7 +23,7 @@ export async function get(route: string, params = {}) {
 }
 
 export async function post(route: string, body: object) {
-  const url = generateUrl({ route });
+  const url = generateApiUrl({ route });
   const condition = _generateRequestCondition({
     method: "POST",
     body,
@@ -41,7 +41,7 @@ export async function post(route: string, body: object) {
 }
 
 export async function put(route: string, body: object) {
-  const url = generateUrl({ route });
+  const url = generateApiUrl({ route });
   const condition = _generateRequestCondition({
     method: "PUT",
     body,
@@ -58,7 +58,7 @@ export async function put(route: string, body: object) {
 }
 
 export async function destroy(route: string, body: object) {
-  const url = generateUrl({ route });
+  const url = generateApiUrl({ route });
   const condition = _generateRequestCondition({
     method: "DELETE",
     body,

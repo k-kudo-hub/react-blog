@@ -17,11 +17,11 @@ interface UrlParamType {
  * @param params クエリパラメータに変換するオブジェクト
  * @returns リクエストURL
  */
-export const generateUrl = ({ route, params = {} }: UrlParamType) => {
+export const generateApiUrl = ({ route, params = {} }: UrlParamType) => {
   const queryString = _parseObjectToParamString(params);
   if (route.startsWith("/")) {
-    const baseUrl = _getBaseUrl();
-    return `${baseUrl}${route}${queryString}`;
+    const baseUrl = getBaseUrl();
+    return `${baseUrl}/api/${route}${queryString}`;
   } else if (route.startsWith("http") || route.startsWith("https")) {
     return `${route}${queryString}`;
   } else {
@@ -33,11 +33,11 @@ export const generateUrl = ({ route, params = {} }: UrlParamType) => {
  * 環境変数をもとに、APIのURLを生成する
  * @returns 環境変数に基づくAPIのURL
  */
-const _getBaseUrl = () => {
+export const getBaseUrl = () => {
   if (config.SERVER.PORT) {
-    return `${config.SERVER.PROTOCOL}://${config.SERVER.HOST}:${config.SERVER.PORT}/api`;
+    return `${config.SERVER.PROTOCOL}://${config.SERVER.HOST}:${config.SERVER.PORT}`;
   }
-  return `${config.SERVER.PROTOCOL}://${config.SERVER.HOST}/api`;
+  return `${config.SERVER.PROTOCOL}://${config.SERVER.HOST}`;
 };
 
 /**
