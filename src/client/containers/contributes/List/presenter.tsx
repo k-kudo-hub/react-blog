@@ -20,7 +20,9 @@ export const ContributeListPresenter: React.FC<TProps> = ({ contributes }) => {
   } = PAGES;
   const asideContent = <p></p>;
 
-  const createPublicStatusElement = (contribute: Contribute): JSX.Element => {
+  const createPublicStatusElement = (
+    contribute: Contribute,
+  ): React.ReactNode => {
     switch (contribute.status) {
       case CONTRIBUTE_STATUS.PUBLISHED:
         return (
@@ -49,7 +51,7 @@ export const ContributeListPresenter: React.FC<TProps> = ({ contributes }) => {
     }
   };
 
-  const createTagsElement = (tags: TagType[]): JSX.Element => {
+  const createTagsElement = (tags: TagType[]): React.ReactNode => {
     return <>{tags?.map((tag) => <Tag tag={tag} key={tag.id} />)}</>;
   };
 

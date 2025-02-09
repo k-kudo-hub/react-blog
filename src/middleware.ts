@@ -9,5 +9,5 @@ export default withAuth({
 });
 
 export const config = {
-  matcher: ["/contributes/new/"],
+  matcher: ["/contributes/new"],
 };

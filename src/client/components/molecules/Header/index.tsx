@@ -1,10 +1,10 @@
 import styles from "./style.module.scss";
 
 interface HeaderProps {
-  userInfoElement: JSX.Element;
-  navigationElement: JSX.Element;
+  userInfoElement: React.ReactNode;
+  navigationElement: React.ReactNode;
   title: string;
-  tagElement: JSX.Element;
+  tagElement: React.ReactNode;
 }
 
 const Header = (props: HeaderProps) => {

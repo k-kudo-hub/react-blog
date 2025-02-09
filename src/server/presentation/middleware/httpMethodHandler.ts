@@ -31,14 +31,11 @@ export interface INextApiRequestWithUser extends NextRequest {
 }
 
 type TParameters = {
-  params: TParameters;
+  params: Promise<any>;
 };
 
 type TOutputMethods = {
-  GET?: (
-    request: INextApiRequestWithUser,
-    params?: TParameters,
-  ) => Promise<any>;
+  GET?: (request: INextApiRequestWithUser, params: TParameters) => Promise<any>;
   POST?: (request: INextApiRequestWithUser) => Promise<any>;
   PUT?: (request: INextApiRequestWithUser) => Promise<any>;
   DELETE?: (request: INextApiRequestWithUser) => Promise<any>;

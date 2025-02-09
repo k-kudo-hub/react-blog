@@ -1,6 +1,6 @@
 import styles from "./style.module.scss";
 
-const EmptyCard = (): JSX.Element => {
+const EmptyCard = (): React.ReactNode => {
   return (
     <div className={styles.card}>
       <div className={[styles.cardHeader, styles.skeleton].join(" ")}></div>

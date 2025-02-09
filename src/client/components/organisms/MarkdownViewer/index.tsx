@@ -3,9 +3,9 @@ import MarkdownRenderer from "@components/atoms/MarkdownRenderer";
 import Header from "@components/molecules/Header";
 
 interface MarkdownViewerProps {
-  imageWithTextElement: JSX.Element;
-  navigationElement: JSX.Element;
-  tagElement: JSX.Element;
+  imageWithTextElement: React.ReactNode;
+  navigationElement: React.ReactNode;
+  tagElement: React.ReactNode;
   title: string;
   content: string;
 }

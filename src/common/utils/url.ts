@@ -21,7 +21,7 @@ export const generateApiUrl = ({ route, params = {} }: UrlParamType) => {
   const queryString = _parseObjectToParamString(params);
   if (route.startsWith("/")) {
     const baseUrl = getBaseUrl();
-    return `${baseUrl}/api/${route}${queryString}`;
+    return `${baseUrl}/api${route}${queryString}`;
   } else if (route.startsWith("http") || route.startsWith("https")) {
     return `${route}${queryString}`;
   } else {

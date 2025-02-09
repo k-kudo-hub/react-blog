@@ -6,13 +6,13 @@ import IMAGE_PATH from "../../../styles/images";
 interface CardProps {
   uniqueKey: string | number;
   coverImageUrl?: string;
-  topContent?: JSX.Element;
+  topContent?: React.ReactNode;
   titleText: string;
   titleLink: string;
-  bottomContent?: JSX.Element;
+  bottomContent?: React.ReactNode;
 }
 
-const Card = (props: CardProps): JSX.Element => {
+const Card = (props: CardProps): React.ReactNode => {
   const {
     uniqueKey,
     coverImageUrl,

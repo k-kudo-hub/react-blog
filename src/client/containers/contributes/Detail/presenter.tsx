@@ -34,7 +34,7 @@ type TTagsProps = {
   tags: TagType[];
 };
 
-const createUserInfoElement = (props: TUserInfoProps): JSX.Element => {
+const createUserInfoElement = (props: TUserInfoProps): React.ReactNode => {
   const { name, imageUrl } = props;
   return (
     <>
@@ -52,7 +52,9 @@ const createUserInfoElement = (props: TUserInfoProps): JSX.Element => {
   );
 };
 
-const createPublicStatusElement = (props: TPublicStatusProps): JSX.Element => {
+const createPublicStatusElement = (
+  props: TPublicStatusProps,
+): React.ReactNode => {
   const { lastEditedDate, publishedDate } = props;
   return (
     <>

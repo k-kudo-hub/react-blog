@@ -4,15 +4,16 @@ import { ContributeDetailPresenter } from "./presenter";
 import { useContribute, useDeleteModal } from "./hooks";
 import { useEffect } from "react";
 import { ContributeDetailPresenterSkeleton } from "./Skeleton";
+import { use } from "react";
 
 type PageProps = {
-  params: {
+  params: Promise<{
     identityCode: string;
-  };
+  }>;
 };
 
 const ContributeDetail = (props: PageProps) => {
-  const { identityCode } = props.params;
+  const { identityCode } = use(props.params);
   const {
     contribute,
     isEditableContribute,
@@ -26,7 +27,7 @@ const ContributeDetail = (props: PageProps) => {
     if (identityCode) {
       fetchContribute(identityCode as string);
     }
-  }, [props.params, identityCode]);
+  }, [identityCode]);
 
   return contribute ? (
     <ContributeDetailPresenter
