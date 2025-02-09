@@ -6,8 +6,8 @@ interface IContent {
   id: string | number;
   title: string;
   link: string;
-  topContent: JSX.Element;
-  bottomContent: JSX.Element;
+  topContent: React.ReactNode;
+  bottomContent: React.ReactNode;
   coverImageUrl?: string;
 }
 

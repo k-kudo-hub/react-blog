@@ -6,7 +6,7 @@ interface TextareaProps {
   onChange: (content: string) => void;
 }
 
-const Textarea = (props: TextareaProps): JSX.Element => {
+const Textarea = (props: TextareaProps): React.ReactNode => {
   return (
     <textarea
       id="content"

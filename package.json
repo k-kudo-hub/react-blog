@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.7.2",
-    "@types/react": "19.0.8",
+    "@types/react": "^19.0.8",
     "@types/react-dom": "19.0.3",
     "@types/react-syntax-highlighter": "^15.5.7",
     "@types/rss": "^0.0.32",

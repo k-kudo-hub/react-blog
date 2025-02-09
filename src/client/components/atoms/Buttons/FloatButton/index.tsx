@@ -2,7 +2,7 @@ import Link from "next/link";
 import styles from "./style.module.scss";
 
 interface ButtonProps {
-  text: string | JSX.Element;
+  text: string | React.ReactNode;
   link?: string;
   onClick?: () => void;
 }
