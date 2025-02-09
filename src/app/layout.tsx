@@ -1,7 +1,6 @@
 "use client";
 
 import "reflect-metadata";
-import { RecoilRoot } from "recoil";
 import "../client/styles/globals.css";
 import Auth from "./auth";
 import { FlashMessageProvider } from "@components/atoms/Flash";
@@ -24,14 +23,12 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <RecoilRoot>
-          <SessionProvider>
-            <FlashMessageProvider>
-              <Auth />
-              {children}
-            </FlashMessageProvider>
-          </SessionProvider>
-        </RecoilRoot>
+        <SessionProvider>
+          <FlashMessageProvider>
+            <Auth />
+            {children}
+          </FlashMessageProvider>
+        </SessionProvider>
       </body>
     </html>
   );

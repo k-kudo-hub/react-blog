@@ -1,15 +1,11 @@
-import { atom, useRecoilValue, useSetRecoilState } from "recoil";
+import { atom, useAtomValue, useSetAtom } from "jotai";
 import { Contribute } from "src/client/models/contribute";
-import { RECOIL_KEYS } from "..";
 
-const contributesState = atom({
-  key: RECOIL_KEYS.CONTRIBUTES,
-  default: [] as Contribute[],
-});
+const contributesState = atom([] as Contribute[]);
 
 const useContributesState = () => {
-  const contributes = useRecoilValue(contributesState);
-  const setContributes = useSetRecoilState(contributesState);
+  const contributes = useAtomValue(contributesState);
+  const setContributes = useSetAtom(contributesState);
 
   return { contributes, setContributes };
 };

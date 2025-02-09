@@ -14,7 +14,7 @@ URL: https://blog.k-kudo.com
 |--------------|-----------|-----------------------------------------------------|
 |フロントエンド|Next.js    | 当時まだReact系FWを使用したことがなかったため       |
 |バックエンド  |Next.js    | スイッチングコスト低減のため (分離は意識)           |
-|状態管理      |Recoil     | Redux以外のライブラリを使ってみたかった             |
+|状態管理      |Jotai     | 当初はRecoilを使用していたが、開発中止に伴い移行 |
 |DB            |PostgreSQL | 最初MySQLだったが、NeonがPostgres互換だったため |
 |ORM           |Prisma     | TypeORM, Sequelize以外を使ってみたかった            |
 |認証          |NextAuth   | Cognitoを使ってみたかったが、サーバ費用削減のため   |
