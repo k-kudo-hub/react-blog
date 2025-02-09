@@ -3,13 +3,12 @@ import { ContributeInterface } from "@/client/interface/contributes";
 import ContributeDetail from "@containers/contributes/Detail";
 
 const contributeInterface = new ContributeInterface();
-export const generateMetadata = async ({
-  params,
-}: {
-  params: {
+export const generateMetadata = async (props: {
+  params: Promise<{
     identityCode: string;
-  };
+  }>;
 }) => {
+  const params = await props.params;
   const contribute = await contributeInterface.getContribute(
     params.identityCode,
   );
